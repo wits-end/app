@@ -38,9 +38,13 @@
 	<div class="wrapper">
 		<div class="filters">
 			<nav class="categories">
-				<span class="active">All</span><span>Compression</span><span>Optimization</span><span
-					>Regularization</span
-				><span>Reinforcement</span>
+				<span class="active">All</span>
+				<span>cs.AI</span>
+				<span>cs.CL</span>
+				<span>cs.CV</span>
+				<span>cs.LG</span>
+				<span>cs.NE</span>
+				<span>stat.ML</span>
 			</nav>
 		</div>
 
@@ -80,7 +84,7 @@
 								aria-hidden="true"
 								data-prefix="fas"
 								data-icon="search"
-								className="svg-inline--fa fa-search fa-w-16"
+								class="svg-inline--fa fa-search fa-w-16"
 								role="img"
 								xmlns="http://www.w3.org/2000/svg"
 								viewBox="0 0 512 512"
@@ -125,6 +129,7 @@
 <style lang="scss">
 	main {
 		padding: 1rem;
+		background: white;
 		.wrapper {
 			.filters {
 				border-bottom: 1px solid #ddd;
@@ -167,8 +172,8 @@
 				display: grid;
 				grid-template-rows: auto auto;
 				grid-template-columns: 2fr 1fr 1fr;
-				grid-gap: 1rem;
-				margin-top: 1rem;
+				grid-gap: 2rem;
+				margin-top: 2rem;
 
 				.col {
 					padding: 1rem;
