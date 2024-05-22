@@ -36,10 +36,16 @@
 
 <main>
 	<div class="wrapper">
+		<div class="filters">
+			<nav class="categories">
+				<span class="active">All</span><span>Compression</span><span>Optimization</span><span
+					>Regularization</span
+				><span>Reinforcement</span>
+			</nav>
+		</div>
+
 		<div class="grid">
 			<div class="trending col">
-				<h3 class="minion">Trending</h3>
-
 				<div class="feed">
 					{#each data.articles as article}
 						<div class="post">
@@ -53,14 +59,12 @@
 				</div>
 			</div>
 			<div class="recent col">
-				<h3 class="minion">Recent</h3>
-
 				<div class="feed">
 					{#each data.articles as article}
 						<div class="post">
 							<small class="date">{article.published_at}</small>
 							<small class="categories">{article.subjects}</small>
-							<h1 class="title">{article.title}</h1>
+							<h2 class="title">{article.title}</h2>
 							<!-- <p class="description">{article.abstract}</p> -->
 							<a href={article.id}>Read More</a>
 						</div>
@@ -122,13 +126,53 @@
 	main {
 		padding: 1rem;
 		.wrapper {
+			.filters {
+				border-bottom: 1px solid #ddd;
+
+				.categories {
+					padding-bottom: 2rem;
+
+					h2 {
+						display: inline-block;
+						font-size: 1.2rem;
+						font-family: 'Open Sans';
+						text-transform: uppercase;
+						margin-right: 2rem;
+					}
+					span {
+						font-family: 'Open Sans';
+						font-size: 1.2rem;
+						font-weight: 500;
+						text-transform: uppercase;
+						text-decoration: none;
+						margin-right: 2rem;
+						color: #aaa;
+
+						&.active,
+						&:hover {
+							color: red;
+							cursor: pointer;
+						}
+					}
+					@media screen and (max-width: 600px) {
+						display: none;
+					}
+				}
+
+				@media screen and (max-width: 600px) {
+					grid-column: auto;
+				}
+			}
 			.grid {
 				display: grid;
 				grid-template-rows: auto auto;
 				grid-template-columns: 2fr 1fr 1fr;
+				grid-gap: 1rem;
+				margin-top: 1rem;
 
 				.col {
 					padding: 1rem;
+					padding-left: 0;
 					border-right: 1px solid #ddd;
 
 					&:last-child {
@@ -156,9 +200,13 @@
 							.categories {
 								display: none;
 							}
-							.title {
+							h1.title {
 								font-family: 'Open Sans';
 								font-size: 2.4rem;
+							}
+							h2.title {
+								font-family: 'Open Sans';
+								font-size: 1.6rem;
 							}
 							.description {
 								font-size: 1.6rem;
