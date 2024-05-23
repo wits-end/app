@@ -10,12 +10,12 @@
 	};
 </script>
 
-<header>
-	<nav>
-		<a href="/">Home</a>
-	</nav>
-	<button on:click={logout}>Logout</button>
-</header>
 <main>
 	<slot />
 </main>
+
+<style lang="scss">
+	main {
+		background: white;
+	}
+</style>

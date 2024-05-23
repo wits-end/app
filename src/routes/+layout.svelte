@@ -4,7 +4,7 @@
 	import { onMount } from 'svelte';
 
 	export let data;
-	$: ({ session, supabase } = data);
+	$: ({ session, supabase, user } = data);
 
 	onMount(() => {
 		const { data } = supabase.auth.onAuthStateChange((_, newSession) => {
@@ -24,15 +24,24 @@
 
 		return () => data.subscription.unsubscribe();
 	});
+
+	$: logout = async () => {
+		const { error } = await supabase.auth.signOut();
+		if (error) {
+			console.error(error);
+		}
+	};
 </script>
 
 <header>
 	<div class="wrapper">
 		<Logo />
 		<nav>
-			<a href="/account">Account</a>
-			<a href="/auth">Sign In</a>
-			<a href="/auth">Register</a>
+			{#if user}
+				<a href="/account">Account</a>
+				<a href="/" on:click={logout}>Logout</a>
+			{/if}
+			<a href="/auth">Login / Register</a>
 		</nav>
 	</div>
 </header>
