@@ -1,4 +1,7 @@
-<script>
+<script lang="ts">
+	export let data;
+	$: ({ articles } = data);
+
 	let tags = [
 		'all',
 		'ensemble',
@@ -30,8 +33,6 @@
 		'segmentation',
 		'theory'
 	];
-
-	export let data;
 </script>
 
 <main>
@@ -51,7 +52,7 @@
 		<div class="grid">
 			<div class="trending col">
 				<div class="feed">
-					{#each data.articles as article}
+					{#each articles as article}
 						<div class="post">
 							<small class="date">{article.published_at}</small>
 							<small class="categories">{article.subjects}</small>
@@ -64,7 +65,7 @@
 			</div>
 			<div class="recent col">
 				<div class="feed">
-					{#each data.articles as article}
+					{#each articles as article}
 						<div class="post">
 							<small class="date">{article.published_at}</small>
 							<small class="categories">{article.subjects}</small>
