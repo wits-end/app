@@ -1,9 +1,11 @@
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ depends, locals: { supabase } }) => {
-    depends('supabase:db:articles');
+export const load: PageServerLoad = async ({ locals: { supabase } }) => {
+    const { data: { user } } = await supabase.auth.getUser()
 
-    const { data: articles } = await supabase.from('articles').select()
+    const { data: profile } = await supabase.from('profiles').select(`id, articles ( id, title )`).eq('id', user.id).single()
 
-    return { articles: articles ?? [] }
+    console.log(profile)
+
+    return { articles: profile.articles ?? [] }
 };

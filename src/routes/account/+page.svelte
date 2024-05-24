@@ -2,7 +2,7 @@
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-	$: ({ articles, supabase, user } = data);
+	$: ({ articles } = data);
 
 	let folders = [
 		{
@@ -37,8 +37,8 @@
 			</h3>
 
 			{#if folder.isExpanded}
-				{#each articles as item}
-					<p>{item.title}</p>
+				{#each articles as article}
+					<p>{article.title}</p>
 				{:else}
 					<p>n/a</p>
 				{/each}
@@ -46,7 +46,7 @@
 		{/each}
 	</div>
 	<div class="col">
-		<h1>{user?.email}</h1>
+		<!-- <h1>{user?.email}</h1> -->
 		<p>
 			Welcome to Dead Neuron and thank you for registering. This is the account homepage. Here you
 			should be able to navigate to all of the pages specific to you.
@@ -82,10 +82,6 @@
 				padding-bottom: 1rem;
 				margin-bottom: 1rem;
 				border-bottom: 1px solid #ddd;
-
-				.rot90 {
-					transform: rotate(90deg);
-				}
 			}
 		}
 	}
