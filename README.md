@@ -39,9 +39,9 @@ You can preview the production build with `npm run preview`.
 
 ## Todo
 
-- [ ] User Auth
+- [x] User Auth
 - [ ] User Dashboard
-- [ ] User Saved Papers List
+- [x] User Saved Papers List
     - [ ] Add papers to user
 - [ ] Home Page
     - [ ] Subject Categories
