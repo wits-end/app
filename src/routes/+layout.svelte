@@ -37,16 +37,20 @@
 	<div class="wrapper">
 		<Logo />
 		<nav>
+			<a href="/">Home</a>
 			{#if user}
 				<a href="/account">Account</a>
 				<a href="/" on:click={logout}>Logout</a>
+			{:else}
+				<a href="/auth">Login / Register</a>
 			{/if}
-			<a href="/auth">Login / Register</a>
 		</nav>
 	</div>
 </header>
 
-<slot></slot>
+<main>
+	<slot></slot>
+</main>
 
 <footer>
 	<div class="wrapper">
@@ -109,6 +113,11 @@
 				}
 			}
 		}
+	}
+
+	main {
+		background: white;
+		padding: 1rem;
 	}
 
 	footer {
