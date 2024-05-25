@@ -3,7 +3,7 @@ import { parse } from 'node-html-parser'
 
 const openai = new OpenAI();
 
-async function main() {
+async function aiAnalysis() {
     const assistant = await openai.beta.assistants.create({
         name: "Financial Analyst Assistant",
         instructions: "You are an expert financial analyst. Use you knowledge base to answer questions about audited financial statements.",
@@ -27,26 +27,15 @@ async function main() {
     });
 
     // Start a thread
-    // A user wants to attach a file to a specific message, let's upload it.
-    const aapl10k = await openai.files.create({
-        file: fs.createReadStream("edgar/aapl-10k.pdf"),
-        purpose: "assistants",
-    });
-
     const thread = await openai.beta.threads.create({
         messages: [
             {
                 role: "user",
                 content:
                     "How many shares of AAPL were outstanding at the end of of October 2023?",
-                // Attach the new file to the message.
-                attachments: [{ file_id: aapl10k.id, tools: [{ type: "file_search" }] }],
             },
         ],
     });
-
-    // The thread now has a vector store in its tool resources.
-    console.log(thread.tool_resources?.file_search);
 
     // Run the thread
     const stream = openai.beta.threads.runs
@@ -79,8 +68,6 @@ async function main() {
     }
 }
 
-main();
-
 export const actions = {
     default: async (event) => {
         console.log("Hello World")
@@ -106,7 +93,7 @@ export const actions = {
             const content = await res.text()
             const dom = parse(content)
             const [id, ver] = parseArxivUrl(abs_url)
-            const pdf_url = `https://arxiv.org/pdf/${id}${ver}`
+            const pdf_url = `https://arxiv.org/pdf/${id}${ver}.pdf`
 
             console.log(pdf_url)
 
@@ -116,7 +103,12 @@ export const actions = {
             const abstract = dom.querySelector('.abstract').text.trim().split("Abstract:")[1]
             const subjects = dom.querySelector('.subjects').text.trim()
 
+            const summary = await aiAnalysis()
+
+
             console.log({ title, authors, abstract, subjects })
+            console.log(summary)
+
         } catch (e) {
             console.log({ e })
         }
