@@ -38,6 +38,7 @@
 		"@supabase/ssr": "^0.3.0",
 		"@supabase/supabase-js": "^2.43.2",
 		"node-html-parser": "^6.1.13",
+		"openai": "^4.47.1",
 		"xml2js": "^0.6.2"
 	}
 }

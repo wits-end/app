@@ -62,6 +62,7 @@ You can preview the production build with `npm run preview`.
 - [ ] OpenAI Sparknotes
     - [ ] Prompt Engineering
     - [ ] PDF RAG
+        - [ ] Experiment in the future with foundational RAG context (e.g. a collection of textbooks on machine learning/math).
     - [ ] Extract Analysis
 - [ ] SAAS
     - [ ] Stripe Integration
