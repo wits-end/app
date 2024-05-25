@@ -1,30 +1,25 @@
 import OpenAI from "openai";
 import { parse } from 'node-html-parser'
-import { OPENAI_KEY, OPENAI_VECTORSTORE_ID } from '$env/static/public'
+import { PRIVATE_OPENAI_KEY, PRIVATE_OPENAI_VECTORSTORE_ID } from '$env/static/private'
 
-const openai = new OpenAI({ apiKey: OPENAI_KEY });
+console.log(PRIVATE_OPENAI_KEY)
+
+const openai = new OpenAI({ apiKey: PRIVATE_OPENAI_KEY });
 
 async function aiAnalysis(pdf_url: string) {
     const assistant = await openai.beta.assistants.create({
-        name: "Financial Analyst Assistant",
+        name: "Machine Learning Research Assistant",
         instructions: "You are an expert financial analyst. Use you knowledge base to answer questions about audited financial statements.",
-        model: "gpt-4o",
+        model: "gpt-3.5-turbo",
         tools: [{ type: "file_search" }],
     });
 
-    // For RAG upload paper pdf here
-    // In the future
-    const fileStreams = [pdf_url].map((path) =>
-        fs.createReadStream(path),
-    );
-
     // Update assistant with vector store
     await openai.beta.assistants.update(assistant.id, {
-        tool_resources: { file_search: { vector_store_ids: [OPENAI_VECTORSTORE_ID] } },
+        tool_resources: { file_search: { vector_store_ids: [PRIVATE_OPENAI_VECTORSTORE_ID] } },
     });
 
-    // Start a thread
-    // A user wants to attach a file to a specific message, let's upload it.
+    // Start a thread and upload the research paper pdf
     const pdf_file = await openai.files.create({
         file: fs.createReadStream(pdf_url),
         purpose: "assistants",
@@ -34,9 +29,7 @@ async function aiAnalysis(pdf_url: string) {
         messages: [
             {
                 role: "user",
-                content:
-                    "How many shares of AAPL were outstanding at the end of of October 2023?",
-                // Attach the new file to the message.
+                content: "How many shares of AAPL were outstanding at the end of of October 2023?",
                 attachments: [{ file_id: pdf_file.id, tools: [{ type: "file_search" }] }],
             },
         ],
