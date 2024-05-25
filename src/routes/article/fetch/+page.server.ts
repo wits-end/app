@@ -1,9 +1,10 @@
 import OpenAI from "openai";
 import { parse } from 'node-html-parser'
+import { OPENAI_KEY, OPENAI_VECTORSTORE_ID } from '$env/static/public'
 
-const openai = new OpenAI();
+const openai = new OpenAI({ apiKey: OPENAI_KEY });
 
-async function aiAnalysis() {
+async function aiAnalysis(pdf_url: string) {
     const assistant = await openai.beta.assistants.create({
         name: "Financial Analyst Assistant",
         instructions: "You are an expert financial analyst. Use you knowledge base to answer questions about audited financial statements.",
@@ -12,27 +13,31 @@ async function aiAnalysis() {
     });
 
     // For RAG upload paper pdf here
-    const fileStreams = ["edgar/goog-10k.pdf", "edgar/brka-10k.txt"].map((path) =>
+    // In the future
+    const fileStreams = [pdf_url].map((path) =>
         fs.createReadStream(path),
     );
 
-    // Create a vector store including our two files.
-    let vectorStore = await openai.beta.vectorStores.create({
-        name: "Financial Statement",
-    });
-
     // Update assistant with vector store
     await openai.beta.assistants.update(assistant.id, {
-        tool_resources: { file_search: { vector_store_ids: [vectorStore.id] } },
+        tool_resources: { file_search: { vector_store_ids: [OPENAI_VECTORSTORE_ID] } },
     });
 
     // Start a thread
+    // A user wants to attach a file to a specific message, let's upload it.
+    const pdf_file = await openai.files.create({
+        file: fs.createReadStream(pdf_url),
+        purpose: "assistants",
+    });
+
     const thread = await openai.beta.threads.create({
         messages: [
             {
                 role: "user",
                 content:
                     "How many shares of AAPL were outstanding at the end of of October 2023?",
+                // Attach the new file to the message.
+                attachments: [{ file_id: pdf_file.id, tools: [{ type: "file_search" }] }],
             },
         ],
     });
@@ -64,8 +69,7 @@ async function aiAnalysis() {
                 console.log(text.value);
                 console.log(citations.join("\n"));
             }
-        }
-    }
+        })
 }
 
 export const actions = {
