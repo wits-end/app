@@ -41,8 +41,12 @@ You can preview the production build with `npm run preview`.
 
 - [x] User Auth
 - [ ] User Dashboard
+- [ ] User Settings
+    - [ ] Subscription Info
+    - [ ] Personal Info
 - [x] User Saved Papers List
     - [ ] Add papers to user
+    - [ ] Add ability to organize papers into folders
 - [ ] Home Page
     - [ ] Subject Categories
     - [ ] Trending Feed
@@ -51,6 +55,8 @@ You can preview the production build with `npm run preview`.
         - [ ] Search
         - [ ] Filter
         - [ ] Keywords
+- [ ] Article Detail
+    - [ ] Comments
 - [ ] Fetch Recent Arxiv Papers
 - [ ] Fetch Single Arxiv Paper
 - [ ] OpenAI Sparknotes

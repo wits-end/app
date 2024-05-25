@@ -57,7 +57,7 @@
 						<small class="categories">{article.subjects}</small>
 						<h1 class="title">{article.title}</h1>
 						<p class="description">{article.abstract.substr(0, 500)}</p>
-						<a href={article.id}>Read More</a>
+						<a href="/article/{article.id}">Read More</a>
 					</div>
 				{/each}
 			</div>
@@ -70,7 +70,7 @@
 						<small class="categories">{article.subjects}</small>
 						<h2 class="title">{article.title}</h2>
 						<!-- <p class="description">{article.abstract}</p> -->
-						<a href={article.id}>Read More</a>
+						<a href="/article/{article.id}">Read More</a>
 					</div>
 				{/each}
 			</div>
