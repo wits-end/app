@@ -7,13 +7,17 @@
 <div class="wrapper">
 	<div class="grid">
 		<div class="col">
+			<p>{article.created_at}</p>
 			<h1>{article.title}</h1>
-			<p>Content</p>
+			<p>{article.authors}</p>
+			<img src="https://arxiv-sanity-lite.com/static/thumb/2405.14873.jpg" />
+			<p>{article.abstract}</p>
+			<h3 class="minion">Key Ideas</h3>
 			<h3 class="minion">Comments</h3>
 			{#if user}
 				<form>
-					<textarea></textarea>
-					<button>Submit</button>
+					<textarea rows="8" cols="80"></textarea>
+					<button>Add Comment</button>
 				</form>
 			{/if}
 		</div>
@@ -48,6 +52,19 @@
 				padding-bottom: 1rem;
 				margin-bottom: 1rem;
 				border-bottom: 1px solid #ddd;
+			}
+
+			form {
+				button {
+					display: block;
+					padding: 1rem 2rem;
+					margin-top: 1rem;
+					background: white;
+					border: 1px solid #aaa;
+				}
+				textarea {
+					border: 1px solid #aaa;
+				}
 			}
 		}
 	}
