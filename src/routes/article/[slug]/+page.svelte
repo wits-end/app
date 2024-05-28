@@ -21,7 +21,7 @@
 				</form>
 			{/if}
 			{#each article.comments as comment}
-				<p>{comment.profile_id}</p>
+				<p>{comment.profile.username}</p>
 				<p>{comment.message}</p>
 			{/each}
 		</div>
