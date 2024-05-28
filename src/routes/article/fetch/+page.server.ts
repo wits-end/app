@@ -1,6 +1,6 @@
 import OpenAI from "openai";
+import fs from 'fs';
 import { parse } from 'node-html-parser'
-import { fs } from 'fs';
 import { PRIVATE_OPENAI_KEY, PRIVATE_OPENAI_VECTORSTORE_ID } from '$env/static/private'
 import { get } from 'https'
 import { Readable } from 'stream'
