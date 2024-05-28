@@ -4,6 +4,7 @@ import https from 'https';
 import { parse } from 'node-html-parser';
 import { PRIVATE_OPENAI_KEY, PRIVATE_OPENAI_VECTORSTORE_ID } from '$env/static/private';
 import { fromPath } from "pdf2pic";
+import { XMLParser, XMLBuilder, XMLValidator } from "fast-xml-parser";
 
 const openai = new OpenAI({ apiKey: PRIVATE_OPENAI_KEY });
 
@@ -85,24 +86,32 @@ export const actions = {
         }
 
         try {
-            const res = await fetch(abs_url)
+            const arxiv_id = "1706.03762"
+            const url = `http://export.arxiv.org/api/query?search_query=id:${arxiv_id}&max_results=1`
+            const res = await fetch(url)
             const content = await res.text()
-            const dom = parse(content)
+
+            const parser = new XMLParser();
+            let data = parser.parse(content);
+
+            console.log(data)
+
+            // const dom = parse(content)
             const [id, ver] = parseArxivUrl(abs_url)
             const pdf_url = `https://arxiv.org/pdf/2202.11782`
 
             console.log(pdf_url)
 
             // Scrape data from raw HTML
-            const title = dom.querySelector('.title').text.trim().split("Title:")[1]
-            const authors = dom.querySelector('.authors').text.trim().split("Authors:")[1]
-            const abstract = dom.querySelector('.abstract').text.trim().split("Abstract:")[1]
-            const subjects = dom.querySelector('.subjects').text.trim()
+            // const title = dom.querySelector('.title').text.trim().split("Title:")[1]
+            // const authors = dom.querySelector('.authors').text.trim().split("Authors:")[1]
+            // const abstract = dom.querySelector('.abstract').text.trim().split("Abstract:")[1]
+            // const subjects = dom.querySelector('.subjects').text.trim()
 
             // const summary = await aiAnalysis(pdf_url, title)
 
 
-            console.log({ title, authors, abstract, subjects })
+            // console.log({ title, authors, abstract, subjects })
             // console.log(summary)
 
         } catch (e) {
