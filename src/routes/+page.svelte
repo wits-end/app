@@ -57,7 +57,7 @@
 						<small class="categories">{article.subjects}</small>
 						<h1 class="title">{article.title}</h1>
 						<img src="https://arxiv-sanity-lite.com/static/thumb/2405.14873.jpg" />
-						<p class="description">{article.abstract.substr(0, 500)}</p>
+						<p class="description">{article.summary.substr(0, 500)}</p>
 						<a href="/article/{article.id}">Read More</a>
 					</div>
 				{/each}

@@ -7,7 +7,7 @@
 <div class="wrapper">
 	<form method="POST">
 		<label>
-			Arxiv ABS URL
+			Arxiv Identifier (e.g. ####.#####)
 			<input name="abs_url" type="text" />
 		</label>
 		<button>Submit</button>

@@ -67,40 +67,33 @@ function getPdfImages() {
 
 export const actions = {
     default: async (event) => {
-        console.log("Hello World")
-
-        const abs_url = 'https://arxiv.org/abs/2202.11782'
-        // const abs_url = 'https://arxiv.org/abs/1706.03762v6'
-
-        // Pull raw id and version from abs urls:
-        // https://arxiv.org/abs/2311.14101
-        // https://arxiv.org/abs/1706.03762v6
-        function parseArxivUrl(abs_url: string): [string, string] {
-            let idx = abs_url.lastIndexOf('/')
-            let slug = abs_url.substring(idx + 1)
-            let data: [string, string] = slug.includes('v')
-                ? [slug.split('v')[0], "v" + slug.split('v')[1]]
-                : [slug, "v1"]
-
-            return data
-        }
-
         try {
-            const arxiv_id = "1706.03762"
-            const url = `http://export.arxiv.org/api/query?search_query=id:${arxiv_id}&max_results=1`
-            const res = await fetch(url)
+            const arxivId = "1706.03762"
+            const apiUrl = `http://export.arxiv.org/api/query?search_query=id:${arxivId}&max_results=1`
+            const res = await fetch(apiUrl)
             const content = await res.text()
 
-            const parser = new XMLParser();
-            let data = parser.parse(content);
+            const parser = new XMLParser({
+                ignoreAttributes: false,
+                attributeNamePrefix: "@_"
+            });
+
+            let { feed: { entry: data } } = parser.parse(content);
 
             console.log(data)
 
-            // const dom = parse(content)
-            const [id, ver] = parseArxivUrl(abs_url)
-            const pdf_url = `https://arxiv.org/pdf/2202.11782`
+            const updated_at = data.updated
+            const published_at = data.published
+            const title = data.title
+            const summary = data.summary.replace(/\n/g, " ")
+            const authors = data.author.map(x => x["name"])
+            const categories = data.category.map(x => x["@_term"])
 
-            console.log(pdf_url)
+            // const dom = parse(content)
+            // const [id, ver] = parseArxivUrl(abs_url)
+            // const pdf_url = `https://arxiv.org/pdf/2202.11782`
+
+            // console.log(pdf_url)
 
             // Scrape data from raw HTML
             // const title = dom.querySelector('.title').text.trim().split("Title:")[1]
@@ -111,7 +104,7 @@ export const actions = {
             // const summary = await aiAnalysis(pdf_url, title)
 
 
-            // console.log({ title, authors, abstract, subjects })
+            console.log({ updated_at, published_at, title, summary, authors, categories })
             // console.log(summary)
 
         } catch (e) {

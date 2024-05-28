@@ -11,7 +11,7 @@
 			<h1>{article.title}</h1>
 			<p>{article.authors}</p>
 			<img src="https://arxiv-sanity-lite.com/static/thumb/2405.14873.jpg" />
-			<p>{article.abstract}</p>
+			<p>{article.summary}</p>
 			<h3 class="minion">Key Ideas</h3>
 			<h3 class="minion">Comments</h3>
 			{#if user}
