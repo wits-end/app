@@ -6,7 +6,7 @@ export const load: PageServerLoad = async ({ locals: { supabase }, params }) => 
     title,
     authors,
     abstract,
-    comments ( id, message, profile:profile_id (username) )
+    comments ( id, message, parent_id, profile:profile_id (username) )
     `).eq('id', params.slug).single()
 
     return { article: article ?? [] }

@@ -7,7 +7,7 @@
 <div class="wrapper">
 	<div class="grid">
 		<div class="col">
-			<p>{article.created_at}</p>
+			<p>{article.published_at}</p>
 			<h1>{article.title}</h1>
 			<p>{article.authors}</p>
 			<img src="https://arxiv-sanity-lite.com/static/thumb/2405.14873.jpg" />
@@ -20,10 +20,12 @@
 					<button>Add Comment</button>
 				</form>
 			{/if}
-			{#each article.comments as comment}
-				<p>{comment.profile.username}</p>
+			<p style="margin-top:1rem;">Comments are currently disabled.</p>
+			<!-- {#each article.comments as comment}
+				<p>{comment.profile.username} | 1 hour ago</p>
 				<p>{comment.message}</p>
-			{/each}
+				<p>Reply</p>
+			{/each} -->
 		</div>
 		<div class="col">
 			<h3 class="minion">Meta</h3>
