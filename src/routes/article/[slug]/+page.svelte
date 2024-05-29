@@ -7,9 +7,7 @@
 <div class="wrapper">
 	<div class="grid">
 		<div class="col">
-			<p>{article.published_at}</p>
 			<h1>{article.title}</h1>
-			<p>{article.authors}</p>
 			<img src="https://arxiv-sanity-lite.com/static/thumb/2405.14873.jpg" />
 			<p>{article.summary}</p>
 			<h3 class="minion">Key Ideas</h3>
@@ -28,7 +26,17 @@
 			{/each} -->
 		</div>
 		<div class="col">
-			<h3 class="minion">Meta</h3>
+			<div class="meta">
+				<h3 class="minion">Meta</h3>
+				<p>Published: {article.published_at}</p>
+				<p>Updated: {article.updated_at}</p>
+				<p>Authors: {article.authors}</p>
+				<p>Categories: {article.categories}</p>
+				<p>Keywords: {article.keywords}</p>
+			</div>
+			<div class="related">
+				<h3 class="minion">Related</h3>
+			</div>
 		</div>
 	</div>
 </div>
