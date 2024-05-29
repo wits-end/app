@@ -51,11 +51,12 @@
 	<div class="grid">
 		<div class="trending col">
 			<div class="feed">
-				{#each articles as article}
+				{#each articles.slice(0, 3) as article}
 					<div class="post">
 						<small class="date">{article.created_at}</small>
 						<small class="categories">{article.subjects}</small>
 						<h1 class="title">{article.title}</h1>
+						<p><small>{article.authors}</small></p>
 						<img src="https://arxiv-sanity-lite.com/static/thumb/2405.14873.jpg" />
 						<p class="description">{article.summary.substr(0, 500)}</p>
 						<a href="/article/{article.id}">Read More</a>
@@ -65,7 +66,7 @@
 		</div>
 		<div class="recent col">
 			<div class="feed">
-				{#each articles as article}
+				{#each articles.slice(3) as article}
 					<div class="post">
 						<small class="date">{article.created_at}</small>
 						<small class="categories">{article.subjects}</small>
