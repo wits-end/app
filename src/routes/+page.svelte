@@ -53,7 +53,7 @@
 			<div class="feed">
 				{#each articles.slice(0, 3) as article}
 					<div class="post">
-						<small class="date">{article.created_at}</small>
+						<small class="date">{new Date(article.created_at).toLocaleDateString()}</small>
 						<small class="categories">{article.subjects}</small>
 						<h1 class="title">{article.title}</h1>
 						<p><small>{article.authors}</small></p>
@@ -68,7 +68,7 @@
 			<div class="feed">
 				{#each articles.slice(3) as article}
 					<div class="post">
-						<small class="date">{article.created_at}</small>
+						<small class="date">{new Date(article.created_at).toLocaleDateString()}</small>
 						<small class="categories">{article.subjects}</small>
 						<h2 class="title">{article.title}</h2>
 						<!-- <p class="description">{article.abstract}</p> -->
