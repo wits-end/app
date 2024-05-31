@@ -3,44 +3,13 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import dayjs from 'dayjs';
 	import relativeTime from 'dayjs/plugin/relativeTime.js';
+	import Tags from '$lib/tags.svelte';
 
 	dayjs.extend(relativeTime);
 
 	export let data;
 
 	$: ({ articles, savedArticleIds, user, supabase } = data);
-
-	let tags = [
-		'all',
-		'ensemble',
-		'optimization',
-		'pruning',
-		'distillation',
-		'diffusion',
-		'generative',
-		'tuning',
-		'reinforcement',
-		'unsupervised',
-		'supervised',
-		'classification',
-		'regression',
-		'regularization',
-		'evolution',
-		'sparsity',
-		'latent',
-		'quantization',
-		'augmentation',
-		'federated',
-		'transfer',
-		'attention',
-		'bayesian',
-		'interpretability',
-		'clustering',
-		'embedding',
-		'efficient',
-		'segmentation',
-		'theory'
-	];
 
 	let loading = false;
 
@@ -187,12 +156,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="tags">
-				<h3 class="minion">Tags</h3>
-				{#each tags as tag}
-					<span class="tag">{tag}</span>
-				{/each}
-			</div>
+			<Tags />
 		</div>
 	</div>
 </div>
@@ -250,17 +214,6 @@
 
 				&:last-child {
 					border-right: none;
-				}
-
-				.minion {
-					font-family: 'Open Sans';
-					text-transform: uppercase;
-					font-size: 1.4rem;
-					line-height: 1.4rem;
-					color: #666;
-					padding-bottom: 1rem;
-					margin-bottom: 1rem;
-					border-bottom: 1px solid #ddd;
 				}
 
 				.feed {
@@ -405,28 +358,6 @@
 									cursor: pointer;
 								}
 							}
-						}
-					}
-				}
-
-				.tags {
-					padding: 2rem 0;
-
-					span {
-						font-family: 'Open Sans';
-						font-size: 1.2rem;
-						font-weight: 500;
-						text-transform: uppercase;
-						text-decoration: none;
-						margin-bottom: 0.2rem;
-						margin-right: 0.5rem;
-						color: #aaa;
-						display: inline-block;
-
-						&.active,
-						&:hover {
-							color: red;
-							cursor: pointer;
 						}
 					}
 				}
