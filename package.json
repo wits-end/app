@@ -37,6 +37,7 @@
 		"@supabase/auth-ui-svelte": "^0.2.9",
 		"@supabase/ssr": "^0.3.0",
 		"@supabase/supabase-js": "^2.43.2",
+		"dayjs": "^1.11.11",
 		"fast-xml-parser": "^4.4.0",
 		"node-html-parser": "^6.1.13",
 		"openai": "^4.47.1",
