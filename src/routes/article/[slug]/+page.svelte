@@ -68,6 +68,13 @@
 				border-bottom: 1px solid #ddd;
 			}
 
+			.meta {
+				margin-bottom: 2rem;
+				p {
+					margin-bottom: 0;
+				}
+			}
+
 			form {
 				button {
 					display: block;

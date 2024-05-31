@@ -1,6 +1,10 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
+	import type { SubmitFunction } from '@sveltejs/kit';
+
 	export let data;
-	$: ({ articles } = data);
+
+	$: ({ articles, savedArticleIds, user, supabase } = data);
 
 	let tags = [
 		'all',
@@ -33,6 +37,18 @@
 		'segmentation',
 		'theory'
 	];
+
+	let loading = false;
+
+	const handleSubmit: SubmitFunction = (articleId) => {
+		if (savedArticleIds.includes(articleId)) {
+			savedArticleIds.splice(savedArticleIds.indexOf(articleId), 1);
+		} else {
+			savedArticleIds.push(articleId);
+		}
+
+		savedArticleIds = savedArticleIds;
+	};
 </script>
 
 <div class="wrapper">
@@ -55,11 +71,34 @@
 					<div class="post">
 						<small class="date">{new Date(article.created_at).toLocaleDateString()}</small>
 						<small class="categories">{article.subjects}</small>
-						<h1 class="title">{article.title}</h1>
+						<h1 class="title"><a href="/article/{article.id}">{article.title}</a></h1>
 						<p><small>{article.authors}</small></p>
 						<img src="https://arxiv-sanity-lite.com/static/thumb/2405.14873.jpg" />
 						<p class="description">{article.summary.substr(0, 500)}</p>
-						<a href="/article/{article.id}">Read More</a>
+						<div class="actions">
+							<a href="/article/{article.id}">0 comments</a>
+							{#if user}
+								{#if savedArticleIds?.includes(article.id)}
+									<form
+										method="post"
+										action="?/unsaveArticle"
+										use:enhance={() => handleSubmit(article.id)}
+									>
+										<input type="hidden" name="articleId" value={article.id} />
+										<button>unsave</button>
+									</form>
+								{:else}
+									<form
+										method="post"
+										action="?/saveArticle"
+										use:enhance={() => handleSubmit(article.id)}
+									>
+										<input type="hidden" name="articleId" value={article.id} />
+										<button>save</button>
+									</form>
+								{/if}
+							{/if}
+						</div>
 					</div>
 				{/each}
 			</div>
@@ -206,6 +245,15 @@
 						h1.title {
 							font-family: 'Open Sans';
 							font-size: 2.4rem;
+
+							a {
+								color: black;
+								text-decoration: none;
+
+								&:hover {
+									color: red;
+								}
+							}
 						}
 						h2.title {
 							font-family: 'Open Sans';
@@ -213,6 +261,15 @@
 						}
 						.description {
 							font-size: 1.6rem;
+						}
+
+						.actions {
+							button {
+								background: none;
+								border: none;
+								color: red;
+								text-decoration: underline;
+							}
 						}
 						&:last-child {
 							border: none;
