@@ -4,7 +4,7 @@
 	import dayjs from 'dayjs';
 	import relativeTime from 'dayjs/plugin/relativeTime.js';
 	import FeedVerbose from '$lib/feedVerbose.svelte';
-	import FeedCondensed from '$lib/feedCondensed.svelte'
+	import FeedCondensed from '$lib/feedCondensed.svelte';
 	import Search from '$lib/search.svelte';
 	import Sort from '$lib/sort.svelte';
 	import Tags from '$lib/tags.svelte';
@@ -13,7 +13,21 @@
 
 	export let data;
 
-	// $: ({ articles, savedArticleIds, user, supabase } = data);
+	// $: ({ articles, profile, user } = data);
+
+	let savedArticleIds = data.profile?.articles.map((x) => x.id);
+
+	let featuredFeedData = {
+		articles: data.articles.slice(0, 3),
+		savedArticleIds: savedArticleIds,
+		user: data.user
+	};
+
+	let condensedFeedData = {
+		articles: data.articles.slice(3),
+		savedArticleIds: savedArticleIds,
+		user: data.user
+	};
 </script>
 
 <div class="wrapper">
@@ -31,10 +45,10 @@
 
 	<div class="grid">
 		<div class="trending col">
-			<FeedVerbose data={data} />
+			<FeedVerbose data={featuredFeedData} />
 		</div>
 		<div class="recent col">
-			<FeedCondensed data={data} />
+			<FeedCondensed data={condensedFeedData} />
 		</div>
 		<div class="tools col">
 			<Search />
@@ -98,7 +112,6 @@
 				&:last-child {
 					border-right: none;
 				}
-
 
 				&.recent {
 					.feed {

@@ -60,9 +60,6 @@ export const load: PageServerLoad = async ({ locals: { supabase, safeGetSession 
 
   const { data: articles } = await supabase.from('articles').select()
   const { data: profile } = await supabase.from('profiles').select(`id, articles ( id, title )`).eq('id', session?.user.id).single()
-  const savedArticleIds = profile?.articles.map((x) => x.id)
 
-  console.log(savedArticleIds)
-
-  return { articles: articles ?? [], savedArticleIds: savedArticleIds ?? [] }
+  return { articles: articles ?? [], profile: profile }
 }

@@ -1,8 +1,9 @@
 <script lang="ts">
 	import type { PageData } from './$types';
+	import FeedCondensed from '$lib/feedCondensed.svelte';
 
 	export let data: PageData;
-	$: ({ articles } = data);
+	// $: ({ articles } = data);
 
 	let folders = [
 		{
@@ -37,11 +38,12 @@
 			</h3>
 
 			{#if folder.isExpanded}
-				{#each articles as article}
+				<FeedCondensed {data} />
+				<!-- {#each articles as article}
 					<p>{article.title}</p>
 				{:else}
 					<p>n/a</p>
-				{/each}
+				{/each} -->
 			{/if}
 		{/each}
 	</div>
@@ -58,7 +60,7 @@
 	.grid {
 		display: grid;
 		grid-template-rows: auto auto;
-		grid-template-columns: 1fr 4fr;
+		grid-template-columns: 1fr 3fr;
 		grid-gap: 2rem;
 		margin-top: 2rem;
 

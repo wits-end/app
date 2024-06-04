@@ -7,7 +7,9 @@
 	dayjs.extend(relativeTime);
 
 	export let data;
-	$: ({ articles, savedArticleIds, user, supabase } = data);
+	$: ({ articles, savedArticleIds, user } = data);
+
+	console.log(data);
 
 	const handleSubmit: SubmitFunction = (articleId) => {
 		if (savedArticleIds.includes(articleId)) {
@@ -21,7 +23,7 @@
 </script>
 
 <div class="feed">
-	{#each articles.slice(3) as article}
+	{#each articles as article}
 		<div class="post">
 			<p class="published-date">
 				{dayjs(article.created_at).format('YYYY-MM-DD')}
