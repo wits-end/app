@@ -2,150 +2,84 @@
 	<a class="glitch" href="/">
 		{#each { length: 6 } as _, i}
 			<svg
+				xmlns:dc="http://purl.org/dc/elements/1.1/"
+				xmlns:cc="http://creativecommons.org/ns#"
+				xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+				xmlns:svg="http://www.w3.org/2000/svg"
 				xmlns="http://www.w3.org/2000/svg"
-				id="svg8"
 				class="glitch__img"
+				id="svg8"
 				version="1.1"
-				viewBox="0 0 50.096542 7.5792999"
-				height="7.5792999mm"
-				width="50.096542mm"
+				viewBox="0 0 77.965294 17.597315"
+				height="17.597315mm"
+				width="77.965294mm"
 			>
 				<defs id="defs2" />
-				<g transform="translate(-18.06971,-126.85656)" id="layer1">
+				<metadata id="metadata5">
+					<rdf:RDF>
+						<cc:Work rdf:about="">
+							<dc:format>image/svg+xml</dc:format>
+							<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+							<dc:title></dc:title>
+						</cc:Work>
+					</rdf:RDF>
+				</metadata>
+				<g transform="translate(-48.112536,-100.52205)" id="layer1">
 					<g
-						id="text821"
-						style="
-            font-style: normal;
-            font-variant: normal;
-            font-weight: normal;
-            font-stretch: normal;
-            font-size: 11.28888893px;
-            line-height: 0.25;
-            font-family: Bembo;
-            -inkscape-font-specification: Bembo;
-            letter-spacing: 0px;
-            word-spacing: 0px;
-            stroke-width: 0.26458332;
-          "
-						aria-label="Dead Neuron"
+						id="text817"
+						style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93888855px;line-height:0.25;font-family:'Times New Roman Cyr';-inkscape-font-specification:'Times New Roman Cyr';letter-spacing:0px;word-spacing:0px;stroke-width:0.26458332"
+						aria-label="Wits End"
 					>
 						<path
-							id="path825"
-							style="
-              font-style: normal;
-              font-variant: normal;
-              font-weight: normal;
-              font-stretch: normal;
-              font-family: Willow;
-              -inkscape-font-specification: Willow;
-              stroke-width: 0.26458332;
-            "
-							d="m 22.104606,130.70964 q 0,1.5875 -0.628386,2.54661 -0.738628,1.13 -2.237934,1.13 0.0441,0 -0.600825,0.022 -0.391362,0.0165 -0.567751,-0.022 v -7.38078 q 0,-0.11575 0.08819,-0.11575 0.12678,0 0.35829,-0.006 0.209462,-0.006 0.35829,-0.006 3.230122,0 3.230122,3.83095 z m -0.948091,-0.011 q 0,-1.11346 -0.407899,-1.94579 -0.518142,-1.06385 -1.515842,-1.06385 l -0.214974,0.006 v 5.79327 h 0.286632 q 0.94809,0 1.449696,-0.97013 0.402387,-0.77722 0.402387,-1.81901 z"
+							id="path848"
+							style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25.39999962px;font-family:'American Horror Story';-inkscape-font-specification:'American Horror Story';stroke-width:0.26458332"
+							d="m 57.053336,108.25635 1.9558,-7.4676 h -2.0066 l -0.9398,4.2418 -0.9398,-4.2418 h -2.159 l 2.0574,7.7724 -1.3716,5.3594 -3.3782,-13.1318 h -2.159 l 4.4704,16.9418 h 1.9558 l 1.4478,-6.1976 1.4478,6.1976 h 1.9558 l 4.4704,-16.9418 h -2.0066 l -3.3528,13.1318 z"
 						/>
 						<path
-							id="path827"
-							style="
-              font-style: normal;
-              font-variant: normal;
-              font-weight: normal;
-              font-stretch: normal;
-              font-family: 'American Horror Story';
-              -inkscape-font-specification: 'American Horror Story';
-            "
-							d="m 27.47406,131.81238 0.124177,-0.49671 h 1.444978 l 0.124178,0.49671 z m 1.851377,0.62089 0.485423,1.95298 h 0.959555 l -1.964266,-7.52969 h -0.959556 l -1.749778,6.7056 h -1.851378 v -4.48169 h 2.630312 v -0.82409 h -2.630312 v -0.57573 h 2.144889 v -0.82409 h -3.059289 v 7.52969 h 4.459112 v -0.82409 h -0.756356 l 0.282222,-1.12889 z m -0.428977,-1.73849 h -1.151467 l 0.575733,-2.29165 z"
+							id="path850"
+							style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25.39999962px;font-family:'American Horror Story';-inkscape-font-specification:'American Horror Story';stroke-width:0.26458332"
+							d="m 64.437591,101.77935 v -1.016 h 1.9812 1.9812 v 1.016 0.9906 h -0.4826 -0.508 v 6.477 6.4516 h 0.508 0.4826 v 1.016 0.9906 h -1.9812 -1.9812 v -0.9906 -1.016 h 0.4826 0.508 v -6.4516 -6.477 h -0.508 -0.4826 z"
 						/>
 						<path
-							id="path829"
-							style="
-              font-style: normal;
-              font-variant: normal;
-              font-weight: normal;
-              font-stretch: normal;
-              font-family: Willow;
-              -inkscape-font-specification: Willow;
-              stroke-width: 0.26458332;
-            "
-							d="m 35.267627,130.70964 q 0,1.5875 -0.628386,2.54661 -0.738628,1.13 -2.237934,1.13 0.0441,0 -0.600824,0.022 -0.391363,0.0165 -0.567752,-0.022 v -7.38078 q 0,-0.11575 0.08819,-0.11575 0.12678,0 0.35829,-0.006 0.209462,-0.006 0.35829,-0.006 3.230122,0 3.230122,3.83095 z m -0.948091,-0.011 q 0,-1.11346 -0.407899,-1.94579 -0.518142,-1.06385 -1.515842,-1.06385 l -0.214974,0.006 v 5.79327 h 0.286632 q 0.94809,0 1.449696,-0.97013 0.402387,-0.77722 0.402387,-1.81901 z"
+							id="path852"
+							style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25.39999962px;font-family:'American Horror Story';-inkscape-font-specification:'American Horror Story';stroke-width:0.26458332"
+							d="m 75.576682,102.64295 h 4.064 v -1.8542 h -10.1854 v 1.8542 h 4.064 v 15.0876 h 2.0574 z"
 						/>
 						<path
-							id="path831"
-							style="
-              font-style: normal;
-              font-variant: normal;
-              font-weight: normal;
-              font-stretch: normal;
-              font-family: Willow;
-              -inkscape-font-specification: Willow;
-              stroke-width: 0.26458332;
-            "
-							d="m 43.613025,134.19883 q 0.05512,0.18742 -0.121267,0.18742 -0.12678,0 -0.374827,0.006 -0.242535,0.011 -0.35829,0.011 -0.04961,-0.0386 -0.09922,-0.0827 0,0.006 0,-0.17088 v -3.71519 q 0.01102,-0.0882 -0.440973,-0.48507 l -1.670182,-1.45521 q -0.143316,-0.11575 -0.402387,-0.33072 -0.09371,-0.0276 -0.09371,0.0827 l -0.0055,5.93659 q 0,0.20395 -0.143316,0.20395 h -0.683507 q -0.104731,0 -0.115755,-0.0331 0,0 0,-0.12126 0,-1.16307 0.01102,-3.55534 0.01654,-2.39228 0.01654,-3.55534 0,-0.24254 0.09922,-0.24254 0.09371,0 0.28112,0.006 0.192926,0.006 0.292144,0.006 0.181901,0 0.253559,0.0551 0.115756,0.0882 1.361502,1.20165 1.141016,1.01975 1.185113,1.01423 0.05512,0.011 0.06063,-0.0717 0,-0.0331 -0.0055,-0.0827 v -1.92374 q -0.01102,-0.1378 0.01654,-0.16536 0.02756,-0.0276 0.159852,-0.0276 0.03307,0 0.248047,0 0.214974,0.006 0.248047,0.006 0.259071,0 0.259071,0.0827 z"
+							id="path854"
+							style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25.39999962px;font-family:'American Horror Story';-inkscape-font-specification:'American Horror Story';stroke-width:0.26458332"
+							d="m 82.902995,100.63635 q 0.4826,-0.1524 1.3716,-0.1016 0.9144,0.0508 1.1938,0.254 0.0762,0.0762 0,0.381 -0.0508,0.2794 -0.3556,1.4478 l -0.0508,0.254 -0.2032,-0.127 q -0.4064,-0.3048 -0.9652,-0.3048 -0.5334,-0.0254 -0.6858,0.254 -0.127,0.2794 0.2286,0.6858 0.3556,0.4064 1.3716,1.1938 1.9812,1.4986 2.921,2.9464 0.9398,1.4224 1.143,3.2004 0.1016,1.016 -0.1016,2.159 -0.2032,1.1176 -0.6604,2.032 -0.3302,0.6604 -0.8636,1.27 -0.5334,0.6096 -1.1938,1.0668 -0.635,0.4318 -1.27,0.635 -0.889,0.2794 -1.9812,0.2286 -1.0922,-0.0254 -2.0574,-0.381 -0.3302,-0.1016 -0.7366,-0.3048 -0.4064,-0.2286 -0.508,-0.3556 -0.0508,-0.0762 0.4064,-0.9144 0.4572,-0.8382 0.4826,-0.889 0.0508,-0.0254 0.254,0.127 0.508,0.381 1.4732,0.5842 0.9652,0.1778 1.651,0 1.7526,-0.4064 2.5654,-2.1336 0.4318,-0.9144 0.4826,-1.9304 0.0762,-1.8288 -0.762,-3.2004 -0.4064,-0.635 -0.889,-1.1176 -0.4826,-0.4826 -1.5494,-1.3462 -1.397,-1.0922 -1.7272,-1.4986 -0.9398,-1.0414 -0.8128,-2.159 0.1016,-0.7874 0.6096,-1.27 0.508,-0.4572 1.2192,-0.6858 z"
 						/>
 						<path
-							id="path833"
-							style="
-              font-style: normal;
-              font-variant: normal;
-              font-weight: normal;
-              font-stretch: normal;
-              font-family: Willow;
-              -inkscape-font-specification: Willow;
-              stroke-width: 0.26458332;
-            "
-							d="m 47.51563,128.93473 h -1.918229 l -0.01102,0.0276 q 0.01654,0.0386 0.01654,4.63572 h 1.752864 q 0.06615,0.12678 0.06063,0.39687 -0.01102,0.28663 -0.09922,0.38585 h -2.524566 q -0.07166,0 -0.07166,-0.0937 v -7.34219 q 0.05512,-0.0496 0.12678,-0.0496 h 1.852083 v 0.7276 h -1.096918 q -0.0055,0.34727 0,0.53468 l 1.885156,-0.011 q 0.0055,0 0.02756,0.011 z"
+							id="path856"
+							style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25.39999962px;font-family:'American Horror Story';-inkscape-font-specification:'American Horror Story';stroke-width:0.26458332"
+							d="m 97.013883,109.27235 v -8.4836 h 2.1844 2.184397 v 1.016 0.9906 h -1.143 -1.142997 v 0.762 0.762 h 1.803397 1.8288 v 0.9906 1.016 h -1.8288 -1.803397 v 4.699 4.699 h 2.108197 2.1336 v 1.016 0.9906 h -3.1496 -3.174997 z"
 						/>
 						<path
-							id="path835"
-							style="
-              font-style: normal;
-              font-variant: normal;
-              font-weight: normal;
-              font-stretch: normal;
-              font-family: Willow;
-              -inkscape-font-specification: Willow;
-              stroke-width: 0.26458332;
-            "
-							d="m 52.741151,132.06012 q -0.01102,0.99218 -0.518142,1.64813 -0.567752,0.72761 -1.548915,0.72761 -1.174089,0 -1.769401,-0.70556 -0.523655,-0.61736 -0.529167,-1.67018 l -0.01102,-4.49241 q 0,-0.56775 0.06615,-0.62838 0.06615,-0.0661 0.650434,-0.0661 0.198437,0 0.198437,0.19293 v 3.10334 q 0,0.59531 0.07166,1.89067 0.03858,0.71106 0.225999,1.02526 0.275607,0.46302 0.986675,0.46302 1.317404,0 1.300868,-1.48828 l -0.03858,-4.98299 q 0,-0.19844 0.165364,-0.19844 0.501606,0 0.451997,-0.006 0.28112,0.0331 0.28112,0.23151 0,0.54571 0.01654,2.4474 0.01102,1.51584 0,2.50803 z"
+							id="path858"
+							style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25.39999962px;font-family:'American Horror Story';-inkscape-font-specification:'American Horror Story';stroke-width:0.26458332"
+							d="m 107.41876,104.67495 5.4356,7.8994 v 5.1562 h 1.9812 v -16.9418 h -1.9812 v 8.2042 l -5.6896,-8.2042 h -1.7272 v 16.9418 h 1.9812 z"
 						/>
 						<path
-							id="path837"
-							style="
-              font-style: normal;
-              font-variant: normal;
-              font-weight: normal;
-              font-stretch: normal;
-              font-family: Willow;
-              -inkscape-font-specification: Willow;
-              stroke-width: 0.26458332;
-            "
-							d="m 58.021794,134.29254 q -0.02205,0.0827 -0.115755,0.10473 -0.06615,0.0165 -0.181901,0.011 -0.176389,-0.0165 -0.170877,-0.0165 -0.04961,0 -0.143316,0.011 -0.08819,0.0165 -0.137804,0.0165 -0.253559,0 -0.253559,-0.25356 0,-0.38585 -1.091406,-4.20577 -0.479558,0.17639 -1.146528,0.23702 l 0.0055,4.07348 q 0,0.11576 -0.159852,0.11576 H 53.99241 q -0.159852,0 -0.159852,-0.23151 l -0.01102,-7.028 q 0,-0.25356 0.192926,-0.25356 0.418923,0 1.256771,0.011 0.837847,0.006 1.25677,0.006 0.490582,0 0.79375,0.33073 0.286632,0.3197 0.286632,0.8158 0,0.9095 -0.981163,1.49379 0.242535,0.93707 0.683507,2.38676 0.595313,1.97886 0.711068,2.37574 z m -1.322917,-6.1681 q 0,-0.42995 -1.207161,-0.42444 l -0.711068,0.006 q 0,0.0496 -0.01102,0.20946 -0.0055,0.13229 -0.0055,0.20946 0,0.16536 0.01654,1.14653 h 0.05512 q 0.507119,0.006 1.141016,-0.31971 0.722092,-0.36931 0.722092,-0.82682 z"
-						/>
-						<path
-							id="path839"
-							style="
-              font-style: normal;
-              font-variant: normal;
-              font-weight: normal;
-              font-stretch: normal;
-              font-family: Willow;
-              -inkscape-font-specification: Willow;
-              stroke-width: 0.26458332;
-            "
-							d="m 62.806342,129.39224 q 0,0.93155 -0.683507,1.5875 -0.683507,0.65043 -1.615061,0.65043 -0.848871,0 -1.493793,-0.66697 -0.644922,-0.66697 -0.644922,-1.52136 0,-1.05282 0.551215,-1.75837 0.600825,-0.76619 1.626085,-0.76619 h 0.192926 q 0.931553,0 1.526866,0.78824 0.540191,0.72209 0.540191,1.68672 z m -1.648134,3.12539 q 0,0.25355 -0.02205,0.32521 -0.04961,0.16537 -0.225999,0.16537 h -0.507118 q -0.198437,0 -0.242534,-0.17088 -0.01654,-0.0606 -0.01654,-0.34726 0,-0.50712 0.259071,-0.47956 0.209462,0.022 0.507118,-0.006 0.248047,0 0.248047,0.51263 z m 0.01654,1.35599 q 0,0.25355 -0.02205,0.32521 -0.04961,0.16537 -0.23151,0.16537 H 60.41407 q -0.192926,0 -0.242535,-0.17088 -0.01102,-0.0551 -0.01102,-0.34727 0,-0.50711 0.253559,-0.47955 0.214974,0.0221 0.507118,-0.006 0.253559,0 0.253559,0.51263 z m 0.766189,-4.71841 q 0,-0.60633 -0.330729,-1.00872 -0.35829,-0.43546 -0.953603,-0.43546 -0.689019,0 -1.052821,0.47404 -0.330729,0.42995 -0.330729,1.14102 0,0.5457 0.374826,0.97014 0.380339,0.42443 0.92053,0.42443 0.617361,0 1.008724,-0.48507 0.363802,-0.44648 0.363802,-1.08038 z"
-						/>
-						<path
-							id="path841"
-							style="
-              font-style: normal;
-              font-variant: normal;
-              font-weight: normal;
-              font-stretch: normal;
-              font-family: Willow;
-              -inkscape-font-specification: Willow;
-              stroke-width: 0.26458332;
-            "
-							d="m 68.153129,134.19883 q 0.05512,0.18742 -0.121267,0.18742 -0.12678,0 -0.374827,0.006 -0.242535,0.011 -0.35829,0.011 -0.04961,-0.0386 -0.09922,-0.0827 0,0.006 0,-0.17088 v -3.71519 q 0.01102,-0.0882 -0.440972,-0.48507 l -1.670182,-1.45521 q -0.143316,-0.11575 -0.402387,-0.33072 -0.09371,-0.0276 -0.09371,0.0827 l -0.0055,5.93659 q 0,0.20395 -0.143316,0.20395 h -0.683507 q -0.104731,0 -0.115755,-0.0331 0,0 0,-0.12126 0,-1.16307 0.01102,-3.55534 0.01654,-2.39228 0.01654,-3.55534 0,-0.24254 0.09922,-0.24254 0.09371,0 0.28112,0.006 0.192926,0.006 0.292144,0.006 0.181901,0 0.253559,0.0551 0.115756,0.0882 1.361502,1.20165 1.141016,1.01975 1.185113,1.01423 0.05512,0.011 0.06063,-0.0717 0,-0.0331 -0.0055,-0.0827 v -1.92374 q -0.01102,-0.1378 0.01654,-0.16536 0.02756,-0.0276 0.159852,-0.0276 0.03307,0 0.248047,0 0.214974,0.006 0.248047,0.006 0.259071,0 0.259071,0.0827 z"
+							id="path860"
+							style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25.39999962px;font-family:'American Horror Story';-inkscape-font-specification:'American Horror Story';stroke-width:0.26458332"
+							d="m 119.06743,102.84615 v 12.9032 q 2.413,-0.3048 3.7338,-2.6416 1.3462,-2.3622 1.3462,-5.2832 0,-2.3622 -1.2192,-3.6576 -1.2192,-1.3208 -3.8608,-1.3208 z m 6.604,1.9304 q 0.2032,0.4318 0.3048,1.1938 0.1016,0.7366 0.1016,1.5748 0,1.1176 -0.1778,2.2606 -0.1524,1.1176 -0.5588,2.413 -0.4064,1.2954 -1.7018,2.794 -1.2954,1.4986 -3.175,2.1844 l -1.4986,0.3302 q -0.9144,0.2032 -1.4478,0.2032 -0.2286,0 -0.2286,-0.0508 v -16.8656 q 2.1336,0 3.6068,0.2286 1.4732,0.2286 2.7432,1.0922 1.2954,0.8382 2.032,2.6416 z"
 						/>
 					</g>
+					<flowRoot
+						style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.66666603px;line-height:0.25;font-family:'Times New Roman Cyr';-inkscape-font-specification:'Times New Roman Cyr';letter-spacing:0px;word-spacing:0px"
+						id="flowRoot838"
+						xml:space="preserve"
+						><flowRegion id="flowRegion840"
+							><rect
+								y="380.2446"
+								x="314.86829"
+								height="40.705406"
+								width="10.774961"
+								id="rect842"
+							/></flowRegion
+						><flowPara id="flowPara844"></flowPara></flowRoot
+					>
 				</g>
 			</svg>
 		{/each}
@@ -156,7 +90,7 @@
 	.glitch {
 		position: relative;
 		height: 3rem;
-		width: 15rem;
+		width: 11rem;
 		margin: 0 auto;
 		display: block;
 	}

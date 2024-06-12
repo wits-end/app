@@ -1,21 +1,19 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
-	import type { SubmitFunction } from '@sveltejs/kit';
-	import dayjs from 'dayjs';
-	import relativeTime from 'dayjs/plugin/relativeTime.js';
 	import FeedVerbose from '$lib/feedVerbose.svelte';
 	import FeedCondensed from '$lib/feedCondensed.svelte';
 	import Search from '$lib/search.svelte';
 	import Sort from '$lib/sort.svelte';
 	import Tags from '$lib/tags.svelte';
 
-	dayjs.extend(relativeTime);
-
 	export let data;
 
 	// $: ({ articles, profile, user } = data);
 
-	let savedArticleIds = data.profile?.articles.map((x) => x.id);
+	let savedArticleIds = [];
+
+	if (data.profile?.articles) {
+		savedArticleIds = data.profile.articles.map((x) => x.id);
+	}
 
 	let featuredFeedData = {
 		articles: data.articles.slice(0, 3),

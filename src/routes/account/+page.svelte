@@ -10,16 +10,6 @@
 			label: 'Saved Articles',
 			isExpanded: true,
 			children: []
-		},
-		{
-			label: 'CV',
-			isExpanded: false,
-			children: []
-		},
-		{
-			label: 'NLP',
-			isExpanded: false,
-			children: []
 		}
 	];
 
@@ -39,18 +29,13 @@
 
 			{#if folder.isExpanded}
 				<FeedCondensed {data} />
-				<!-- {#each articles as article}
-					<p>{article.title}</p>
-				{:else}
-					<p>n/a</p>
-				{/each} -->
 			{/if}
 		{/each}
 	</div>
 	<div class="col">
 		<!-- <h1>{user?.email}</h1> -->
 		<p>
-			Welcome to Dead Neuron and thank you for registering. This is the account homepage. Here you
+			Welcome to Wits End and thank you for registering. This is the account homepage. Here you
 			should be able to navigate to all of the pages specific to you.
 		</p>
 	</div>

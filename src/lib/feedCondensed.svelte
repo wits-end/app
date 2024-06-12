@@ -9,8 +9,6 @@
 	export let data;
 	$: ({ articles, savedArticleIds, user } = data);
 
-	console.log(data);
-
 	const handleSubmit: SubmitFunction = (articleId) => {
 		if (savedArticleIds.includes(articleId)) {
 			savedArticleIds.splice(savedArticleIds.indexOf(articleId), 1);

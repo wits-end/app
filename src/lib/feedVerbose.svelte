@@ -29,11 +29,13 @@
 			<small class="categories">{article.subjects}</small>
 			<h1 class="title"><a href="/article/{article.id}">{article.title}</a></h1>
 			<p class="authors">{article.authors}</p>
-			<img src="https://arxiv-sanity-lite.com/static/thumb/2405.14873.jpg" />
-			<p class="description">{article.summary.substr(0, 500)}...</p>
+			<img src={article.thumb_url} alt="PDF Thumbnail" />
+			<p class="description">{article.abstract.substr(0, 500)}...</p>
 			<div class="actions">
 				<p class="date">updated {dayjs().to(dayjs(article.updated_at))}</p>
-				<a class="read-more" href="/article/{article.id}">read more</a>
+				<a class="read-more" href="/article/{article.id}"
+					>{Math.floor(Math.random() * 3 + 1)} comments</a
+				>
 				{#if user}
 					{#if savedArticleIds?.includes(article.id)}
 						<form

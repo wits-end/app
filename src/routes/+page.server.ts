@@ -14,6 +14,8 @@ export const actions: Actions = {
       .from('profiles_articles')
       .insert({ profile_id: profileId, article_id: articleId });
 
+    console.log(error)
+
     if (error) {
       return fail(500, {
         articleId,
@@ -58,7 +60,7 @@ export const actions: Actions = {
 export const load: PageServerLoad = async ({ locals: { supabase, safeGetSession } }) => {
   const { session } = await safeGetSession()
 
-  const { data: articles } = await supabase.from('articles').select()
+  const { data: articles } = await supabase.from('articles').select().order('created_at', { ascending: false })
   const { data: profile } = await supabase.from('profiles').select(`id, articles ( id, title )`).eq('id', session?.user.id).single()
 
   return { articles: articles ?? [], profile: profile }

@@ -1,4 +1,4 @@
-# create-svelte
+# Wits End
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
 
@@ -50,19 +50,22 @@ You can preview the production build with `npm run preview`.
 - [ ] Home Page
     - [ ] Subject Categories
     - [ ] Trending Feed
-    - [ ] Recent Feed
+    - [x] Recent Feed
     - [ ] Sidebar Functionality
         - [ ] Search
         - [ ] Filter
         - [ ] Keywords
-- [ ] Article Detail
+- [x] Article Detail
     - [ ] Comments
-- [ ] Fetch Recent Arxiv Papers
-- [ ] Fetch Single Arxiv Paper
-- [ ] OpenAI Sparknotes
-    - [ ] Prompt Engineering
-    - [ ] PDF RAG
-        - [ ] Experiment in the future with foundational RAG context (e.g. a collection of textbooks on machine learning/math).
-    - [ ] Extract Analysis
+- [x] Fetch Recent Arxiv Papers
+- [x] Fetch Single Arxiv Paper
+    - [x] Arxiv API
+    - [x] PDF image thumbnails
+- [x] OpenAI Sparknotes
+    - [x] Prompt Engineering
+    - [x] PDF RAG
+        - [x] Experiment in the future with foundational RAG context (e.g. a collection of textbooks on machine learning/math).
+    - [x] Extract Keywords
+    - [x] Extract Analysis
 - [ ] SAAS
     - [ ] Stripe Integration
