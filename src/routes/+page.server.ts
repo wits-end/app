@@ -2,9 +2,7 @@ import type { PageServerLoad, Actions } from './$types'
 import { fail, redirect } from '@sveltejs/kit'
 
 export const actions: Actions = {
-  saveArticle: async ({ request, locals: { supabase, safeGetSession } }) => {
-    const { session } = await safeGetSession()
-
+  saveArticle: async ({ request, locals: { supabase, session } }) => {
     const params = await request.formData()
 
     const articleId = params.get("articleId")
@@ -29,9 +27,7 @@ export const actions: Actions = {
     }
   },
 
-  unsaveArticle: async ({ request, locals: { supabase, safeGetSession } }) => {
-    const { session } = await safeGetSession()
-
+  unsaveArticle: async ({ request, locals: { supabase, session } }) => {
     const params = await request.formData();
 
     const articleId = params.get("articleId")
@@ -57,11 +53,9 @@ export const actions: Actions = {
   }
 }
 
-export const load: PageServerLoad = async ({ locals: { supabase, safeGetSession } }) => {
-  const { session } = await safeGetSession()
-
+export const load: PageServerLoad = async ({ locals: { supabase, session } }) => {
   const { data: articles } = await supabase.from('articles').select().order('created_at', { ascending: false })
   const { data: profile } = await supabase.from('profiles').select(`id, articles ( id, title )`).eq('id', session?.user.id).single()
 
-  return { articles: articles ?? [], profile: profile }
+  return { articles: articles ?? [], profile: profile ?? {}, session }
 }

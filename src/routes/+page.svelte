@@ -6,25 +6,25 @@
 	import Tags from '$lib/tags.svelte';
 
 	export let data;
-
+	let { articles, profile, session } = data;
 	// $: ({ articles, profile, user } = data);
 
 	let savedArticleIds = [];
 
-	if (data.profile?.articles) {
-		savedArticleIds = data.profile.articles.map((x) => x.id);
+	if (profile?.articles) {
+		savedArticleIds = profile.articles.map((x) => x.id);
 	}
 
 	let featuredFeedData = {
-		articles: data.articles.slice(0, 3),
+		articles: articles.slice(0, 3),
 		savedArticleIds: savedArticleIds,
-		user: data.user
+		session: session
 	};
 
 	let condensedFeedData = {
-		articles: data.articles.slice(3),
+		articles: articles.slice(3),
 		savedArticleIds: savedArticleIds,
-		user: data.user
+		session: session
 	};
 </script>
 
@@ -64,13 +64,6 @@
 			.categories {
 				padding-bottom: 2rem;
 
-				h2 {
-					display: inline-block;
-					font-size: 1.2rem;
-					font-family: 'Open Sans';
-					text-transform: uppercase;
-					margin-right: 2rem;
-				}
 				span {
 					font-family: 'Open Sans';
 					font-size: 1.2rem;
@@ -109,20 +102,6 @@
 
 				&:last-child {
 					border-right: none;
-				}
-
-				&.recent {
-					.feed {
-						.post {
-							.actions {
-								p,
-								a,
-								form button {
-									font-size: 1.2rem;
-								}
-							}
-						}
-					}
 				}
 			}
 		}

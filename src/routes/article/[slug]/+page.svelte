@@ -1,28 +1,37 @@
 <script>
 	/** @type {import('./$types').PageData} */
 	import { marked } from 'marked';
+	import FeedCondensed from '$lib/feedCondensed.svelte';
+	import FeedVerbose from '$lib/feedVerbose.svelte';
+	import Layout from '../../+layout.svelte';
+	import { REALTIME_PRESENCE_LISTEN_EVENTS } from '@supabase/supabase-js';
 
 	export let data;
-	$: ({ article, user } = data);
 
-	console.log(article);
+	$: ({ article, relatedArticles, session } = data);
+
+	$: relatedFeedData = {
+		articles: relatedArticles,
+		savedArticleIds: [],
+		session: session
+	};
 </script>
 
 <div class="wrapper">
 	<div class="grid">
 		<div class="col">
 			<div class="article">
-				<h1>{article.title}</h1>
-				<p><small>{article.authors}</small></p>
-				<img class="thumbnail" src={article.thumb_url} />
-				<p><b>Abstract:</b> {article.abstract}</p>
-				{#if article.summary}
+				<h1>{article?.title}</h1>
+				<p><small>{article?.authors}</small></p>
+				<img class="thumbnail" src={article?.thumb_url} alt="PDF Thumbnail" />
+				<p><b>Abstract:</b> {article?.abstract}</p>
+				{#if article?.synopsis}
 					<div class="ai">
-						{@html marked(article?.summary)}
+						{@html marked(article?.synopsis)}
 					</div>
 				{/if}
 				<h3 class="minion">Comments</h3>
-				{#if user}
+				{#if session}
 					<form>
 						<textarea rows="8" cols="80"></textarea>
 						<button>Add Comment</button>
@@ -39,19 +48,25 @@
 		<div class="col">
 			<div class="meta">
 				<h3 class="minion">Meta</h3>
-				<p>Published: {article.published_at}</p>
-				<p>Updated: {article.updated_at}</p>
-				<p>Authors: {article.authors}</p>
-				<p>Categories: {article.categories}</p>
-				<p>Keywords: {article.keywords}</p>
+				<p>
+					URL: <a href={'https://arxiv.org/abs/' + article?.arxiv_id}
+						>{'https://arxiv.org/abs/' + article?.arxiv_id}</a
+					>
+				</p>
+				<p>Published: {article?.published_at}</p>
+				<p>Updated: {article?.updated_at}</p>
+				<p>Authors: {article?.authors}</p>
+				<p>Categories: {article?.categories}</p>
+				<p>Keywords: {article?.keywords}</p>
 			</div>
-			<div class="ai-meta">
+			<div class="meta">
 				<h3 class="minion">Model</h3>
-				<p>Name: {article.model_id}</p>
-				<p>Updated: {article.model_updated_at}</p>
+				<p>Name: {article?.model_id}</p>
+				<p>Updated: {article?.model_updated_at}</p>
 			</div>
 			<div class="related">
 				<h3 class="minion">Related</h3>
+				<FeedCondensed data={relatedFeedData} />
 			</div>
 		</div>
 	</div>
@@ -82,6 +97,7 @@
 			.article {
 				.thumbnail {
 					max-width: 100%;
+					width: 100%;
 				}
 				.minion {
 					font-family: 'Open Sans';

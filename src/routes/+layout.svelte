@@ -4,7 +4,7 @@
 	import { onMount } from 'svelte';
 
 	export let data;
-	$: ({ session, supabase, user } = data);
+	$: ({ session, supabase } = data);
 
 	onMount(() => {
 		const { data } = supabase.auth.onAuthStateChange((_, newSession) => {
@@ -38,7 +38,7 @@
 		<Logo />
 		<nav>
 			<a href="/">Home</a>
-			{#if user}
+			{#if session}
 				<a href="/account">Account</a>
 				<a href="/" on:click={logout}>Logout</a>
 			{:else}
@@ -83,12 +83,14 @@
 		background-color: #eeeeee;
 		margin: 0;
 		padding: 1rem;
+		position: relative;
 
 		.wrapper {
 			display: grid;
 			grid-template-columns: auto auto;
 			align-items: center;
 			justify-content: space-between;
+			position: relative;
 
 			nav {
 				font-size: 0;

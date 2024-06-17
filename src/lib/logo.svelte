@@ -17,9 +17,8 @@
 				<defs id="defs2" />
 				<metadata id="metadata5">
 					<rdf:RDF>
-						<cc:Work rdf:about="">
+						<cc:Work>
 							<dc:format>image/svg+xml</dc:format>
-							<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
 							<dc:title></dc:title>
 						</cc:Work>
 					</rdf:RDF>
@@ -90,7 +89,7 @@
 	.glitch {
 		position: relative;
 		height: 3rem;
-		width: 11rem;
+		width: 12rem;
 		margin: 0 auto;
 		display: block;
 	}

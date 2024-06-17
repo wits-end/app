@@ -7,7 +7,7 @@
 	dayjs.extend(relativeTime);
 
 	export let data;
-	$: ({ articles, savedArticleIds, user } = data);
+	$: ({ articles, savedArticleIds, session } = data);
 
 	const handleSubmit: SubmitFunction = (articleId) => {
 		if (savedArticleIds.includes(articleId)) {
@@ -21,35 +21,43 @@
 </script>
 
 <div class="feed">
-	{#each articles as article}
-		<div class="post">
-			<p class="published-date">
-				{dayjs(article.created_at).format('YYYY-MM-DD')}
-			</p>
-			<h2 class="title"><a href="/article/{article.id}">{article.title}</a></h2>
-			<div class="actions">
-				<p class="date">{dayjs().to(dayjs(article.updated_at))}</p>
-				<a class="read-more" href="/article/{article.id}">read more</a>
-				{#if user}
-					{#if savedArticleIds?.includes(article.id)}
-						<form
-							method="post"
-							action="?/unsaveArticle"
-							use:enhance={() => handleSubmit(article.id)}
-						>
-							<input type="hidden" name="articleId" value={article.id} />
-							<button>unsave article</button>
-						</form>
-					{:else}
-						<form method="post" action="?/saveArticle" use:enhance={() => handleSubmit(article.id)}>
-							<input type="hidden" name="articleId" value={article.id} />
-							<button>save article</button>
-						</form>
+	{#if articles}
+		{#each articles as article}
+			<div class="post">
+				<p class="published-date">
+					{dayjs(article?.created_at).format('YYYY-MM-DD')}
+				</p>
+				<h2 class="title"><a href="/article/{article?.id}">{article?.title}</a></h2>
+				<div class="actions">
+					<p class="date">{dayjs().to(dayjs(article?.updated_at))}</p>
+					<a class="read-more" href="/article/{article?.id}">read more</a>
+					{#if session}
+						{#if savedArticleIds?.includes(article?.id)}
+							<form
+								method="post"
+								action="?/unsaveArticle"
+								use:enhance={() => handleSubmit(article?.id)}
+							>
+								<input type="hidden" name="articleId" value={article?.id} />
+								<button>unsave article</button>
+							</form>
+						{:else}
+							<form
+								method="post"
+								action="?/saveArticle"
+								use:enhance={() => handleSubmit(article.id)}
+							>
+								<input type="hidden" name="articleId" value={article?.id} />
+								<button>save article</button>
+							</form>
+						{/if}
 					{/if}
-				{/if}
+				</div>
 			</div>
-		</div>
-	{/each}
+		{/each}
+	{:else}
+		<p>N/A</p>
+	{/if}
 </div>
 
 <style lang="scss">

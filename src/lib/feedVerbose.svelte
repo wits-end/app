@@ -7,7 +7,7 @@
 	dayjs.extend(relativeTime);
 
 	export let data;
-	$: ({ articles, savedArticleIds, user } = data);
+	$: ({ articles, savedArticleIds, session } = data);
 
 	const handleSubmit: SubmitFunction = (articleId) => {
 		if (savedArticleIds.includes(articleId)) {
@@ -36,7 +36,7 @@
 				<a class="read-more" href="/article/{article.id}"
 					>{Math.floor(Math.random() * 3 + 1)} comments</a
 				>
-				{#if user}
+				{#if session}
 					{#if savedArticleIds?.includes(article.id)}
 						<form
 							method="post"
