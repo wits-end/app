@@ -53,7 +53,9 @@ export const actions: Actions = {
   }
 }
 
-export const load: PageServerLoad = async ({ locals: { supabase, session, profile } }) => {
+export const load: PageServerLoad = async ({ params, url, locals: { supabase, session, profile } }) => {
+  let sort = url.searchParams.get('sort')
+
   const { data: articles } = await supabase.from('articles').select().order('created_at', { ascending: false })
 
   return { articles: articles ?? [], profile, session }

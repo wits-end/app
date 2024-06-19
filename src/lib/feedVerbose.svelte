@@ -79,7 +79,7 @@
 			}
 			.authors {
 				font-size: 1.3rem;
-				margin-bottom: 0.5rem;
+				margin-bottom: 1rem;
 			}
 			.categories {
 				display: none;
@@ -87,7 +87,7 @@
 			h1.title {
 				font-family: 'Open Sans';
 				font-size: 2.4rem;
-
+				line-height: 1.25;
 				a {
 					color: black;
 					text-decoration: none;

@@ -4,38 +4,31 @@
 	import Sort from '$lib/sort.svelte';
 	import Tags from '$lib/tags.svelte';
 	import { createArticleStore, filterHandler } from '$lib/stores/search.js';
-	import { onDestroy } from 'svelte';
+	import { onDestroy, beforeUpdate } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 
 	export let data;
 	let { articles, profile, session } = data;
 
-	// Reactive search filter for home page articles
-	articles = articles.map((article) => ({
-		...article,
-		searchTerms: `${article.title} ${article.authors} ${article.abstract} ${article.keywords}`
-	}));
-
+	// Store for articles
 	const articleStore = createArticleStore(articles);
-
 	const unsubscribe = articleStore.subscribe((model) => filterHandler(model));
-
 	onDestroy(() => {
 		unsubscribe();
 	});
 
-	$: featuredFeedData = {
-		articles: $articleStore.filtered.slice(0, 3),
-		profile: profile,
-		session: session
-	};
+	// Handle url params on load
+	const categoryParam = $page.url.searchParams.get('category') || 'all';
+	const tagParam = $page.url.searchParams.get('tag') || 'all';
+	const searchParam = $page.url.searchParams.get('search') || '';
 
-	$: condensedFeedData = {
-		articles: $articleStore.filtered.slice(3),
-		profile: profile,
-		session: session
-	};
+	$articleStore.category = categoryParam;
+	$articleStore.tag = tagParam;
+	$articleStore.search = searchParam;
 
-	let categories = [
+	// Reactive category filter
+	const categories = [
 		['cs.AI', 'Artificial Intelligence'],
 		['cs.CV', 'Computer Vision'],
 		['cs.LG', 'Machine Learning'],
@@ -44,7 +37,22 @@
 		['stat.ML', 'Statistics']
 	];
 
-	let tags = [
+	const handleCategory = (e, category: string) => {
+		$page.url.searchParams.set('category', category);
+		goto(`?${$page.url.searchParams.toString()}`);
+
+		const buttons = document.getElementsByClassName('category-button');
+
+		for (let b of buttons) {
+			b.classList.remove('active');
+		}
+
+		e.target.classList.toggle('active');
+		$articleStore.category = category;
+	};
+
+	// Reactive tag filter
+	const tags = [
 		'ensemble',
 		'optimization',
 		'pruning',
@@ -75,18 +83,10 @@
 		'theory'
 	];
 
-	const handleCategory = (e, category: string) => {
-		const buttons = document.getElementsByClassName('category-button');
-
-		for (let b of buttons) {
-			b.classList.remove('active');
-		}
-
-		e.target.classList.toggle('active');
-		$articleStore.category = category;
-	};
-
 	const handleTag = (e, tag: string) => {
+		$page.url.searchParams.set('tag', tag);
+		goto(`?${$page.url.searchParams.toString()}`);
+
 		const buttons = document.getElementsByClassName('tag-button');
 
 		for (let b of buttons) {
@@ -96,6 +96,19 @@
 		e.target.classList.toggle('active');
 		$articleStore.tag = tag;
 	};
+
+	// Reactive data for the article feeds
+	$: featuredFeedData = {
+		articles: $articleStore.filtered.slice(0, 3),
+		profile: profile,
+		session: session
+	};
+
+	$: condensedFeedData = {
+		articles: $articleStore.filtered.slice(3),
+		profile: profile,
+		session: session
+	};
 </script>
 
 <div class="wrapper">
@@ -104,14 +117,14 @@
 			<button
 				class="category-button active"
 				on:click={(e) => {
-					handleCategory(e, '');
+					handleCategory(e, 'all');
 				}}>All</button
 			>
 			{#each categories as [key, value]}
 				<button
 					class="category-button"
 					on:click={(e) => {
-						handleCategory(e, key);
+						handleCategory(e, key.toLowerCase());
 					}}>{value}</button
 				>
 			{/each}
@@ -149,6 +162,13 @@
 						type="text"
 						placeholder="Articles, Datasets, Research and more..."
 						bind:value={$articleStore.search}
+						on:input={() => {
+							$page.url.searchParams.set('search', $articleStore.search);
+
+							if ($articleStore.search == '') {
+								$page.url.searchParams.delete('search');
+							}
+						}}
 					/>
 				</div>
 			</div>
@@ -159,13 +179,13 @@
 				<button
 					class="tag-button active"
 					on:click={(e) => {
-						handleTag(e, '');
+						handleTag(e, 'all');
 					}}>All</button
 				>{#each tags as tag}
 					<button
 						class="tag-button"
 						on:click={(e) => {
-							handleTag(e, tag);
+							handleTag(e, tag.toLowerCase());
 						}}>{tag}</button
 					>
 				{/each}

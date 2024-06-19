@@ -21,7 +21,7 @@
 	<div class="grid">
 		<div class="col">
 			<div class="article">
-				<h1>{article?.title}</h1>
+				<h1 class="title">{article?.title}</h1>
 				<p><small>{article?.authors}</small></p>
 				<img class="thumbnail" src={article?.thumb_url} alt="PDF Thumbnail" />
 				<p><b>Abstract:</b> {article?.abstract}</p>
@@ -81,7 +81,7 @@
 <style lang="scss">
 	.grid {
 		display: grid;
-		grid-template-rows: auto auto;
+		grid-template-rows: auto;
 		grid-template-columns: 3fr 1fr;
 		grid-gap: 2rem;
 
@@ -95,6 +95,11 @@
 			}
 
 			.article {
+				.title {
+					font-family: 'Open Sans';
+					font-size: 3.2rem;
+					line-height: 1.25;
+				}
 				.thumbnail {
 					max-width: 100%;
 					width: 100%;
