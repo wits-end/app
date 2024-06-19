@@ -2,16 +2,16 @@
 	<h3 class="minion">Sort</h3>
 	<div class="options">
 		<div class="group">
-			<span class="active">Top</span>
-			<span>Recent</span>
-			<span>Impactful</span>
+			<span class="active">Recent</span>
 			<span>Featured</span>
+			<span>Trending</span>
+			<span>For You</span>
 		</div>
 		<div class="group">
 			<span class="active">All Time</span>
+			<span>Past 5 Years</span>
 			<span>Past Year</span>
 			<span>Past Month</span>
-			<span>Past Week</span>
 		</div>
 	</div>
 </div>

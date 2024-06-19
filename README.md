@@ -45,14 +45,13 @@ You can preview the production build with `npm run preview`.
     - [ ] Subscription Info
     - [ ] Personal Info
 - [x] User Saved Papers List
-    - [ ] Add papers to user
-    - [ ] Add ability to organize papers into folders
+    - [x] Add/remove papers to user
 - [ ] Home Page
     - [ ] Subject Categories
-    - [ ] Trending Feed
     - [x] Recent Feed
+    - [ ] For You Feed
     - [ ] Sidebar Functionality
-        - [ ] Search
+        - [x] Search
         - [ ] Filter
         - [ ] Keywords
 - [x] Article Detail
@@ -61,6 +60,7 @@ You can preview the production build with `npm run preview`.
 - [x] Fetch Single Arxiv Paper
     - [x] Arxiv API
     - [x] PDF image thumbnails
+- [ ] User submit new paper request (on 404?)
 - [x] OpenAI Sparknotes
     - [x] Prompt Engineering
     - [x] PDF RAG
@@ -68,4 +68,6 @@ You can preview the production build with `npm run preview`.
     - [x] Extract Keywords
     - [x] Extract Analysis
 - [ ] SAAS
-    - [ ] Stripe Integration
+    - [x] Signup for Stripe
+    - [ ] Integrate Stripe Subscription w/ app
+    - [x] Setup Supabase for Stripe

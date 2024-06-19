@@ -37,7 +37,7 @@ const supabase: Handle = async ({ event, resolve }) => {
             data: { session },
         } = await event.locals.supabase.auth.getSession()
         if (!session) {
-            return { session: null, user: null }
+            return { session: null, user: null, profile: null }
         }
 
         const {
@@ -46,10 +46,12 @@ const supabase: Handle = async ({ event, resolve }) => {
         } = await event.locals.supabase.auth.getUser()
         if (error) {
             // JWT validation has failed
-            return { session: null, user: null }
+            return { session: null, user: null, profile: null }
         }
 
-        return { session, user }
+        const { data: profile } = await event.locals.supabase.from('profiles').select('id, articles (id, title) ').eq('id', user?.id).single()
+
+        return { session, user, profile }
     }
 
     return resolve(event, {
@@ -64,9 +66,10 @@ const supabase: Handle = async ({ event, resolve }) => {
 }
 
 const authGuard: Handle = async ({ event, resolve }) => {
-    const { session, user } = await event.locals.safeGetSession()
+    const { session, user, profile } = await event.locals.safeGetSession()
     event.locals.session = session
     event.locals.user = user
+    event.locals.profile = profile
 
     if (!event.locals.session && event.url.pathname.startsWith('/account')) {
         return redirect(303, '/auth')

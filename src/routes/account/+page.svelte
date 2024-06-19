@@ -3,7 +3,6 @@
 	import FeedCondensed from '$lib/feedCondensed.svelte';
 
 	export let data: PageData;
-	// $: ({ articles } = data);
 
 	let folders = [
 		{

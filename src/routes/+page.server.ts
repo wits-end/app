@@ -53,9 +53,8 @@ export const actions: Actions = {
   }
 }
 
-export const load: PageServerLoad = async ({ locals: { supabase, session } }) => {
+export const load: PageServerLoad = async ({ locals: { supabase, session, profile } }) => {
   const { data: articles } = await supabase.from('articles').select().order('created_at', { ascending: false })
-  const { data: profile } = await supabase.from('profiles').select(`id, articles ( id, title )`).eq('id', session?.user.id).single()
 
-  return { articles: articles ?? [], profile: profile ?? {}, session }
+  return { articles: articles ?? [], profile, session }
 }

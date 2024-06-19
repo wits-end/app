@@ -1,7 +1,6 @@
 <script lang="ts">
 	import FeedVerbose from '$lib/feedVerbose.svelte';
 	import FeedCondensed from '$lib/feedCondensed.svelte';
-	import Search from '$lib/search.svelte';
 	import Sort from '$lib/sort.svelte';
 	import Tags from '$lib/tags.svelte';
 	import { createSearchStore, searchHandler } from '$lib/stores/search.js';
@@ -10,6 +9,7 @@
 	export let data;
 	let { articles, profile, session } = data;
 
+	// Reactive search filter for home page articles
 	const searchArticles = articles.map((article) => ({
 		...article,
 		searchTerms: `${article.title} ${article.authors} ${article.abstract} ${article.keywords}`
@@ -23,37 +23,35 @@
 		unsubscribe();
 	});
 
-	// $: ({ articles, profile, user } = data);
-
-	let savedArticleIds = [];
-
-	if (profile?.articles) {
-		savedArticleIds = profile.articles.map((x) => x.id);
-	}
-
 	$: featuredFeedData = {
 		articles: $searchStore.filtered.slice(0, 3),
-		savedArticleIds: savedArticleIds,
+		profile: profile,
 		session: session
 	};
 
 	$: condensedFeedData = {
 		articles: $searchStore.filtered.slice(3),
-		savedArticleIds: savedArticleIds,
+		profile: profile,
 		session: session
 	};
+
+	let categories = [
+		('cs.AI', 'Artificial Intelligence'),
+		('cs.CL', 'Natural Language Processing'),
+		('cs.CV', 'Computer Vision'),
+		('cs.LG', 'Machine Learning'),
+		('cs.NE', 'Neuroevolution'),
+		('stat.ML', 'Theory')
+	];
 </script>
 
 <div class="wrapper">
 	<div class="filters">
 		<nav class="categories">
 			<span class="active">All</span>
-			<span>cs.AI</span>
-			<span>cs.CL</span>
-			<span>cs.CV</span>
-			<span>cs.LG</span>
-			<span>cs.NE</span>
-			<span>stat.ML</span>
+			{#each categories as category}
+				<span>{category}</span>
+			{/each}
 		</nav>
 	</div>
 

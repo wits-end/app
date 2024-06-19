@@ -1,3 +1,8 @@
+<script lang="ts">
+	export let data;
+	let { searchStore } = data;
+</script>
+
 <div class="search">
 	<h3 class="minion">Search</h3>
 	<div class="field-group">
@@ -17,7 +22,11 @@
 				/>
 			</svg>
 		</div>
-		<input type="text" placeholder="Articles, Datasets, Research and more..." />
+		<input
+			type="text"
+			placeholder="Articles, Datasets, Research and more..."
+			bind:value={$searchStore.search}
+		/>
 	</div>
 	<button type="submit">search</button>
 </div>

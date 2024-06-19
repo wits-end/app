@@ -7,7 +7,14 @@
 	dayjs.extend(relativeTime);
 
 	export let data;
-	$: ({ articles, savedArticleIds, session } = data);
+	let { articles, profile, session } = data;
+	$: ({ articles, profile, session } = data);
+
+	let savedArticleIds = [];
+
+	if (profile?.articles) {
+		savedArticleIds = profile.articles.map((x) => x.id);
+	}
 
 	const handleSubmit: SubmitFunction = (articleId) => {
 		if (savedArticleIds.includes(articleId)) {
