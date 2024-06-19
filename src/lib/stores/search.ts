@@ -15,18 +15,13 @@ export const createArticleStore = (data) => {
     }
 }
 
-export const searchHandler = (store) => {
+export const filterHandler = (store) => {
     const searchTerm = store.search.toLowerCase() || ""
-
-    store.filtered = store.data.filter((item) => {
-        return item.searchTerms.toLowerCase().includes(searchTerm);
-    })
-}
-
-export const categoryHandler = (store) => {
     const category = store.category.toLowerCase() || ""
 
     store.filtered = store.data.filter((item) => {
-        return item.categories?.toLowerCase().includes(category);
+        const isSearch = item.searchTerms?.toLowerCase().includes(searchTerm);
+        const isCategory = item.categories?.toLowerCase().includes(category);
+        return (isSearch && isCategory)
     })
 }

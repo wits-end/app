@@ -3,7 +3,7 @@
 	import FeedCondensed from '$lib/feedCondensed.svelte';
 	import Sort from '$lib/sort.svelte';
 	import Tags from '$lib/tags.svelte';
-	import { createArticleStore, searchHandler, categoryHandler } from '$lib/stores/search.js';
+	import { createArticleStore, filterHandler } from '$lib/stores/search.js';
 	import { onDestroy } from 'svelte';
 
 	export let data;
@@ -17,12 +17,10 @@
 
 	const articleStore = createArticleStore(articles);
 
-	const searchUnsubscribe = articleStore.subscribe((model) => searchHandler(model));
-	const categoryUnsubscribe = articleStore.subscribe((model) => categoryHandler(model));
+	const unsubscribe = articleStore.subscribe((model) => filterHandler(model));
 
 	onDestroy(() => {
-		searchUnsubscribe();
-		categoryUnsubscribe();
+		unsubscribe();
 	});
 
 	$: featuredFeedData = {
@@ -39,14 +37,21 @@
 
 	let categories = [
 		['cs.AI', 'Artificial Intelligence'],
-		['cs.CL', 'Natural Language Processing'],
 		['cs.CV', 'Computer Vision'],
 		['cs.LG', 'Machine Learning'],
+		['cs.CL', 'Natural Language Processing'],
 		['cs.NE', 'Neuroevolution'],
-		['stat.ML', 'Theory']
+		['stat.ML', 'Statistics']
 	];
 
-	const handleCategory = (category: string) => {
+	const handleCategory = (e, category: string) => {
+		const buttons = document.getElementsByClassName('category-button');
+
+		for (let b of buttons) {
+			b.classList.remove('active');
+		}
+
+		e.target.classList.toggle('active');
 		$articleStore.category = category;
 	};
 </script>
@@ -54,17 +59,18 @@
 <div class="wrapper">
 	<div class="filters">
 		<nav class="categories">
-			<span
-				class="active"
-				on:click={() => {
-					handleCategory('');
-				}}>All</span
+			<button
+				class="category-button active"
+				on:click={(e) => {
+					handleCategory(e, '');
+				}}>All</button
 			>
 			{#each categories as [key, value]}
-				<span
-					on:click={() => {
-						handleCategory(key);
-					}}>{value}</span
+				<button
+					class="category-button"
+					on:click={(e) => {
+						handleCategory(e, key);
+					}}>{value}</button
 				>
 			{/each}
 		</nav>
@@ -118,7 +124,7 @@
 			.categories {
 				padding-bottom: 2rem;
 
-				span {
+				button {
 					font-family: 'Open Sans';
 					font-size: 1.2rem;
 					font-weight: 500;
@@ -126,6 +132,8 @@
 					text-decoration: none;
 					margin-right: 2rem;
 					color: #aaa;
+					background: none;
+					border: none;
 
 					&.active,
 					&:hover {
