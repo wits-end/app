@@ -3,54 +3,69 @@
 	import FeedCondensed from '$lib/feedCondensed.svelte';
 	import Sort from '$lib/sort.svelte';
 	import Tags from '$lib/tags.svelte';
-	import { createSearchStore, searchHandler } from '$lib/stores/search.js';
+	import { createArticleStore, searchHandler, categoryHandler } from '$lib/stores/search.js';
 	import { onDestroy } from 'svelte';
 
 	export let data;
 	let { articles, profile, session } = data;
 
 	// Reactive search filter for home page articles
-	const searchArticles = articles.map((article) => ({
+	articles = articles.map((article) => ({
 		...article,
 		searchTerms: `${article.title} ${article.authors} ${article.abstract} ${article.keywords}`
 	}));
 
-	const searchStore = createSearchStore(searchArticles);
+	const articleStore = createArticleStore(articles);
 
-	const unsubscribe = searchStore.subscribe((model) => searchHandler(model));
+	const searchUnsubscribe = articleStore.subscribe((model) => searchHandler(model));
+	const categoryUnsubscribe = articleStore.subscribe((model) => categoryHandler(model));
 
 	onDestroy(() => {
-		unsubscribe();
+		searchUnsubscribe();
+		categoryUnsubscribe();
 	});
 
 	$: featuredFeedData = {
-		articles: $searchStore.filtered.slice(0, 3),
+		articles: $articleStore.filtered.slice(0, 3),
 		profile: profile,
 		session: session
 	};
 
 	$: condensedFeedData = {
-		articles: $searchStore.filtered.slice(3),
+		articles: $articleStore.filtered.slice(3),
 		profile: profile,
 		session: session
 	};
 
 	let categories = [
-		('cs.AI', 'Artificial Intelligence'),
-		('cs.CL', 'Natural Language Processing'),
-		('cs.CV', 'Computer Vision'),
-		('cs.LG', 'Machine Learning'),
-		('cs.NE', 'Neuroevolution'),
-		('stat.ML', 'Theory')
+		['cs.AI', 'Artificial Intelligence'],
+		['cs.CL', 'Natural Language Processing'],
+		['cs.CV', 'Computer Vision'],
+		['cs.LG', 'Machine Learning'],
+		['cs.NE', 'Neuroevolution'],
+		['stat.ML', 'Theory']
 	];
+
+	const handleCategory = (category: string) => {
+		$articleStore.category = category;
+	};
 </script>
 
 <div class="wrapper">
 	<div class="filters">
 		<nav class="categories">
-			<span class="active">All</span>
-			{#each categories as category}
-				<span>{category}</span>
+			<span
+				class="active"
+				on:click={() => {
+					handleCategory('');
+				}}>All</span
+			>
+			{#each categories as [key, value]}
+				<span
+					on:click={() => {
+						handleCategory(key);
+					}}>{value}</span
+				>
 			{/each}
 		</nav>
 	</div>
@@ -85,7 +100,7 @@
 					<input
 						type="text"
 						placeholder="Articles, Datasets, Research and more..."
-						bind:value={$searchStore.search}
+						bind:value={$articleStore.search}
 					/>
 				</div>
 			</div>

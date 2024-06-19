@@ -1,10 +1,11 @@
 import { writable } from "svelte/store"
 
-export const createSearchStore = (data) => {
+export const createArticleStore = (data) => {
     const { subscribe, set, update } = writable({
         data: data,
         filtered: data,
-        search: ""
+        search: "",
+        category: "",
     })
 
     return {
@@ -19,5 +20,13 @@ export const searchHandler = (store) => {
 
     store.filtered = store.data.filter((item) => {
         return item.searchTerms.toLowerCase().includes(searchTerm);
+    })
+}
+
+export const categoryHandler = (store) => {
+    const category = store.category.toLowerCase() || ""
+
+    store.filtered = store.data.filter((item) => {
+        return item.categories?.toLowerCase().includes(category);
     })
 }

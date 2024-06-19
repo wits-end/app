@@ -1,6 +1,6 @@
 <script lang="ts">
 	export let data;
-	let { searchStore } = data;
+	let { articleStore } = data;
 </script>
 
 <div class="search">
@@ -25,7 +25,7 @@
 		<input
 			type="text"
 			placeholder="Articles, Datasets, Research and more..."
-			bind:value={$searchStore.search}
+			bind:value={$articleStore.search}
 		/>
 	</div>
 	<button type="submit">search</button>
