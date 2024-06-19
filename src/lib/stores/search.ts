@@ -6,6 +6,8 @@ export const createArticleStore = (data) => {
         filtered: data,
         search: "",
         category: "",
+        sort: "",
+        tag: ""
     })
 
     return {
@@ -18,10 +20,13 @@ export const createArticleStore = (data) => {
 export const filterHandler = (store) => {
     const searchTerm = store.search.toLowerCase() || ""
     const category = store.category.toLowerCase() || ""
+    const tag = store.tag.toLowerCase() || ""
 
     store.filtered = store.data.filter((item) => {
-        const isSearch = item.searchTerms?.toLowerCase().includes(searchTerm);
-        const isCategory = item.categories?.toLowerCase().includes(category);
-        return (isSearch && isCategory)
+        const hasSearch = item.searchTerms?.toLowerCase().includes(searchTerm);
+        const hasCategory = item.categories?.toLowerCase().includes(category);
+        const hasTag = item.searchTerms?.toLowerCase().includes(tag);
+
+        return (hasSearch && hasCategory && hasTag)
     })
 }

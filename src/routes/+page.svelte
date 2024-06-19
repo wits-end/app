@@ -44,6 +44,37 @@
 		['stat.ML', 'Statistics']
 	];
 
+	let tags = [
+		'ensemble',
+		'optimization',
+		'pruning',
+		'distillation',
+		'diffusion',
+		'generative',
+		'tuning',
+		'reinforcement',
+		'unsupervised',
+		'supervised',
+		'classification',
+		'regression',
+		'regularization',
+		'evolution',
+		'sparsity',
+		'latent',
+		'quantization',
+		'augmentation',
+		'federated',
+		'transfer',
+		'attention',
+		'bayesian',
+		'interpretability',
+		'clustering',
+		'embedding',
+		'efficient',
+		'segmentation',
+		'theory'
+	];
+
 	const handleCategory = (e, category: string) => {
 		const buttons = document.getElementsByClassName('category-button');
 
@@ -53,6 +84,17 @@
 
 		e.target.classList.toggle('active');
 		$articleStore.category = category;
+	};
+
+	const handleTag = (e, tag: string) => {
+		const buttons = document.getElementsByClassName('tag-button');
+
+		for (let b of buttons) {
+			b.classList.remove('active');
+		}
+
+		e.target.classList.toggle('active');
+		$articleStore.tag = tag;
 	};
 </script>
 
@@ -111,7 +153,23 @@
 				</div>
 			</div>
 			<Sort />
-			<Tags />
+
+			<div class="tags">
+				<h3 class="minion">Tags</h3>
+				<button
+					class="tag-button active"
+					on:click={(e) => {
+						handleTag(e, '');
+					}}>All</button
+				>{#each tags as tag}
+					<button
+						class="tag-button"
+						on:click={(e) => {
+							handleTag(e, tag);
+						}}>{tag}</button
+					>
+				{/each}
+			</div>
 		</div>
 	</div>
 </div>
@@ -124,7 +182,7 @@
 			.categories {
 				padding-bottom: 2rem;
 
-				button {
+				.category-button {
 					font-family: 'Open Sans';
 					font-size: 1.2rem;
 					font-weight: 500;
@@ -187,6 +245,27 @@
 							border: 1px solid #ddd;
 							padding-left: 3.5rem;
 							font-family: 'Open Sans';
+						}
+					}
+				}
+				.tags {
+					padding: 2rem 0;
+
+					.tag-button {
+						font-family: 'Open Sans';
+						font-size: 1.2rem;
+						font-weight: 500;
+						text-transform: uppercase;
+						text-decoration: none;
+						margin-right: 1rem;
+						color: #aaa;
+						background: none;
+						border: none;
+
+						&.active,
+						&:hover {
+							color: red;
+							cursor: pointer;
 						}
 					}
 				}
