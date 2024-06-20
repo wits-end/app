@@ -80,10 +80,14 @@
 <style lang="scss">
 	header {
 		width: 100%;
-		background-color: #eeeeee;
 		margin: 0;
 		padding: 1rem;
 		position: relative;
+		background-image: url('$lib/assets/chalk-2-invert.png');
+		background-position: center;
+		background-size: 50rem;
+		background-color: rgba(255, 255, 255, 0.8);
+		background-blend-mode: lighten;
 
 		.wrapper {
 			display: grid;
@@ -123,9 +127,13 @@
 	}
 
 	footer {
-		background-color: #eeeeee;
 		padding: 1rem;
 		padding-bottom: 1rem;
+		background-image: url('$lib/assets/chalk-5-invert.png');
+		background-position: center;
+		background-size: 50rem;
+		background-color: rgba(255, 255, 255, 0.8);
+		background-blend-mode: lighten;
 
 		.wrapper {
 			display: grid;
