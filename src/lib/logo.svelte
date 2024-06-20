@@ -1,5 +1,5 @@
 <div class="logo">
-	<a class="glitch" href="/">
+	<a class="glitch" href="/" data-sveltekit-reload>
 		{#each { length: 6 } as _, i}
 			<svg
 				xmlns:dc="http://purl.org/dc/elements/1.1/"
