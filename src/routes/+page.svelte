@@ -22,36 +22,25 @@
 	const categoryParam = $page.url.searchParams.get('category') || 'all';
 	const tagParam = $page.url.searchParams.get('tag') || 'all';
 	const searchParam = $page.url.searchParams.get('search') || '';
+	const sortParam = $page.url.searchParams.get('sort') || 'recent';
+	const timeParam = $page.url.searchParams.get('time') || 'alltime';
 
 	$articleStore.category = categoryParam;
 	$articleStore.tag = tagParam;
 	$articleStore.search = searchParam;
+	$articleStore.sort = sortParam;
+	$articleStore.time = timeParam;
 
-	// Reactive category filter
+	// Reactive filters
 	const categories = [
-		['cs.AI', 'Artificial Intelligence'],
-		['cs.CV', 'Computer Vision'],
-		['cs.LG', 'Machine Learning'],
-		['cs.CL', 'Natural Language Processing'],
-		['cs.NE', 'Neuroevolution'],
-		['stat.ML', 'Statistics']
+		['cs.ai', 'Artificial Intelligence'],
+		['cs.cv', 'Computer Vision'],
+		['cs.lg', 'Machine Learning'],
+		['cs.cl', 'Natural Language Processing'],
+		['cs.ne', 'Neuroevolution'],
+		['stat.ml', 'Statistics']
 	];
 
-	const handleCategory = (e, category: string) => {
-		$page.url.searchParams.set('category', category);
-		goto(`?${$page.url.searchParams.toString()}`);
-
-		const buttons = document.getElementsByClassName('category-button');
-
-		for (let b of buttons) {
-			b.classList.remove('active');
-		}
-
-		e.target.classList.toggle('active');
-		$articleStore.category = category;
-	};
-
-	// Reactive tag filter
 	const tags = [
 		'ensemble',
 		'optimization',
@@ -83,6 +72,32 @@
 		'theory'
 	];
 
+	const sortOptions = [
+		['featured', 'Featured'],
+		['trending', 'Trending'],
+		['foryou', 'For You']
+	];
+
+	const timeOptions = [
+		['pastfive', 'Past 5 Years'],
+		['pastyear', 'Past Year'],
+		['pastmonth', 'Past Month']
+	];
+
+	const handleCategory = (e, category: string) => {
+		$page.url.searchParams.set('category', category);
+		goto(`?${$page.url.searchParams.toString()}`);
+
+		const buttons = document.getElementsByClassName('category-button');
+
+		for (let b of buttons) {
+			b.classList.remove('active');
+		}
+
+		e.target.classList.toggle('active');
+		$articleStore.category = category;
+	};
+
 	const handleTag = (e, tag: string) => {
 		$page.url.searchParams.set('tag', tag);
 		goto(`?${$page.url.searchParams.toString()}`);
@@ -95,6 +110,34 @@
 
 		e.target.classList.toggle('active');
 		$articleStore.tag = tag;
+	};
+
+	const handleSort = (e, sort: string) => {
+		$page.url.searchParams.set('sort', sort);
+		goto(`?${$page.url.searchParams.toString()}`);
+
+		const buttons = document.getElementsByClassName('sort-button');
+
+		for (let b of buttons) {
+			b.classList.remove('active');
+		}
+
+		e.target.classList.toggle('active');
+		$articleStore.sort = sort;
+	};
+
+	const handleTime = (e, time: string) => {
+		$page.url.searchParams.set('time', time);
+		goto(`?${$page.url.searchParams.toString()}`);
+
+		const buttons = document.getElementsByClassName('time-button');
+
+		for (let b of buttons) {
+			b.classList.remove('active');
+		}
+
+		e.target.classList.toggle('active');
+		$articleStore.time = time;
 	};
 
 	// Reactive data for the article feeds
@@ -124,7 +167,7 @@
 				<button
 					class="category-button"
 					on:click={(e) => {
-						handleCategory(e, key.toLowerCase());
+						handleCategory(e, key);
 					}}>{value}</button
 				>
 			{/each}
@@ -139,6 +182,8 @@
 			<FeedCondensed data={condensedFeedData} />
 		</div>
 		<div class="tools col">
+			<!-- Search Filter -->
+
 			<div class="search">
 				<h3 class="minion">Search</h3>
 				<div class="field-group">
@@ -172,7 +217,48 @@
 					/>
 				</div>
 			</div>
-			<Sort />
+
+			<!-- Sort Filter -->
+
+			<div class="sort">
+				<h3 class="minion">Sort</h3>
+				<div class="options">
+					<div class="group">
+						<button
+							class="sort-button active"
+							on:click={(e) => {
+								handleSort(e, 'recent');
+							}}>Recent</button
+						>
+						{#each sortOptions as [key, value]}
+							<button
+								class="sort-button"
+								on:click={(e) => {
+									handleSort(e, key);
+								}}>{value}</button
+							>
+						{/each}
+					</div>
+					<div class="group">
+						<button
+							class="time-button active"
+							on:click={(e) => {
+								handleTime(e, 'alltime');
+							}}>All Time</button
+						>
+						{#each timeOptions as [key, value]}
+							<button
+								class="time-button"
+								on:click={(e) => {
+									handleTime(e, key);
+								}}>{value}</button
+							>
+						{/each}
+					</div>
+				</div>
+			</div>
+
+			<!-- Tags Filter -->
 
 			<div class="tags">
 				<h3 class="minion">Tags</h3>
@@ -265,6 +351,35 @@
 							border: 1px solid #ddd;
 							padding-left: 3.5rem;
 							font-family: 'Open Sans';
+						}
+					}
+				}
+				.sort {
+					padding: 2rem 0;
+
+					.options {
+						display: flex;
+						.group {
+							flex: 0 0 50%;
+							.sort-button,
+							.time-button {
+								font-family: 'Open Sans';
+								font-size: 1.2rem;
+								font-weight: 500;
+								text-transform: uppercase;
+								text-decoration: none;
+								margin-bottom: 0.2rem;
+								color: #aaa;
+								display: block;
+								border: none;
+								background: none;
+
+								&.active,
+								&:hover {
+									color: red;
+									cursor: pointer;
+								}
+							}
 						}
 					}
 				}

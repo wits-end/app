@@ -12,6 +12,7 @@ export const createArticleStore = (data) => {
         search: "",
         category: "",
         sort: "",
+        time: "",
         tag: ""
     })
 
