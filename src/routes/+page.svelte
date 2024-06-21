@@ -231,12 +231,7 @@
 							}}>Recent</button
 						>
 						{#each sortOptions as [key, value]}
-							<button
-								class="sort-button"
-								on:click={(e) => {
-									handleSort(e, key);
-								}}>{value}</button
-							>
+							<button class="sort-button-disabled">{value}</button>
 						{/each}
 					</div>
 					<div class="group">
@@ -379,6 +374,19 @@
 									color: red;
 									cursor: pointer;
 								}
+							}
+							.sort-button-disabled {
+								font-family: 'Open Sans';
+								font-size: 1.2rem;
+								font-weight: 500;
+								text-transform: uppercase;
+								text-decoration: line-through;
+								margin-bottom: 0.2rem;
+								color: #aaa;
+								display: block;
+								border: none;
+								background: none;
+								cursor: text;
 							}
 						}
 					}
