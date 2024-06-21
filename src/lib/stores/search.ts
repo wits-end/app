@@ -33,17 +33,16 @@ export const filterHandler = (store) => {
 
     const time = store.time.toLowerCase() || ""
 
-    const currentTime = new Date()
     let timeThreshold = new Date()
 
     if (time == "pastfive") {
-        timeThreshold.setFullYear(currentTime.getFullYear() - 5)
+        timeThreshold.setFullYear(timeThreshold.getFullYear() - 5)
 
     } else if (time == "pastyear") {
-        timeThreshold.setFullYear(currentTime.getFullYear() - 1)
+        timeThreshold.setFullYear(timeThreshold.getFullYear() - 1)
 
     } else if (time == "pastmonth") {
-        timeThreshold.setMonth(currentTime.getMonth() - 1)
+        timeThreshold.setMonth(timeThreshold.getMonth() - 1)
     }
 
 
@@ -53,10 +52,16 @@ export const filterHandler = (store) => {
         const hasTag = item.searchTerms?.toLowerCase().includes(tag);
         const withinTime = time == "alltime" ? true : new Date(item.published_at) > timeThreshold;
 
-        console.log(item.published_at)
-        console.log(timeThreshold)
-        console.log(withinTime)
-
         return (hasSearch && hasCategory && hasTag && withinTime)
     })
+
+    if (sort == "featured") {
+        store.filtered.sort((a, b) => {
+
+        })
+    } else if (sort == "trending") {
+
+    } else if (sort == "foryou") {
+
+    }
 }
