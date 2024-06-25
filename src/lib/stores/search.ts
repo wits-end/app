@@ -14,7 +14,8 @@ export const createArticleStore = (data) => {
         category: "",
         sort: "",
         time: "",
-        tag: ""
+        tag: "",
+        page: 0
     })
 
     return {
@@ -24,14 +25,21 @@ export const createArticleStore = (data) => {
     }
 }
 
+const getPagination = (page, size) => {
+    const limit = size ? +size : 3
+    const from = page ? page * limit : 0
+    const to = page ? from + size - 1 : size - 1
+
+    return { from, to }
+}
+
 export const filterHandler = (store) => {
     const searchTerm = store.search.toLowerCase() || ""
     const category = store.category == "all" ? "" : (store.category.toLowerCase() || "")
     const tag = store.tag == "all" ? "" : (store.tag.toLowerCase() || "")
-
     const sort = store.sort.toLowerCase() || ""
-
     const time = store.time.toLowerCase() || ""
+    const { from, to } = getPagination(store.page, 14)
 
     let timeThreshold = new Date()
 
@@ -53,7 +61,7 @@ export const filterHandler = (store) => {
         const withinTime = time == "alltime" ? true : new Date(item.published_at) > timeThreshold;
 
         return (hasSearch && hasCategory && hasTag && withinTime)
-    })
+    }).slice(from, to)
 
     if (sort == "featured") {
         store.filtered.sort((a, b) => {

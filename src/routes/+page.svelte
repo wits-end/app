@@ -24,12 +24,14 @@
 	const searchParam = $page.url.searchParams.get('search') || '';
 	const sortParam = $page.url.searchParams.get('sort') || 'recent';
 	const timeParam = $page.url.searchParams.get('time') || 'alltime';
+	const pageParam: number = parseInt($page.url.searchParams.get('page') || '0');
 
 	$articleStore.category = categoryParam;
 	$articleStore.tag = tagParam;
 	$articleStore.search = searchParam;
 	$articleStore.sort = sortParam;
 	$articleStore.time = timeParam;
+	$articleStore.page = pageParam;
 
 	// Reactive filters
 	const categories = [
@@ -86,6 +88,7 @@
 
 	const handleCategory = (e, category: string) => {
 		$page.url.searchParams.set('category', category);
+		$page.url.searchParams.set('page', 0);
 		goto(`?${$page.url.searchParams.toString()}`);
 
 		const buttons = document.getElementsByClassName('category-button');
@@ -96,10 +99,12 @@
 
 		e.target.classList.toggle('active');
 		$articleStore.category = category;
+		$articleStore.page = 0;
 	};
 
 	const handleTag = (e, tag: string) => {
 		$page.url.searchParams.set('tag', tag);
+		$page.url.searchParams.set('page', 0);
 		goto(`?${$page.url.searchParams.toString()}`);
 
 		const buttons = document.getElementsByClassName('tag-button');
@@ -110,10 +115,12 @@
 
 		e.target.classList.toggle('active');
 		$articleStore.tag = tag;
+		$articleStore.page = 0;
 	};
 
 	const handleSort = (e, sort: string) => {
 		$page.url.searchParams.set('sort', sort);
+		$page.url.searchParams.set('page', 0);
 		goto(`?${$page.url.searchParams.toString()}`);
 
 		const buttons = document.getElementsByClassName('sort-button');
@@ -124,10 +131,12 @@
 
 		e.target.classList.toggle('active');
 		$articleStore.sort = sort;
+		$articleStore.page = 0;
 	};
 
 	const handleTime = (e, time: string) => {
 		$page.url.searchParams.set('time', time);
+		$page.url.searchParams.set('page', 0);
 		goto(`?${$page.url.searchParams.toString()}`);
 
 		const buttons = document.getElementsByClassName('time-button');
@@ -138,6 +147,13 @@
 
 		e.target.classList.toggle('active');
 		$articleStore.time = time;
+		$articleStore.page = 0;
+	};
+
+	const handlePaginate = (page) => {
+		$page.url.searchParams.set('page', page);
+		goto(`?${$page.url.searchParams.toString()}`);
+		$articleStore.page = page;
 	};
 
 	// Reactive data for the article feeds
@@ -205,10 +221,12 @@
 					</div>
 					<input
 						type="text"
-						placeholder="Articles, Datasets, Research and more..."
+						placeholder="Titles, Keywords, Authors and More..."
 						bind:value={$articleStore.search}
 						on:input={() => {
 							$page.url.searchParams.set('search', $articleStore.search);
+							$page.url.searchParams.set('page', 0);
+							$articleStore.page = 0;
 
 							if ($articleStore.search == '') {
 								$page.url.searchParams.delete('search');
@@ -271,11 +289,27 @@
 					>
 				{/each}
 			</div>
+
+			<div class="ads">
+				<h3 class="minion">Ads</h3>
+			</div>
 		</div>
 	</div>
 	<div class="pagination">
-		<a href="#">Prev</a>
-		<a href="#">Next</a>
+		{#if $articleStore.page > 0}
+			<button
+				class="page-button"
+				on:click={() => {
+					handlePaginate($articleStore.page - 1);
+				}}>Prev</button
+			>
+		{/if}
+		<button
+			class="page-button"
+			on:click={() => {
+				handlePaginate($articleStore.page + 1);
+			}}>Next</button
+		>
 	</div>
 </div>
 
@@ -415,6 +449,30 @@
 							cursor: pointer;
 						}
 					}
+				}
+				.ads {
+				}
+			}
+		}
+		.pagination {
+			padding-top: 1rem;
+			border-top: 1px solid #ddd;
+
+			.page-button {
+				font-family: 'Open Sans';
+				font-size: 1.2rem;
+				font-weight: 500;
+				text-transform: uppercase;
+				text-decoration: none;
+				margin-right: 1rem;
+				color: #aaa;
+				background: none;
+				border: none;
+
+				&.active,
+				&:hover {
+					color: red;
+					cursor: pointer;
 				}
 			}
 		}
