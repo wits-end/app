@@ -273,6 +273,10 @@
 			</div>
 		</div>
 	</div>
+	<div class="pagination">
+		<a href="#">Prev</a>
+		<a href="#">Next</a>
+	</div>
 </div>
 
 <style lang="scss">

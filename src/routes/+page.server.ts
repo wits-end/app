@@ -53,10 +53,21 @@ export const actions: Actions = {
   }
 }
 
-export const load: PageServerLoad = async ({ params, url, locals: { supabase, session, profile } }) => {
-  let sort = url.searchParams.get('sort')
+const getPagination = (page, size) => {
+  const limit = size ? +size : 3
+  const from = page ? page * limit : 0
+  const to = page ? from + size - 1 : size - 1
 
-  const { data: articles } = await supabase.from('articles').select().order('created_at', { ascending: false })
+  return { from, to }
+}
+
+export const load: PageServerLoad = async ({ params, url, locals: { supabase, session, profile } }) => {
+  const sort = url.searchParams.get('sort') || "recent";
+  const page = url.searchParams.get('page') || 0;
+
+  const { from, to } = getPagination(page, 14);
+
+  const { data: articles } = await supabase.from('articles').select().order('created_at', { ascending: false }).range(from, to)
 
   return { articles: articles ?? [], profile, session }
 }
