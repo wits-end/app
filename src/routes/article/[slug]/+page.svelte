@@ -17,7 +17,7 @@
 <div class="wrapper">
 	<div class="tools">
 		<nav class="actions">
-			<button class="action-button">Comment</button>
+			<!-- <button class="action-button">Comment</button> -->
 			<button class="action-button">Save</button>
 			<button class="action-button">Share</button>
 			<button class="action-button">Report</button>
@@ -35,14 +35,14 @@
 						{@html marked(article?.synopsis)}
 					</div>
 				{/if}
-				<h3 class="minion">Comments</h3>
+				<!-- <h3 class="minion">Comments</h3>
 				{#if session}
 					<form>
 						<textarea rows="8" cols="80"></textarea>
 						<button>Add Comment</button>
 					</form>
-				{/if}
-				<p style="margin-top:1rem;">Comments are currently disabled.</p>
+				{/if} -->
+				<!-- <p style="margin-top:1rem;">Comments are currently disabled.</p> -->
 				<!-- {#each article.comments as comment}
 				<p>{comment.profile.username} | 1 hour ago</p>
 				<p>{comment.message}</p>
@@ -73,9 +73,9 @@
 				<h3 class="minion">Related</h3>
 				<FeedCondensed data={relatedFeedData} />
 			</div>
-			<div class="ads">
+			<!-- <div class="ads">
 				<h3 class="minion">Ads</h3>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	<script

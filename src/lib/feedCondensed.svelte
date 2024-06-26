@@ -106,12 +106,12 @@
 				}
 				.date,
 				.read-more {
-					border-right: 1px solid #ddd;
 					padding-right: 1rem;
 					padding-bottom: 0.25rem;
 				}
 				.read-more,
 				form {
+					border-left: 1px solid #ddd;
 					padding-left: 1rem;
 					padding-bottom: 0.25rem;
 				}

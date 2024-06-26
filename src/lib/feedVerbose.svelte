@@ -40,9 +40,7 @@
 			<p class="description">{article.abstract.substr(0, 500)}...</p>
 			<div class="actions">
 				<p class="date">updated {dayjs().to(dayjs(article.updated_at))}</p>
-				<a class="read-more" href="/article/{article.id}"
-					>{Math.floor(Math.random() * 3 + 1)} comments</a
-				>
+				<a class="read-more" href="/article/{article.id}">read more</a>
 				{#if session}
 					{#if savedArticleIds?.includes(article.id)}
 						<form
@@ -113,12 +111,12 @@
 				}
 				.date,
 				.read-more {
-					border-right: 1px solid #ddd;
 					padding-right: 1rem;
 					padding-bottom: 0.25rem;
 				}
 				.read-more,
 				form {
+					border-left: 1px solid #ddd;
 					padding-left: 1rem;
 					padding-bottom: 0.25rem;
 				}

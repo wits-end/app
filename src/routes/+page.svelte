@@ -19,20 +19,21 @@
 	});
 
 	// Handle url params on load
-	const categoryParam = $page.url.searchParams.get('category') || 'all';
-	const tagParam = $page.url.searchParams.get('tag') || 'all';
-	const searchParam = $page.url.searchParams.get('search') || '';
-	const sortParam = $page.url.searchParams.get('sort') || 'recent';
-	const timeParam = $page.url.searchParams.get('time') || 'alltime';
-	const pageParam: number = parseInt($page.url.searchParams.get('page') || '0');
+	$: {
+		let categoryParam = $page.url.searchParams.get('category') || 'all';
+		let tagParam = $page.url.searchParams.get('tag') || 'all';
+		let searchParam = $page.url.searchParams.get('search') || '';
+		let sortParam = $page.url.searchParams.get('sort') || 'recent';
+		let timeParam = $page.url.searchParams.get('time') || 'alltime';
+		let pageParam: number = parseInt($page.url.searchParams.get('page') || '0');
 
-	$articleStore.category = categoryParam;
-	$articleStore.tag = tagParam;
-	$articleStore.search = searchParam;
-	$articleStore.sort = sortParam;
-	$articleStore.time = timeParam;
-	$articleStore.page = pageParam;
-
+		$articleStore.category = categoryParam;
+		$articleStore.tag = tagParam;
+		$articleStore.search = searchParam;
+		$articleStore.sort = sortParam;
+		$articleStore.time = timeParam;
+		$articleStore.page = pageParam;
+	}
 	// Reactive filters
 	const categories = [
 		['cs.ai', 'Artificial Intelligence'],

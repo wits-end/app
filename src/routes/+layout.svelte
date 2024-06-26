@@ -37,7 +37,7 @@
 	<div class="wrapper">
 		<Logo />
 		<nav>
-			<a href="/">Home</a>
+			<a href="/about">About</a>
 			{#if session}
 				<a href="/account">Account</a>
 				<a href="/" on:click={logout}>Logout</a>
