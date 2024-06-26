@@ -2,9 +2,6 @@
 	/** @type {import('./$types').PageData} */
 	import { marked } from 'marked';
 	import FeedCondensed from '$lib/feedCondensed.svelte';
-	import FeedVerbose from '$lib/feedVerbose.svelte';
-	import Layout from '../../+layout.svelte';
-	import { REALTIME_PRESENCE_LISTEN_EVENTS } from '@supabase/supabase-js';
 
 	export let data;
 
@@ -18,6 +15,14 @@
 </script>
 
 <div class="wrapper">
+	<div class="tools">
+		<nav class="actions">
+			<button class="action-button">Comment</button>
+			<button class="action-button">Save</button>
+			<button class="action-button">Share</button>
+			<button class="action-button">Report</button>
+		</nav>
+	</div>
 	<div class="grid">
 		<div class="col">
 			<div class="article">
@@ -68,6 +73,9 @@
 				<h3 class="minion">Related</h3>
 				<FeedCondensed data={relatedFeedData} />
 			</div>
+			<div class="ads">
+				<h3 class="minion">Ads</h3>
+			</div>
 		</div>
 	</div>
 	<script
@@ -79,44 +87,62 @@
 </div>
 
 <style lang="scss">
-	.grid {
-		display: grid;
-		grid-template-rows: auto;
-		grid-template-columns: 3fr 1fr;
-		grid-gap: 2rem;
+	.wrapper {
+		.tools {
+			border-bottom: 1px solid #ddd;
+			margin-bottom: 2rem;
 
-		.col {
-			padding: 1rem;
-			padding-left: 0;
-			border-right: 1px solid #ddd;
+			.actions {
+				padding-bottom: 2rem;
 
-			&:last-child {
-				border: none;
-			}
-
-			.article {
-				.title {
+				.action-button {
 					font-family: 'Open Sans';
-					font-size: 3.2rem;
-					line-height: 1.25;
-				}
-				.thumbnail {
-					max-width: 100%;
-					width: 100%;
-				}
-				.minion {
-					font-family: 'Open Sans';
+					font-size: 1.2rem;
+					font-weight: 500;
 					text-transform: uppercase;
-					font-size: 1.4rem;
-					line-height: 1.4rem;
-					color: #666;
-					padding-bottom: 1rem;
-					margin-bottom: 1rem;
-					border-bottom: 1px solid #ddd;
+					text-decoration: none;
+					margin-right: 2rem;
+					color: #aaa;
+					background: none;
+					border: none;
+
+					&.active,
+					&:hover {
+						color: red;
+						cursor: pointer;
+					}
+				}
+			}
+		}
+		.grid {
+			display: grid;
+			grid-template-rows: auto;
+			grid-template-columns: 3fr 1fr;
+			grid-gap: 2rem;
+
+			.col {
+				padding: 1rem;
+				padding-left: 0;
+				border-right: 1px solid #ddd;
+
+				&:last-child {
+					border: none;
 				}
 
-				.ai {
-					:global(h2) {
+				.article {
+					p {
+						font-size: 1.8rem;
+					}
+					.title {
+						font-family: 'Open Sans';
+						font-size: 3.2rem;
+						line-height: 1.25;
+					}
+					.thumbnail {
+						max-width: 100%;
+						width: 100%;
+					}
+					.minion {
 						font-family: 'Open Sans';
 						text-transform: uppercase;
 						font-size: 1.4rem;
@@ -126,26 +152,42 @@
 						margin-bottom: 1rem;
 						border-bottom: 1px solid #ddd;
 					}
-				}
-			}
 
-			.meta {
-				margin-bottom: 2rem;
-				p {
-					margin-bottom: 0;
+					.ai {
+						:global(h2) {
+							font-family: 'Open Sans';
+							text-transform: uppercase;
+							font-size: 1.4rem;
+							line-height: 1.4rem;
+							color: #666;
+							padding-bottom: 1rem;
+							margin-bottom: 1rem;
+							border-bottom: 1px solid #ddd;
+						}
+						:global(p) {
+							font-size: 1.8rem;
+						}
+					}
 				}
-			}
 
-			form {
-				button {
-					display: block;
-					padding: 1rem 2rem;
-					margin-top: 1rem;
-					background: white;
-					border: 1px solid #aaa;
+				.meta {
+					margin-bottom: 2rem;
+					p {
+						margin-bottom: 0;
+					}
 				}
-				textarea {
-					border: 1px solid #aaa;
+
+				form {
+					button {
+						display: block;
+						padding: 1rem 2rem;
+						margin-top: 1rem;
+						background: white;
+						border: 1px solid #aaa;
+					}
+					textarea {
+						border: 1px solid #aaa;
+					}
 				}
 			}
 		}

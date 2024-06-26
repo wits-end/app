@@ -39,7 +39,7 @@ export const filterHandler = (store) => {
     const tag = store.tag == "all" ? "" : (store.tag.toLowerCase() || "")
     const sort = store.sort.toLowerCase() || ""
     const time = store.time.toLowerCase() || ""
-    const { from, to } = getPagination(store.page, 14)
+    const { from, to } = getPagination(store.page, 15)
 
     let timeThreshold = new Date()
 
