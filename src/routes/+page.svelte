@@ -4,7 +4,7 @@
 	import Sort from '$lib/sort.svelte';
 	import Tags from '$lib/tags.svelte';
 	import { createArticleStore, filterHandler } from '$lib/stores/search.js';
-	import { onDestroy, beforeUpdate } from 'svelte';
+	import { onDestroy, beforeUpdate, onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 
@@ -14,12 +14,13 @@
 	// Store for articles
 	const articleStore = createArticleStore(articles);
 	const unsubscribe = articleStore.subscribe((model) => filterHandler(model));
+
 	onDestroy(() => {
 		unsubscribe();
 	});
 
 	// Handle url params on load
-	$: {
+	onMount(() => {
 		let categoryParam = $page.url.searchParams.get('category') || 'all';
 		let tagParam = $page.url.searchParams.get('tag') || 'all';
 		let searchParam = $page.url.searchParams.get('search') || '';
@@ -33,7 +34,29 @@
 		$articleStore.sort = sortParam;
 		$articleStore.time = timeParam;
 		$articleStore.page = pageParam;
-	}
+
+		// Set actives based on urlparams
+		if (categories.some((x) => x[0] === categoryParam)) {
+			document.querySelector('.category-button.active')?.classList.remove('active');
+			document.getElementById(`category-button-${categoryParam}`)?.classList.toggle('active');
+		}
+
+		if (tags.some((x) => x[0] === tagParam)) {
+			document.querySelector('.tag-button.active')?.classList.remove('active');
+			document.getElementById(`tag-button-${tagParam}`)?.classList.toggle('active');
+		}
+
+		if (sortOptions.some((x) => x[0] === sortParam)) {
+			document.querySelector('.sort-button.active')?.classList.remove('active');
+			document.getElementById(`sort-button-${sortParam}`)?.classList.toggle('active');
+		}
+
+		if (timeOptions.some((x) => x[0] === timeParam)) {
+			document.querySelector('.time-button.active')?.classList.remove('active');
+			document.getElementById(`time-button-${timeParam}`)?.classList.toggle('active');
+		}
+	});
+
 	// Reactive filters
 	const categories = [
 		['cs.ai', 'Artificial Intelligence'],
@@ -45,40 +68,40 @@
 	];
 
 	const tags = [
-		'ensemble',
-		'optimization',
-		'pruning',
-		'distillation',
-		'diffusion',
-		'generative',
-		'tuning',
-		'reinforcement',
-		'unsupervised',
-		'supervised',
-		'classification',
-		'regression',
-		'regularization',
-		'evolution',
-		'sparsity',
-		'latent',
-		'quantization',
-		'augmentation',
-		'federated',
-		'transfer',
-		'attention',
-		'bayesian',
-		'interpretability',
-		'clustering',
-		'embedding',
-		'efficient',
-		'segmentation',
-		'theory'
+		['ensemble', 'Ensemble'],
+		['optimization', 'Optimization'],
+		['pruning', 'Pruning'],
+		['distillation', 'Distillation'],
+		['diffusion', 'Diffusion'],
+		['generative', 'Generative'],
+		['tuning', 'Tuning'],
+		['reinforcement', 'Reinforcement'],
+		['unsupervised', 'Unsupervised'],
+		['supervised', 'Supervised'],
+		['classification', 'Classification'],
+		['regression', 'Regression'],
+		['regularization', 'Regularization'],
+		['evolution', 'Evolution'],
+		['sparsity', 'Sparsity'],
+		['latent', 'Latent'],
+		['quantization', 'Quantization'],
+		['augmentation', 'Augmentation'],
+		['federated', 'Federated'],
+		['transfer', 'Tranfer'],
+		['attention', 'attention'],
+		['bayesian', 'Bayesian'],
+		['interpretability', 'Interpretability'],
+		['clustering', 'Clustering'],
+		['embedding', 'Embedding'],
+		['efficient', 'Efficient'],
+		['segmentation', 'Segmentation'],
+		['theory', 'Theory']
 	];
 
 	const sortOptions = [
 		['featured', 'Featured'],
-		['trending', 'Trending'],
-		['foryou', 'For You']
+		['influential', 'Influential']
+		// ['foryou', 'For You']
 	];
 
 	const timeOptions = [
@@ -176,6 +199,7 @@
 		<nav class="categories">
 			<button
 				class="category-button active"
+				id="category-button-all"
 				on:click={(e) => {
 					handleCategory(e, 'all');
 				}}>All</button
@@ -183,6 +207,7 @@
 			{#each categories as [key, value]}
 				<button
 					class="category-button"
+					id="category-button-{key}"
 					on:click={(e) => {
 						handleCategory(e, key);
 					}}>{value}</button
@@ -245,17 +270,26 @@
 					<div class="group">
 						<button
 							class="sort-button active"
+							id="sort-button-recent"
 							on:click={(e) => {
 								handleSort(e, 'recent');
 							}}>Recent</button
 						>
 						{#each sortOptions as [key, value]}
-							<button class="sort-button-disabled">{value}</button>
+							<button
+								class="sort-button"
+								id="sort-button-{key}"
+								on:click={(e) => {
+									handleSort(e, key);
+								}}>{value}</button
+							>
 						{/each}
+						<button class="sort-button-disabled">For You</button>
 					</div>
 					<div class="group">
 						<button
 							class="time-button active"
+							id="time-button-alltime"
 							on:click={(e) => {
 								handleTime(e, 'alltime');
 							}}>All Time</button
@@ -263,6 +297,7 @@
 						{#each timeOptions as [key, value]}
 							<button
 								class="time-button"
+								id="time-button-{key}"
 								on:click={(e) => {
 									handleTime(e, key);
 								}}>{value}</button
@@ -278,15 +313,17 @@
 				<h3 class="minion">Tags</h3>
 				<button
 					class="tag-button active"
+					id="tag-button-all"
 					on:click={(e) => {
 						handleTag(e, 'all');
 					}}>All</button
-				>{#each tags as tag}
+				>{#each tags as [key, value]}
 					<button
 						class="tag-button"
+						id="tag-button-{key}"
 						on:click={(e) => {
-							handleTag(e, tag.toLowerCase());
-						}}>{tag}</button
+							handleTag(e, key);
+						}}>{value}</button
 					>
 				{/each}
 			</div>

@@ -63,13 +63,17 @@ export const filterHandler = (store) => {
         return (hasSearch && hasCategory && hasTag && withinTime)
     }).slice(from, to)
 
-    if (sort == "featured") {
+    if (sort == "recent") {
         store.filtered.sort((a, b) => {
-
+            return a.created_at < b.created_at
         })
-    } else if (sort == "trending") {
-
-    } else if (sort == "foryou") {
-
+    } else if (sort == "featured") {
+        store.filtered.sort((a, b) => {
+            return a.h_index < b.h_index
+        })
+    } else if (sort == "influential") {
+        store.filtered.sort((a, b) => {
+            return a.citations < b.citations
+        })
     }
 }

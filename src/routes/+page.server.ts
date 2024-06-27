@@ -57,8 +57,18 @@ export const actions: Actions = {
 
 export const load: PageServerLoad = async ({ params, url, locals: { supabase, session, profile } }) => {
   const sort = url.searchParams.get('sort') || "recent";
+  let articles: any;
 
-  const { data: articles } = await supabase.from('articles').select().order('created_at', { ascending: false })
+  if (sort == "recent") {
+    ({ data: articles } = await supabase.from('articles')
+      .select().order('created_at', { ascending: false }))
+  } else if (sort == "featured") {
+    ({ data: articles } = await supabase.from('articles')
+      .select().order('h_index', { ascending: false }))
+  } else if (sort == "influential") {
+    ({ data: articles } = await supabase.from('articles')
+      .select().order('citations', { ascending: false }))
+  }
 
   return { articles: articles ?? [], profile, session }
 }
