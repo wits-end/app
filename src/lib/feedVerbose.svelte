@@ -30,16 +30,18 @@
 <div class="feed">
 	{#each articles as article}
 		<div class="post">
-			<p class="published-date">
-				{dayjs(article.created_at).format('YYYY-MM-DD')}
+			<p class="updated-date">
+				{dayjs(article.updated_at).format('YYYY-MM-DD')}
 			</p>
 			<small class="categories">{article.subjects}</small>
 			<h1 class="title"><a href="/article/{article.id}">{article.title}</a></h1>
-			<p class="authors">{article.authors}</p>
+			<p class="authors">
+				{article.authors.substr(0, 200)}{article.authors.length > 200 ? '...' : ''}
+			</p>
 			<img src={article.thumb_url} alt="PDF Thumbnail" />
 			<p class="description">{article.abstract.substr(0, 500)}...</p>
 			<div class="actions">
-				<p class="date">updated {dayjs().to(dayjs(article.updated_at))}</p>
+				<p class="date">published {dayjs().to(dayjs(article.published_at))}</p>
 				<a class="read-more" href="/article/{article.id}">read more</a>
 				{#if session}
 					{#if savedArticleIds?.includes(article.id)}
@@ -60,6 +62,8 @@
 				{/if}
 			</div>
 		</div>
+	{:else}
+		<div class="message"><p>N/A</p></div>
 	{/each}
 </div>
 
@@ -71,7 +75,7 @@
 			margin-right: 2rem;
 			border-bottom: 1px solid #ddd;
 
-			.published-date {
+			.updated-date {
 				font-size: 1.3rem;
 				margin: 0;
 			}

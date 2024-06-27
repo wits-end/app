@@ -61,7 +61,7 @@ export const load: PageServerLoad = async ({ params, url, locals: { supabase, se
 
   if (sort == "recent") {
     ({ data: articles } = await supabase.from('articles')
-      .select().order('created_at', { ascending: false }))
+      .select().order('published_at', { ascending: false }))
   } else if (sort == "featured") {
     ({ data: articles } = await supabase.from('articles')
       .select().order('h_index', { ascending: false }))

@@ -28,43 +28,37 @@
 </script>
 
 <div class="feed">
-	{#if articles}
-		{#each articles as article}
-			<div class="post">
-				<p class="published-date">
-					{dayjs(article?.created_at).format('YYYY-MM-DD')}
-				</p>
-				<h2 class="title"><a href="/article/{article?.id}">{article?.title}</a></h2>
-				<div class="actions">
-					<p class="date">{dayjs().to(dayjs(article?.updated_at))}</p>
-					<a class="read-more" href="/article/{article?.id}">read more</a>
-					{#if session}
-						{#if savedArticleIds?.includes(article?.id)}
-							<form
-								method="post"
-								action="?/unsaveArticle"
-								use:enhance={() => handleSubmit(article?.id)}
-							>
-								<input type="hidden" name="articleId" value={article?.id} />
-								<button>unsave article</button>
-							</form>
-						{:else}
-							<form
-								method="post"
-								action="?/saveArticle"
-								use:enhance={() => handleSubmit(article.id)}
-							>
-								<input type="hidden" name="articleId" value={article?.id} />
-								<button>save article</button>
-							</form>
-						{/if}
+	{#each articles as article}
+		<div class="post">
+			<p class="updated-date">
+				{dayjs(article?.updated_at).format('YYYY-MM-DD')}
+			</p>
+			<h2 class="title"><a href="/article/{article?.id}">{article?.title}</a></h2>
+			<div class="actions">
+				<p class="date">{dayjs().to(dayjs(article?.published_at))}</p>
+				<a class="read-more" href="/article/{article?.id}">read more</a>
+				{#if session}
+					{#if savedArticleIds?.includes(article?.id)}
+						<form
+							method="post"
+							action="?/unsaveArticle"
+							use:enhance={() => handleSubmit(article?.id)}
+						>
+							<input type="hidden" name="articleId" value={article?.id} />
+							<button>unsave article</button>
+						</form>
+					{:else}
+						<form method="post" action="?/saveArticle" use:enhance={() => handleSubmit(article.id)}>
+							<input type="hidden" name="articleId" value={article?.id} />
+							<button>save article</button>
+						</form>
 					{/if}
-				</div>
+				{/if}
 			</div>
-		{/each}
+		</div>
 	{:else}
-		<p>N/A</p>
-	{/if}
+		<div class="message"><p>N/A</p></div>
+	{/each}
 </div>
 
 <style lang="scss">
@@ -75,7 +69,7 @@
 			margin-right: 2rem;
 			border-bottom: 1px solid #ddd;
 
-			.published-date {
+			.updated-date {
 				font-size: 1.3rem;
 				margin: 0;
 			}

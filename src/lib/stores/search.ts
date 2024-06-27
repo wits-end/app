@@ -65,7 +65,7 @@ export const filterHandler = (store) => {
 
     if (sort == "recent") {
         store.filtered.sort((a, b) => {
-            return a.created_at < b.created_at
+            return a.published_at < b.published_at
         })
     } else if (sort == "featured") {
         store.filtered.sort((a, b) => {
