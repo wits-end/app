@@ -88,6 +88,7 @@
 		background-size: 50rem;
 		background-color: rgba(255, 255, 255, 0.8);
 		background-blend-mode: lighten;
+		border-bottom: 1px solid #ddd;
 
 		.wrapper {
 			display: grid;
@@ -134,6 +135,7 @@
 		background-size: 50rem;
 		background-color: rgba(255, 255, 255, 0.8);
 		background-blend-mode: lighten;
+		border-top: 1px solid #ddd;
 
 		.wrapper {
 			display: grid;

@@ -44,7 +44,7 @@
 			bottom: 0;
 			z-index: 0;
 			background: white;
-			opacity: 0.75;
+			opacity: 0.65;
 		}
 
 		.wrapper {
