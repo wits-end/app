@@ -7,19 +7,17 @@
 		<div class="intro">
 			<h1>An AI Platform To<br /> Empower Researchers</h1>
 			<p>
-				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquid, pariatur. Minima dolorem
-				explicabo ad nam perferendis pariatur facilis facere dolor, id officia, quam rerum sed,
-				tempora doloremque libero quo corporis.
+				Deep learning has absolutely exploded over the last decade as tens of thousands of papers
+				are newly published every year. Exploring state of the art research can often feel like
+				drinking from a fire hose. Wits End serves as a valuable resource for machine learning
+				practitioners to better explore the research landscape.
 			</p>
 			<p>
-				Lorem ipsum dolor, sit amet consectetur adipisicing elit. Necessitatibus dolorum dolores
-				deleniti eos doloribus repellendus quidem ducimus minima quisquam repudiandae earum nobis,
-				neque reiciendis rerum aut maxime. Dolores, neque nisi?
-			</p>
-			<p>
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias expedita ad eveniet placeat
-				quod. Incidunt, harum! Ea odio nulla ex tempore quasi perferendis, fugiat sequi eligendi id
-				earum labore vero.
+				This project is inspired by my time in academia while I was pursuing my PhD. Arxiv Sanity
+				and Papers with Code were invaluable to me while I was navigating research. I wanted to
+				build the platform that I wish I had during my PhD. A place to find new ideas without
+				needing to trudge through the deluge of new research constantly being published. A place
+				where a community can develop that is geared towards discussing new and interesting ideas.
 			</p>
 		</div>
 	</div>
@@ -34,6 +32,9 @@
 		height: 80vh;
 		width: 100%;
 		position: relative;
+		margin-top: -1rem;
+		margin-bottom: -1rem;
+		filter: grayscale(1);
 
 		.overlay {
 			position: absolute;
@@ -43,7 +44,7 @@
 			bottom: 0;
 			z-index: 0;
 			background: white;
-			opacity: 0.65;
+			opacity: 0.75;
 		}
 
 		.wrapper {
@@ -60,7 +61,7 @@
 					font-size: 6.4rem;
 					text-transform: uppercase;
 					line-height: 1;
-					margin-bottom: 1rem;
+					margin-bottom: 2rem;
 					color: black;
 
 					@media screen and (max-width: 600px) {
@@ -71,7 +72,6 @@
 				p {
 					color: black;
 					font-size: 1.8rem;
-					font-style: italic;
 					max-width: 800px;
 					margin-bottom: 2rem;
 				}
