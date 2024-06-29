@@ -125,6 +125,7 @@
 	main {
 		background: white;
 		padding: 1rem;
+		min-height: 80vh;
 	}
 
 	footer {

@@ -106,6 +106,7 @@
 
 	const timeOptions = [
 		['pastfive', 'Past 5 Years'],
+		['pastthree', 'Past 3 Years'],
 		['pastyear', 'Past Year'],
 		['pastmonth', 'Past Month']
 	];

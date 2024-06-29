@@ -45,10 +45,10 @@ export const filterHandler = (store) => {
 
     if (time == "pastfive") {
         timeThreshold.setFullYear(timeThreshold.getFullYear() - 5)
-
+    } else if (time == "pastthree") {
+        timeThreshold.setFullYear(timeThreshold.getFullYear() - 3)
     } else if (time == "pastyear") {
         timeThreshold.setFullYear(timeThreshold.getFullYear() - 1)
-
     } else if (time == "pastmonth") {
         timeThreshold.setMonth(timeThreshold.getMonth() - 1)
     }
@@ -69,7 +69,7 @@ export const filterHandler = (store) => {
         })
     } else if (sort == "featured") {
         store.filtered.sort((a, b) => {
-            return a.h_index < b.h_index
+            return a.featured_at < b.featured_at
         })
     } else if (sort == "influential") {
         store.filtered.sort((a, b) => {

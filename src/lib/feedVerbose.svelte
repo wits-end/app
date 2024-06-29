@@ -30,10 +30,10 @@
 <div class="feed">
 	{#each articles as article}
 		<div class="post">
-			<p class="updated-date">
-				{dayjs(article.updated_at).format('YYYY-MM-DD')}
+			<p class="published-date">
+				{dayjs(article.published_at).format('YYYY-MM-DD')}
 			</p>
-			<small class="categories">{article.subjects}</small>
+			<small class="categories">{article.categories}</small>
 			<h1 class="title"><a href="/article/{article.id}">{article.title}</a></h1>
 			<p class="authors">
 				{article.authors.substr(0, 200)}{article.authors.length > 200 ? '...' : ''}
@@ -61,6 +61,11 @@
 					{/if}
 				{/if}
 			</div>
+			<p>
+				<small
+					>f: {dayjs(article.featured_at).format('YYYY-MM-DD')} | c: {article.citations} | h: {article.h_index}</small
+				>
+			</p>
 		</div>
 	{:else}
 		<div class="message"><p>N/A</p></div>
@@ -75,7 +80,7 @@
 			margin-right: 2rem;
 			border-bottom: 1px solid #ddd;
 
-			.updated-date {
+			.published-date {
 				font-size: 1.3rem;
 				margin: 0;
 			}
