@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Highcharts from 'highcharts';
 	import { Chart } from '@highcharts/svelte'; // Chart is also exported by default
-	import type { PageData } from './$types';
+	import type { PageData } from '../$types';
 	import FeedCondensed from '$lib/feedCondensed.svelte';
 	export let data: PageData;
 
