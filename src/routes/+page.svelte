@@ -63,8 +63,7 @@
 		['cs.cv', 'Computer Vision'],
 		['cs.lg', 'Machine Learning'],
 		['cs.cl', 'Natural Language Processing'],
-		['cs.ne', 'Neuroevolution'],
-		['stat.ml', 'Statistics']
+		['cs.ne', 'Neuroevolution']
 	];
 
 	const tags = [

@@ -3,31 +3,9 @@
 	import { Chart } from '@highcharts/svelte'; // Chart is also exported by default
 	import type { PageData } from './$types';
 	import FeedCondensed from '$lib/feedCondensed.svelte';
-
 	export let data: PageData;
 
 	let { articles, profile } = data;
-
-	let folders = [
-		{
-			label: 'Saved Articles',
-			isExpanded: true,
-			children: []
-		}
-	];
-
-	let toggleExpansion = (folder) => {
-		folder.isExpanded = !folder.isExpanded;
-		folders = folders;
-	};
-
-	// let embeddings = articles.map((article) => {
-	// 	return {
-	// 		type: 'line',
-	// 		data: JSON.parse(article.embedding),
-	// 		opacity: 0.2
-	// 	};
-	// });
 
 	let embeddings = articles.map((article) => {
 		return JSON.parse(article.embedding);
@@ -42,43 +20,14 @@
 		meanEmbedding.push(num / embeddings.length);
 	}
 
-	let maxEmbedding = [];
-	let minEmbedding = [];
-	for (let i = 0; i < embeddings[0].length; i++) {
-		let max = 0;
-		let min = 0;
-		for (let j = 0; j < embeddings.length; j++) {
-			if (embeddings[j][i] > max) {
-				max = embeddings[j][i];
-			}
-			if (embeddings[j][i] < min) {
-				min = embeddings[j][i];
-			}
-		}
-		maxEmbedding.push(max);
-		minEmbedding.push(min);
-	}
-
-	// embeddings.push({
-	// 	type: 'column',
-	// 	data: meanEmbedding,
-	// 	color: 'black',
-	// 	opacity: 0.8,
-	// 	plotOptions: {
-	// 		column: {
-	// 			pointWidth: 20
-	// 		}
-	// 	}
-	// });
-
 	let allEmbeddings = embeddings.map((e) => {
 		return {
 			type: 'scatter',
-			color: '#ddd',
-			opacity: 1,
+			color: '#aaa',
+			opacity: 0.5,
 			marker: {
 				symbol: 'diamond',
-				radius: 2
+				radius: 3
 			},
 			data: e
 		};
@@ -92,19 +41,6 @@
 		borderRadius: 0,
 		data: meanEmbedding
 	});
-
-	// allEmbeddings.push({
-	// 	type: 'areaspline',
-	// 	data: minEmbedding,
-	// 	color: '#dddddd',
-	// 	opacity: 0.25
-	// });
-	// allEmbeddings.push({
-	// 	type: 'areaspline',
-	// 	data: maxEmbedding,
-	// 	color: '#dddddd',
-	// 	opacity: 0.25
-	// });
 
 	let options = {
 		title: {
@@ -140,7 +76,7 @@
 <div class="wrapper">
 	<div class="menu">
 		<nav class="categories">
-			<span class="active">{profile?.username}</span>
+			<span class="active">@{profile?.username}</span>
 			<span>Settings</span>
 		</nav>
 	</div>
@@ -148,20 +84,19 @@
 	<div class="grid">
 		<div class="col">
 			<div id="chart-container">
+				<h2 class="chart-title">Embeddings</h2>
 				<Chart {options} highcharts={Highcharts} />
 			</div>
+			<p>
+				All research articles on Wits End are represented with a 256 dimensional vector embedding.
+				These embeddings are used to represent article similarity and to make recommendations based
+				on the types of research articles you like. The scatter plot and the column chart visualize
+				your saved and mean embeddings respectively.
+			</p>
 		</div>
 		<div class="tree col">
-			{#each folders as folder}
-				<h3 class="minion" on:click={() => toggleExpansion(folder)}>
-					{folder.isExpanded ? '\u25BE' : '\u25B8'}
-					{folder.label}
-				</h3>
-
-				{#if folder.isExpanded}
-					<FeedCondensed {data} />
-				{/if}
-			{/each}
+			<h3 class="minion">Saved Articles</h3>
+			<FeedCondensed {data} />
 		</div>
 	</div>
 </div>
@@ -223,6 +158,12 @@
 
 			#chart-container {
 				margin-left: -1rem;
+				margin-bottom: 2rem;
+
+				.chart-title {
+					margin-left: 1rem;
+					margin-bottom: 1rem;
+				}
 			}
 			.input-group {
 				display: flex;
