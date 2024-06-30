@@ -74,25 +74,62 @@
 </script>
 
 <div class="wrapper">
-	<div class="menu">
+	<!-- <div class="menu">
 		<nav class="categories">
 			<span class="active">@{profile?.username}</span>
 			<span>Settings</span>
 		</nav>
-	</div>
+	</div> -->
 
 	<div class="grid">
 		<div class="col">
-			<div id="chart-container">
-				<h2 class="chart-title">Embeddings</h2>
-				<Chart {options} highcharts={Highcharts} />
+			<h3 class="minion">Embedding Fingerprint</h3>
+			<div class="embeddings">
+				<p>
+					All research articles on Wits End are represented with a 256 dimensional vector embedding.
+					These embeddings are used to measure article similarity and to make recommendations for
+					new papers based on the unique collection of research articles you have saved to your
+					account.
+				</p>
+				<div id="chart-container">
+					<Chart {options} highcharts={Highcharts} />
+				</div>
 			</div>
-			<p>
-				All research articles on Wits End are represented with a 256 dimensional vector embedding.
-				These embeddings are used to represent article similarity and to make recommendations based
-				on the types of research articles you like. The scatter plot and the column chart visualize
-				your saved and mean embeddings respectively.
-			</p>
+
+			<h3 class="minion">Personal Info</h3>
+			<div class="personal-info">
+				<form>
+					<div class="input-group">
+						<div>
+							<label for="first_name">first name</label>
+							<input placeholder="first name" name="first_name" value={profile?.first_name} />
+						</div>
+						<div>
+							<label for="last_name">last name</label>
+							<input placeholder="last name" name="last_name" value={profile?.last_name} />
+						</div>
+					</div>
+					<div class="input-group">
+						<div>
+							<label for="username">username</label>
+							<input placeholder="username" name="username" value={profile?.username} />
+						</div>
+						<div>
+							<label for="email">email</label>
+							<input placeholder="email" name="email" value={profile?.email} />
+						</div>
+					</div>
+					<label for="interests">interests</label>
+					<textarea
+						placeholder="Research, Summary, Bio, etc..."
+						name="interests"
+						rows="8"
+						value={profile?.bio}
+					/>
+
+					<button>Save</button>
+				</form>
+			</div>
 		</div>
 		<div class="tree col">
 			<h3 class="minion">Saved Articles</h3>
@@ -145,7 +182,6 @@
 		grid-template-rows: auto auto;
 		grid-template-columns: 3fr 1fr;
 		grid-gap: 2rem;
-		margin-top: 2rem;
 
 		.col {
 			padding: 1rem;
@@ -156,28 +192,51 @@
 				border: none;
 			}
 
-			#chart-container {
-				margin-left: -1rem;
+			.personal-info {
 				margin-bottom: 2rem;
 
-				.chart-title {
-					margin-left: 1rem;
-					margin-bottom: 1rem;
+				form {
+					.input-group {
+						display: grid;
+						grid-template-columns: 1fr 1fr;
+						grid-gap: 2rem;
+						margin-bottom: 2rem;
+
+						input {
+							padding: 1rem;
+							width: 100%;
+							border: 1px solid #ddd;
+						}
+					}
+					textarea {
+						width: 100%;
+						padding: 1rem;
+						border: 1px solid #ddd;
+						margin-bottom: 2rem;
+					}
+					button {
+						background: white;
+						border: 1px solid #ddd;
+						padding: 1rem 2rem;
+						transition: all 0.2s ease;
+
+						&:hover {
+							border: 1px solid #666;
+						}
+					}
 				}
 			}
-			.input-group {
-				display: flex;
-				input {
-					padding: 1rem;
-					margin: 1rem;
-					width: 100%;
+			.embeddings {
+				margin-bottom: 2rem;
+				#chart-container {
+					margin-left: -1rem;
+					margin-bottom: 2rem;
+
+					.chart-title {
+						margin-left: 1rem;
+						margin-bottom: 1rem;
+					}
 				}
-			}
-			textarea {
-				padding: 1rem;
-				margin: 1rem;
-				margin-right: 2rem;
-				width: 100%;
 			}
 		}
 
