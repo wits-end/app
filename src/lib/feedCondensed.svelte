@@ -55,14 +55,12 @@
 					{/if}
 				{/if}
 			</div>
-			<p>
+			<!-- <p>
 				<small
-					>f: {dayjs(article.featured_at).format('YYYY-MM-DD')} | c: {article.citations} | h: {article.h_index}</small
+					>c: {article.citations} | h: {article.h_index}</small
 				>
-			</p>
+			</p> -->
 		</div>
-	{:else}
-		<div class="message"><p>N/A</p></div>
 	{/each}
 </div>
 
