@@ -43,8 +43,8 @@
 			<div class="actions">
 				<p class="date">published {dayjs().to(dayjs(article.published_at))}</p>
 				<a class="read-more" href="/article/{article.id}">read more</a>
-				{#if session}
-					{#if savedArticleIds?.includes(article.id)}
+				{#if session && profile}
+					{#if profile?.articles.some((x) => x.id === article.id)}
 						<form
 							method="post"
 							action="?/unsaveArticle"

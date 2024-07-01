@@ -1,16 +1,26 @@
-<script>
+<script lang="ts">
 	/** @type {import('./$types').PageData} */
 	import { marked } from 'marked';
+	import { enhance } from '$app/forms';
+	import type { SubmitFunction } from '@sveltejs/kit';
 	import FeedCondensed from '$lib/feedCondensed.svelte';
 	import dayjs from 'dayjs';
-	export let data;
 
-	$: ({ article, relatedArticles, session } = data);
+	export let data;
+	let { article, relatedArticles } = data;
+	$: ({ session, profile } = data);
 
 	$: relatedFeedData = {
 		articles: relatedArticles,
 		savedArticleIds: [],
-		session: session
+		session: session,
+		profile: profile
+	};
+
+	$: isSaved = profile?.articles.some((x) => x.id === article.id) || false;
+
+	const handleSubmit: SubmitFunction = () => {
+		isSaved = !isSaved;
 	};
 </script>
 
@@ -28,14 +38,26 @@
 					</div>
 				{/if}
 
-				<div class="tools">
-					<nav class="actions">
-						<!-- <button class="action-button">Comment</button> -->
-						<button class="action-button">Save</button>
-						<button class="action-button">Share</button>
-						<button class="action-button">Report</button>
-					</nav>
-				</div>
+				{#if session && profile}
+					<div class="tools">
+						<nav class="actions">
+							<!-- <button class="action-button">Comment</button> -->
+							{#if isSaved}
+								<form method="post" action="?/unsaveArticle" use:enhance={() => handleSubmit()}>
+									<input type="hidden" name="articleId" value={article?.id} />
+									<button class="action-button">Unsave</button>
+								</form>
+							{:else}
+								<form method="post" action="?/saveArticle" use:enhance={() => handleSubmit()}>
+									<input type="hidden" name="articleId" value={article?.id} />
+									<button class="action-button">Save</button>
+								</form>
+							{/if}
+							<button class="action-button-disabled">Share</button>
+							<button class="action-button-disabled">Report</button>
+						</nav>
+					</div>
+				{/if}
 
 				<!-- <h3 class="minion">Comments</h3>
 				{#if session}
@@ -153,6 +175,10 @@
 						.actions {
 							padding-top: 1rem;
 
+							form {
+								display: inline-block;
+							}
+
 							.action-button {
 								font-family: 'Open Sans';
 								font-size: 1.2rem;
@@ -170,6 +196,19 @@
 									cursor: pointer;
 								}
 							}
+							.action-button-disabled {
+								font-family: 'Open Sans';
+								font-size: 1.2rem;
+								font-weight: 500;
+								text-transform: uppercase;
+								text-decoration: line-through;
+								margin-right: 2rem;
+								color: #aaa;
+								display: inline-block;
+								border: none;
+								background: none;
+								cursor: text;
+							}
 						}
 					}
 				}
@@ -178,19 +217,6 @@
 					margin-bottom: 2rem;
 					p {
 						margin-bottom: 0;
-					}
-				}
-
-				form {
-					button {
-						display: block;
-						padding: 1rem 2rem;
-						margin-top: 1rem;
-						background: white;
-						border: 1px solid #aaa;
-					}
-					textarea {
-						border: 1px solid #aaa;
 					}
 				}
 			}

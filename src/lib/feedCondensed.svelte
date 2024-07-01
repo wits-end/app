@@ -37,7 +37,7 @@
 			<div class="actions">
 				<p class="date">{dayjs().to(dayjs(article?.published_at))}</p>
 				<a class="read-more" href="/article/{article?.id}">read more</a>
-				{#if session}
+				{#if session && profile}
 					{#if savedArticleIds?.includes(article?.id)}
 						<form
 							method="post"
@@ -57,7 +57,7 @@
 			</div>
 			<!-- <p>
 				<small
-					>c: {article.citations} | h: {article.h_index}</small
+					>f: {dayjs(article.featured_at).format('YYYY-MM-DD')} | c: {article.citations} | h: {article.h_index}</small
 				>
 			</p> -->
 		</div>
