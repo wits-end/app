@@ -1,34 +1,38 @@
-<script>
+<script lang="ts">
 	/** @type {import('./$types').PageData} */
 	import { marked } from 'marked';
+	import { enhance } from '$app/forms';
+	import type { SubmitFunction } from '@sveltejs/kit';
 	import FeedCondensed from '$lib/feedCondensed.svelte';
+	import dayjs from 'dayjs';
 
 	export let data;
-
-	$: ({ article, relatedArticles, session } = data);
+	let { article, relatedArticles } = data;
+	$: ({ session, profile } = data);
 
 	$: relatedFeedData = {
 		articles: relatedArticles,
 		savedArticleIds: [],
-		session: session
+		session: session,
+		profile: profile
+	};
+
+	$: isSaved = profile?.articles.some((x) => x.id === article.id) || false;
+
+	const handleSubmit: SubmitFunction = () => {
+		isSaved = !isSaved;
 	};
 </script>
 
 <div class="wrapper">
-	<div class="tools">
-		<nav class="actions">
-			<!-- <button class="action-button">Comment</button> -->
-			<button class="action-button">Save</button>
-			<button class="action-button">Share</button>
-			<button class="action-button">Report</button>
-		</nav>
-	</div>
 	<div class="grid">
 		<div class="col">
 			<div class="article">
 				<h1 class="title">{article?.title}</h1>
 				<p><small>{article?.authors}</small></p>
-				<img class="thumbnail" src={article?.thumb_url} alt="PDF Thumbnail" />
+				<a href="https://arxiv.org/pdf/{article?.arxiv_id}"
+					><img class="thumbnail" src={article?.thumb_url} alt="PDF Thumbnail" /></a
+				>
 				<p><b>Abstract:</b> {article?.abstract}</p>
 				{#if article?.synopsis}
 					<h3 class="minion">Synopsis</h3>
@@ -36,6 +40,28 @@
 						{@html marked(article?.synopsis)}
 					</div>
 				{/if}
+
+				{#if session && profile}
+					<div class="tools">
+						<nav class="actions">
+							<!-- <button class="action-button">Comment</button> -->
+							{#if isSaved}
+								<form method="post" action="?/unsaveArticle" use:enhance={() => handleSubmit()}>
+									<input type="hidden" name="articleId" value={article?.id} />
+									<button class="action-button">Unsave</button>
+								</form>
+							{:else}
+								<form method="post" action="?/saveArticle" use:enhance={() => handleSubmit()}>
+									<input type="hidden" name="articleId" value={article?.id} />
+									<button class="action-button">Save</button>
+								</form>
+							{/if}
+							<button class="action-button-disabled">Share</button>
+							<button class="action-button-disabled">Report</button>
+						</nav>
+					</div>
+				{/if}
+
 				<!-- <h3 class="minion">Comments</h3>
 				{#if session}
 					<form>
@@ -54,14 +80,16 @@
 		<div class="col">
 			<div class="meta">
 				<h3 class="minion">Meta</h3>
+				<p>Published: {dayjs(article?.published_at).format('YYYY-MM-DD')}</p>
+				<p>Updated: {dayjs(article?.updated_at).format('YYYY-MM-DD')}</p>
 				<p>
 					URL: <a href={'https://arxiv.org/abs/' + article?.arxiv_id}
 						>{'https://arxiv.org/abs/' + article?.arxiv_id}</a
 					>
 				</p>
-				<p>Published: {article?.published_at}</p>
-				<p>Updated: {article?.updated_at}</p>
 				<p>Authors: {article?.authors}</p>
+				<p>Citations: {article?.citations}</p>
+				<p>H Index: {article?.h_index}</p>
 				<p>Categories: {article?.categories}</p>
 				<p>Keywords: {article?.keywords}</p>
 			</div>
@@ -89,32 +117,6 @@
 
 <style lang="scss">
 	.wrapper {
-		.tools {
-			border-bottom: 1px solid #ddd;
-			margin-bottom: 2rem;
-
-			.actions {
-				padding-bottom: 2rem;
-
-				.action-button {
-					font-family: 'Open Sans';
-					font-size: 1.2rem;
-					font-weight: 500;
-					text-transform: uppercase;
-					text-decoration: none;
-					margin-right: 2rem;
-					color: #aaa;
-					background: none;
-					border: none;
-
-					&.active,
-					&:hover {
-						color: red;
-						cursor: pointer;
-					}
-				}
-			}
-		}
 		.grid {
 			display: grid;
 			grid-template-rows: auto;
@@ -162,25 +164,55 @@
 							font-size: 1.8rem;
 						}
 					}
+					.tools {
+						border-top: 1px solid #ddd;
+						margin-top: 2rem;
+
+						.actions {
+							padding-top: 1rem;
+
+							form {
+								display: inline-block;
+							}
+
+							.action-button {
+								font-family: 'Open Sans';
+								font-size: 1.2rem;
+								font-weight: 500;
+								text-transform: uppercase;
+								text-decoration: none;
+								margin-right: 2rem;
+								color: #aaa;
+								background: none;
+								border: none;
+
+								&.active,
+								&:hover {
+									color: red;
+									cursor: pointer;
+								}
+							}
+							.action-button-disabled {
+								font-family: 'Open Sans';
+								font-size: 1.2rem;
+								font-weight: 500;
+								text-transform: uppercase;
+								text-decoration: line-through;
+								margin-right: 2rem;
+								color: #aaa;
+								display: inline-block;
+								border: none;
+								background: none;
+								cursor: text;
+							}
+						}
+					}
 				}
 
 				.meta {
 					margin-bottom: 2rem;
 					p {
 						margin-bottom: 0;
-					}
-				}
-
-				form {
-					button {
-						display: block;
-						padding: 1rem 2rem;
-						margin-top: 1rem;
-						background: white;
-						border: 1px solid #aaa;
-					}
-					textarea {
-						border: 1px solid #aaa;
 					}
 				}
 			}

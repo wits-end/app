@@ -12,12 +12,15 @@
 	});
 
 	let meanEmbedding = [];
-	for (let i = 0; i < embeddings[0].length; i++) {
-		let num = 0;
-		for (let j = 0; j < embeddings.length; j++) {
-			num += embeddings[j][i];
+
+	if (embeddings.length) {
+		for (let i = 0; i < embeddings[0].length; i++) {
+			let num = 0;
+			for (let j = 0; j < embeddings.length; j++) {
+				num += embeddings[j][i];
+			}
+			meanEmbedding.push(num / embeddings.length);
 		}
-		meanEmbedding.push(num / embeddings.length);
 	}
 
 	let allEmbeddings = embeddings.map((e) => {
@@ -33,14 +36,16 @@
 		};
 	});
 
-	allEmbeddings.push({
-		type: 'column',
-		opacity: 1,
-		color: '#000000',
-		borderColor: '#000000',
-		borderRadius: 0,
-		data: meanEmbedding
-	});
+	if (embeddings.length) {
+		allEmbeddings.push({
+			type: 'column',
+			opacity: 1,
+			color: '#000000',
+			borderColor: '#000000',
+			borderRadius: 0,
+			data: meanEmbedding
+		});
+	}
 
 	let options = {
 		title: {
@@ -91,9 +96,16 @@
 					new papers based on the unique collection of research articles you have saved to your
 					account.
 				</p>
-				<div id="chart-container">
-					<Chart {options} highcharts={Highcharts} />
-				</div>
+				{#if allEmbeddings.length}
+					<div id="chart-container">
+						<Chart {options} highcharts={Highcharts} />
+					</div>
+				{:else}
+					<p>
+						If you don't see a graph here, try saving some articles to get a visualization of your
+						profile's fingerprint.
+					</p>
+				{/if}
 			</div>
 
 			<h3 class="minion">Personal Info</h3>

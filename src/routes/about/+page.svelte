@@ -13,11 +13,12 @@
 				practitioners to better explore the research landscape.
 			</p>
 			<p>
-				This project is inspired by my time in academia while I was pursuing my PhD. Arxiv Sanity
-				and Papers with Code were invaluable to me while I was navigating research. I wanted to
-				build the platform that I wish I had during my PhD. A place to find new ideas without
-				needing to trudge through the deluge of new research constantly being published. A place
-				where a community can develop that is geared towards discussing new and interesting ideas.
+				This project is inspired by my experience trying to navigate research during my time in
+				academia. Arxiv Sanity and Papers with Code were invaluable to me throughout my PhD but I
+				still found it difficult to explore research in a way that resonated with me. This website
+				is the platform that I wish I had. A place to find new ideas without needing to trudge
+				through the deluge of new research constantly being published. A place where new and
+				experienced researchers alike can build and engage in a healthy and productive community.
 			</p>
 		</div>
 	</div>

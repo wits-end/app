@@ -43,8 +43,8 @@
 			<div class="actions">
 				<p class="date">published {dayjs().to(dayjs(article.published_at))}</p>
 				<a class="read-more" href="/article/{article.id}">read more</a>
-				{#if session}
-					{#if savedArticleIds?.includes(article.id)}
+				{#if session && profile}
+					{#if savedArticleIds?.includes(article?.id)}
 						<form
 							method="post"
 							action="?/unsaveArticle"
@@ -61,14 +61,12 @@
 					{/if}
 				{/if}
 			</div>
-			<p>
+			<!-- <p>
 				<small
-					>f: {dayjs(article.featured_at).format('YYYY-MM-DD')} | c: {article.citations} | h: {article.h_index}</small
+					>c: {article.citations} | h: {article.h_index}</small
 				>
-			</p>
+			</p> -->
 		</div>
-	{:else}
-		<div class="message"><p>N/A</p></div>
 	{/each}
 </div>
 
