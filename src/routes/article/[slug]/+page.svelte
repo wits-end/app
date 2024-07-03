@@ -30,7 +30,9 @@
 			<div class="article">
 				<h1 class="title">{article?.title}</h1>
 				<p><small>{article?.authors}</small></p>
-				<img class="thumbnail" src={article?.thumb_url} alt="PDF Thumbnail" />
+				<a href="https://arxiv.org/pdf/{article?.arxiv_id}"
+					><img class="thumbnail" src={article?.thumb_url} alt="PDF Thumbnail" /></a
+				>
 				<p><b>Abstract:</b> {article?.abstract}</p>
 				{#if article?.synopsis}
 					<div class="ai">
