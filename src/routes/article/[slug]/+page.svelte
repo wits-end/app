@@ -158,7 +158,7 @@
 
 					.ai {
 						padding: 1rem;
-						background: #fafafa;
+						background: #f7f7f7;
 						border: 1px solid #ddd;
 
 						:global(p) {
