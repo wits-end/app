@@ -158,7 +158,8 @@
 
 					.ai {
 						padding: 1rem;
-						background: #efefef;
+						background: #fafafa;
+						border: 1px solid #ddd;
 
 						:global(p) {
 							font-size: 1.8rem;
