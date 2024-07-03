@@ -31,6 +31,7 @@
 				<img class="thumbnail" src={article?.thumb_url} alt="PDF Thumbnail" />
 				<p><b>Abstract:</b> {article?.abstract}</p>
 				{#if article?.synopsis}
+					<h3 class="minion">Synopsis</h3>
 					<div class="ai">
 						{@html marked(article?.synopsis)}
 					</div>
@@ -154,16 +155,9 @@
 					}
 
 					.ai {
-						:global(h2) {
-							font-family: 'Open Sans';
-							text-transform: uppercase;
-							font-size: 1.4rem;
-							line-height: 1.4rem;
-							color: #666;
-							padding-bottom: 1rem;
-							margin-bottom: 1rem;
-							border-bottom: 1px solid #ddd;
-						}
+						padding: 1rem;
+						background: #efefef;
+
 						:global(p) {
 							font-size: 1.8rem;
 						}
