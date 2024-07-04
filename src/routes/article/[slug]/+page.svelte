@@ -8,7 +8,7 @@
 
 	export let data;
 	let { article, relatedArticles } = data;
-	$: ({ session, profile } = data);
+	$: ({ article, session, profile } = data);
 
 	$: relatedFeedData = {
 		articles: relatedArticles,
@@ -24,12 +24,17 @@
 	};
 </script>
 
+<svelte:head>
+	<title>{article?.title} | Wits End</title>
+	<meta name="description" content={article?.abstract} />
+</svelte:head>
+
 <div class="wrapper">
 	<div class="grid">
 		<div class="col">
 			<div class="article">
 				<h1 class="title">{article?.title}</h1>
-				<p><small>{article?.authors}</small></p>
+				<p class="authors">{article?.authors}</p>
 				<a href="https://arxiv.org/pdf/{article?.arxiv_id}"
 					><img class="thumbnail" src={article?.thumb_url} alt="PDF Thumbnail" /></a
 				>
@@ -91,12 +96,11 @@
 				<p>Citations: {article?.citations}</p>
 				<p>H Index: {article?.h_index}</p>
 				<p>Categories: {article?.categories}</p>
-				<p>Keywords: {article?.keywords}</p>
 			</div>
 			<div class="meta">
 				<h3 class="minion">Model</h3>
 				<p>Name: {article?.model_id}</p>
-				<p>Updated: {article?.model_updated_at}</p>
+				<p>Updated: {dayjs(article?.model_updated_at).format('YYYY-MM-DD')}</p>
 			</div>
 			<div class="related">
 				<h3 class="minion">Related</h3>
@@ -133,8 +137,9 @@
 				}
 
 				.article {
-					p {
-						font-size: 1.8rem;
+					.authors {
+						font-size: 1.4rem;
+						color: #666;
 					}
 					.title {
 						font-family: 'Open Sans';
@@ -163,6 +168,13 @@
 
 						:global(p) {
 							font-size: 1.8rem;
+						}
+
+						:global(h2) {
+							font-family: 'Open Sans';
+						}
+						:global(h3) {
+							font-family: 'Open Sans';
 						}
 					}
 					.tools {
@@ -211,6 +223,7 @@
 				}
 
 				.meta {
+					font-size: 1.4rem;
 					margin-bottom: 2rem;
 					p {
 						margin-bottom: 0;

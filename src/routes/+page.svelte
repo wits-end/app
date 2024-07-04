@@ -194,6 +194,14 @@
 	};
 </script>
 
+<svelte:head>
+	<title>Home | Wits End</title>
+	<meta
+		name="description"
+		content="Enhancing the productivity and impact of researchers through an AI-powered web platform that simplifies the management of academic literature."
+	/>
+</svelte:head>
+
 <div class="wrapper">
 	<div class="filters">
 		<nav class="categories">

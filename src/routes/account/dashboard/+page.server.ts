@@ -50,7 +50,47 @@ export const actions: Actions = {
             articleId,
             profileId,
         }
-    }
+    },
+
+    saveProfile: async ({ request, locals: { supabase, session } }) => {
+        const params = await request.formData()
+
+        const profileId = session?.user.id
+
+        const firstName = params.get("first_name")
+        const lastName = params.get("last_name")
+        const username = params.get("username")
+        const email = params.get("email")
+        const bio = params.get("bio")
+
+        const { data, error } = await supabase
+            .from('profiles')
+            .update({
+                first_name: firstName,
+                last_name: lastName,
+                username: username,
+                email: email,
+                bio: bio
+            })
+            .eq("id", profileId)
+            .select()
+
+        console.log(error)
+        console.log(data)
+
+        if (error) {
+            return fail(500, {
+                profileId,
+                firstName,
+                lastName,
+                username,
+                email
+            })
+        }
+
+        return data
+    },
+
 }
 
 

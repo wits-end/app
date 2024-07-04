@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import Highcharts from 'highcharts';
 	import { Chart } from '@highcharts/svelte'; // Chart is also exported by default
 	import type { PageData } from '../$types';
@@ -78,6 +79,14 @@
 	};
 </script>
 
+<svelte:head>
+	<title>Dashboard | Wits End</title>
+	<meta
+		name="description"
+		content="Personal AI notebook dashboard. View your embedding fingerprint, saved articles, and personal info."
+	/>
+</svelte:head>
+
 <div class="wrapper">
 	<!-- <div class="menu">
 		<nav class="categories">
@@ -110,7 +119,7 @@
 
 			<h3 class="minion">Personal Info</h3>
 			<div class="personal-info">
-				<form>
+				<form method="post" action="?/saveProfile" use:enhance>
 					<div class="input-group">
 						<div>
 							<label for="first_name">first name</label>
@@ -134,7 +143,7 @@
 					<label for="interests">interests</label>
 					<textarea
 						placeholder="Research, Summary, Bio, etc..."
-						name="interests"
+						name="bio"
 						rows="8"
 						value={profile?.bio}
 					/>

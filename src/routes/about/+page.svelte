@@ -1,5 +1,10 @@
 <script></script>
 
+<svelte:head>
+	<title>About | Wits End</title>
+	<meta name="description" content="An AI platform to empower researchers." />
+</svelte:head>
+
 <div class="hero">
 	<div class="overlay"></div>
 
