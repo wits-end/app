@@ -40,33 +40,34 @@ You can preview the production build with `npm run preview`.
 ## Todo
 
 - [x] User Auth
-- [ ] User Dashboard
+- [x] User Dashboard
+    - [x] Save Articles
+    - [x] Embedding Fingerprint
 - [ ] User Settings
     - [ ] Subscription Info
-    - [ ] Personal Info
-- [x] User Saved Papers List
-    - [x] Add/remove papers to user
-- [ ] Home Page
-    - [ ] Subject Categories
+    - [x] Personal Info
+- [x] Home Page
+    - [x] Subject Categories
     - [x] Recent Feed
+    - [x] Featured Feed
+        - [x] Sort by author prestige + citations + recency
+    - [x] Influential Feed
+        - [x] Sort by citations
     - [ ] For You Feed
-    - [ ] Sidebar Functionality
+    - [x] Sidebar Filters
         - [x] Search
-        - [ ] Filter
-        - [ ] Keywords
+        - [x] Sort
+        - [x] Tags
+- [x] Paper feeds
+    - [x] Add/remove papers to user
 - [x] Article Detail
     - [ ] Comments
-- [x] Fetch Recent Arxiv Papers
-- [x] Fetch Single Arxiv Paper
-    - [x] Arxiv API
-    - [x] PDF image thumbnails
+    - [x] Sparknotes
+        - [x] Prompt Engineering
+        - [x] PDF RAG
+            - [x] Experiment with foundational RAG context (e.g. a collection of textbooks on machine learning/math)
+        - [x] Synopsis
 - [ ] User submit new paper request (on 404?)
-- [x] OpenAI Sparknotes
-    - [x] Prompt Engineering
-    - [x] PDF RAG
-        - [x] Experiment in the future with foundational RAG context (e.g. a collection of textbooks on machine learning/math).
-    - [x] Extract Keywords
-    - [x] Extract Analysis
 - [ ] SAAS
     - [x] Signup for Stripe
     - [ ] Integrate Stripe Subscription w/ app
