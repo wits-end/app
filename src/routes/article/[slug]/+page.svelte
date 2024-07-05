@@ -34,7 +34,11 @@
 		<div class="col">
 			<div class="article">
 				<h1 class="title">{article?.title}</h1>
-				<p class="authors">{article?.authors}</p>
+				{#if article?.authors.length > 400}
+					<p class="authors">{article?.authors.substr(0, 400)}...</p>
+				{:else}
+					<p class="authors">{article?.authors}</p>
+				{/if}
 				<a href="https://arxiv.org/pdf/{article?.arxiv_id}"
 					><img class="thumbnail" src={article?.thumb_url} alt="PDF Thumbnail" /></a
 				>
@@ -139,7 +143,6 @@
 				.article {
 					.authors {
 						font-size: 1.4rem;
-						color: #666;
 					}
 					.title {
 						font-family: 'Open Sans';

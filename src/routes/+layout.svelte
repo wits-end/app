@@ -115,7 +115,7 @@
 					}
 
 					&:hover {
-						color: blue;
+						color: red;
 					}
 				}
 			}
