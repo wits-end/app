@@ -67,7 +67,8 @@ You can preview the production build with `npm run preview`.
         - [x] PDF RAG
             - [x] Experiment with foundational RAG context (e.g. a collection of textbooks on machine learning/math)
         - [x] Synopsis
-- [ ] User submit new paper request (on 404?)
+    - [ ] Report
+- [ ] User submit new paper request
 - [ ] SAAS
     - [x] Signup for Stripe
     - [ ] Integrate Stripe Subscription w/ app
