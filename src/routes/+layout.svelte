@@ -39,10 +39,10 @@
 		<nav>
 			<a href="/about">About</a>
 			{#if session}
-				<a href="/account/dashboard">Account</a>
-				<a href="/" on:click={logout}>Logout</a>
+				<a href="/account/dashboard" title="Account">Account</a>
+				<a href="/" on:click={logout} title="Logout">Logout</a>
 			{:else}
-				<a href="/auth">Login / Register</a>
+				<a href="/auth" title="Login / Register">Login / Register</a>
 			{/if}
 		</nav>
 	</div>
@@ -83,7 +83,7 @@
 		margin: 0;
 		padding: 1rem;
 		position: relative;
-		background-image: url('$lib/assets/chalk-2-invert.png');
+		background-image: url('$lib/assets/graph-bg.png');
 		background-position: center;
 		background-size: 50rem;
 		background-color: rgba(255, 255, 255, 0.8);
@@ -101,21 +101,21 @@
 				font-size: 0;
 
 				a {
+					background: rgba(255, 255, 255, 0.5);
 					color: black;
 					text-decoration: none;
-					font-weight: 500;
 					font-family: 'Open Sans';
 					margin-left: 3.2rem;
 					text-transform: uppercase;
 					font-size: 1.2rem;
 
+					&:hover {
+						color: #d33682;
+					}
+
 					@media screen and (max-width: 600px) {
 						margin-left: 1.5rem;
 						font-size: 0.9rem;
-					}
-
-					&:hover {
-						color: red;
 					}
 				}
 			}
@@ -131,11 +131,12 @@
 	footer {
 		padding: 1rem;
 		padding-bottom: 1rem;
-		background-image: url('$lib/assets/chalk-5-invert.png');
-		background-position: center;
-		background-size: 50rem;
-		background-color: rgba(255, 255, 255, 0.8);
-		background-blend-mode: lighten;
+		background: #eee;
+		// background-image: url('$lib/assets/chalk-5-invert.png');
+		// background-position: center;
+		// background-size: 50rem;
+		// background-color: rgba(255, 255, 255, 0.8);
+		// background-blend-mode: lighten;
 		border-top: 1px solid #ddd;
 
 		.wrapper {

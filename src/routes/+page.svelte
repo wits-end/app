@@ -208,6 +208,7 @@
 			<button
 				class="category-button active"
 				id="category-button-all"
+				title="All"
 				on:click={(e) => {
 					handleCategory(e, 'all');
 				}}>All</button
@@ -216,6 +217,7 @@
 				<button
 					class="category-button"
 					id="category-button-{key}"
+					title={value}
 					on:click={(e) => {
 						handleCategory(e, key);
 					}}>{value}</button
@@ -279,6 +281,7 @@
 						<button
 							class="sort-button active"
 							id="sort-button-recent"
+							title="recent"
 							on:click={(e) => {
 								handleSort(e, 'recent');
 							}}>Recent</button
@@ -287,6 +290,7 @@
 							<button
 								class="sort-button"
 								id="sort-button-{key}"
+								title={value}
 								on:click={(e) => {
 									handleSort(e, key);
 								}}>{value}</button
@@ -298,6 +302,7 @@
 						<button
 							class="time-button active"
 							id="time-button-alltime"
+							title="All Time"
 							on:click={(e) => {
 								handleTime(e, 'alltime');
 							}}>All Time</button
@@ -306,6 +311,7 @@
 							<button
 								class="time-button"
 								id="time-button-{key}"
+								title={value}
 								on:click={(e) => {
 									handleTime(e, key);
 								}}>{value}</button
@@ -322,6 +328,7 @@
 				<button
 					class="tag-button active"
 					id="tag-button-all"
+					title="All"
 					on:click={(e) => {
 						handleTag(e, 'all');
 					}}>All</button
@@ -329,6 +336,7 @@
 					<button
 						class="tag-button"
 						id="tag-button-{key}"
+						title={value}
 						on:click={(e) => {
 							handleTag(e, key);
 						}}>{value}</button
@@ -336,8 +344,8 @@
 				{/each}
 			</div>
 
-			<div class="ads">
-				<h3 class="minion">Ads</h3>
+			<div class="sponsors">
+				<h3 class="minion">Sponsors</h3>
 				<script
 					async
 					src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1498186405228029"
@@ -397,8 +405,18 @@
 
 					&.active,
 					&:hover {
-						color: red;
+						color: #d33682;
 						cursor: pointer;
+						font-weight: bold;
+					}
+
+					&:before {
+						display: block;
+						content: attr(title);
+						font-weight: bold;
+						height: 0;
+						overflow: hidden;
+						visibility: hidden;
 					}
 				}
 				@media screen and (max-width: 600px) {
@@ -427,6 +445,8 @@
 				}
 
 				.search {
+					padding-bottom: 2rem;
+
 					.field-group {
 						position: relative;
 						width: 100%;
@@ -451,7 +471,7 @@
 					}
 				}
 				.sort {
-					padding: 2rem 0;
+					padding: 1rem 0;
 
 					.options {
 						display: flex;
@@ -472,8 +492,17 @@
 
 								&.active,
 								&:hover {
-									color: red;
+									color: #d33682;
 									cursor: pointer;
+									font-weight: bold;
+								}
+								&:before {
+									display: block;
+									content: attr(title);
+									font-weight: bold;
+									height: 0;
+									overflow: hidden;
+									visibility: hidden;
 								}
 							}
 							.sort-button-disabled {
@@ -493,7 +522,7 @@
 					}
 				}
 				.tags {
-					padding: 2rem 0;
+					padding: 1rem 0;
 
 					.tag-button {
 						font-family: 'Open Sans';
@@ -508,12 +537,23 @@
 
 						&.active,
 						&:hover {
-							color: red;
+							color: #d33682;
 							cursor: pointer;
+							font-weight: bold;
+						}
+
+						&:before {
+							display: block;
+							content: attr(title);
+							font-weight: bold;
+							height: 0;
+							overflow: hidden;
+							visibility: hidden;
 						}
 					}
 				}
-				.ads {
+				.sponsors {
+					margin: 2rem 0;
 				}
 			}
 		}
@@ -534,8 +574,9 @@
 
 				&.active,
 				&:hover {
-					color: red;
+					color: #d33682;
 					cursor: pointer;
+					font-weight: bold;
 				}
 			}
 		}

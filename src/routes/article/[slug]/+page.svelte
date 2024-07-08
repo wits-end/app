@@ -57,12 +57,12 @@
 							{#if isSaved}
 								<form method="post" action="?/unsaveArticle" use:enhance={() => handleSubmit()}>
 									<input type="hidden" name="articleId" value={article?.id} />
-									<button class="action-button">Unsave</button>
+									<button class="action-button" title="Unsave">Unsave</button>
 								</form>
 							{:else}
 								<form method="post" action="?/saveArticle" use:enhance={() => handleSubmit()}>
 									<input type="hidden" name="articleId" value={article?.id} />
-									<button class="action-button">Save</button>
+									<button class="action-button" title="Save">Save</button>
 								</form>
 							{/if}
 							<button class="action-button-disabled">Share</button>
@@ -148,6 +148,7 @@
 						font-family: 'Open Sans';
 						font-size: 3.2rem;
 						line-height: 1.25;
+						margin-top: -1rem;
 					}
 					.thumbnail {
 						max-width: 100%;
@@ -204,8 +205,18 @@
 
 								&.active,
 								&:hover {
-									color: red;
+									color: #d33682;
+									font-weight: bold;
 									cursor: pointer;
+								}
+
+								&:before {
+									display: block;
+									content: attr(title);
+									font-weight: bold;
+									height: 0;
+									overflow: hidden;
+									visibility: hidden;
 								}
 							}
 							.action-button-disabled {

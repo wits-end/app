@@ -86,7 +86,7 @@
 					text-decoration: none;
 
 					&:hover {
-						color: red;
+						color: #d33682;
 					}
 				}
 			}
@@ -117,9 +117,13 @@
 					button {
 						background: none;
 						border: none;
-						color: red;
+						color: #d33682;
 						text-decoration: underline;
 						font-size: 1.2rem;
+
+						&:hover {
+							color: #0085a1;
+						}
 					}
 				}
 			}

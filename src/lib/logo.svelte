@@ -86,6 +86,9 @@
 </div>
 
 <style lang="scss">
+	.logo {
+		background: rgba(255, 255, 255, 0.5);
+	}
 	.glitch {
 		position: relative;
 		height: 3rem;
