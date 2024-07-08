@@ -25,7 +25,7 @@
 		let categoryParam = $page.url.searchParams.get('category') || 'all';
 		let tagParam = $page.url.searchParams.get('tag') || 'all';
 		let searchParam = $page.url.searchParams.get('search') || '';
-		let sortParam = $page.url.searchParams.get('sort') || 'recent';
+		let sortParam = $page.url.searchParams.get('sort') || 'featured';
 		let timeParam = $page.url.searchParams.get('time') || 'alltime';
 		let pageParam: number = parseInt($page.url.searchParams.get('page') || '0');
 
@@ -47,7 +47,7 @@
 			document.getElementById(`tag-button-${tagParam}`)?.classList.toggle('active');
 		}
 
-		if (sortOptions.some((x) => x[0] === sortParam)) {
+		if (sortOptions.some((x) => x[0] === sortParam || sortParam === 'foryou')) {
 			document.querySelector('.sort-button.active')?.classList.remove('active');
 			document.getElementById(`sort-button-${sortParam}`)?.classList.toggle('active');
 		}
@@ -99,9 +99,8 @@
 	];
 
 	const sortOptions = [
-		['featured', 'Featured'],
 		['influential', 'Influential'],
-		['foryou', 'For You']
+		['recent', 'Recent']
 	];
 
 	const timeOptions = [
@@ -280,11 +279,11 @@
 					<div class="group">
 						<button
 							class="sort-button active"
-							id="sort-button-recent"
-							title="recent"
+							id="sort-button-featured"
+							title="Featured"
 							on:click={(e) => {
-								handleSort(e, 'recent');
-							}}>Recent</button
+								handleSort(e, 'featured');
+							}}>Featured</button
 						>
 						{#each sortOptions as [key, value]}
 							<button
@@ -296,6 +295,18 @@
 								}}>{value}</button
 							>
 						{/each}
+						{#if session && profile && profile?.articles.length}
+							<button
+								class="sort-button"
+								id="sort-button-foryou"
+								title="For You"
+								on:click={(e) => {
+									handleSort(e, 'foryou');
+								}}>For You</button
+							>
+						{:else}
+							<button class="sort-button-disabled">For You</button>
+						{/if}
 					</div>
 					<div class="group">
 						<button

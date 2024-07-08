@@ -30,7 +30,6 @@
 <div class="feed">
 	{#each articles as article}
 		<div class="post">
-			<p>{article.similarity}</p>
 			<p class="published-date">
 				{dayjs(article.published_at).format('YYYY-MM-DD')}
 			</p>

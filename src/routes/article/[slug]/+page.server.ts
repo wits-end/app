@@ -62,7 +62,7 @@ export const load: PageServerLoad = async ({ locals: { supabase, session, profil
     const { data: relatedArticles } = await supabase.rpc('match_articles', {
         query_embedding: article?.embedding,
         match_threshold: 0.0,
-        match_count: 10,
+        match_count: 14,
     }).neq('id', article?.id)
 
     return { article: article ?? {}, relatedArticles: relatedArticles ?? [], session, profile }

@@ -12,19 +12,20 @@
 		<div class="intro">
 			<h1>An AI Platform To<br /> Empower Researchers</h1>
 			<p>
-				Deep learning has exploded over the last decade as tens of thousands of papers are newly
-				published every year. Exploring state of the art research can be difficult and time
-				consuming when finding quality papers can feel like trying to drink from a fire hose. This
-				website aims to serve as a valuable resource for machine learning practitioners to better
-				explore the research landscape.
+				Deep learning research has exploded over the last decade as tens of thousands of interesting
+				and impactful papers are being published every year. This surge in activity has made it
+				difficult and time consuming to discover quality research that is applicable to your
+				interests. This website aims to serve as a valuable resource for machine learning
+				practitioners to better explore the research landscape.We do this by leveraging algorithms
+				to not only aggregate and curate the most influential research papers but also to provide
+				succinct summaries, highlight key contributions, and offer personalized recommendations.
 			</p>
 			<p>
-				This project is inspired by my experience trying to navigate research during my time in
-				academia. Arxiv Sanity and Papers with Code were invaluable to me throughout my PhD but I
-				still found it difficult to explore research in a way that resonated with me. This website
-				is the platform that I wish I had. A place to find new ideas without needing to trudge
-				through the deluge of new research constantly being published. A place where new and
-				experienced researchers alike can build and engage in a healthy and productive community.
+				My name is Tim Whitaker and I am a recent PhD graduate who is trying to build a platform and
+				community that is useful to new and experienced researchers alike. This is the website that
+				I wish I had during my time in academia. A place to find new ideas without needing to trudge
+				through the deluge of new research constantly being published. An inclusive place to
+				discover, organize, and discuss cutting edge ideas in machine learning.
 			</p>
 		</div>
 	</div>

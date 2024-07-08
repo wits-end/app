@@ -65,26 +65,21 @@ export const load: PageServerLoad = async ({ params, url, locals: { supabase, se
 
   let articles: any;
 
-  if (profile && session) {
-    if (profile?.articles.length) {
-      ({ data: articles } = await supabase.rpc('match_articles', {
-        query_embedding: profile?.articles.map(x => JSON.parse(x.embedding))
-          .reduce((acc, obj) => {
-            for (let i = 0; i < 256; i++) {
-              acc[i] += obj[i]
-            }
-            return acc
-          }, new Array(256).fill(0))
-          .map(x => x / profile?.articles.length),
-        match_threshold: -1.0,
-        match_count: 1000,
-        order_by: sortParam
-      }))
-    }
-    else {
-      ({ data: articles } = await supabase.from('articles')
-        .select().order(sortMap[sortParam], { ascending: false }))
-    }
+  if (profile && session && profile?.articles.length) {
+    // map reduce to average embeddings together
+    ({ data: articles } = await supabase.rpc('match_articles', {
+      query_embedding: profile?.articles.map(x => JSON.parse(x.embedding))
+        .reduce((acc, obj) => {
+          for (let i = 0; i < 256; i++) {
+            acc[i] += obj[i]
+          }
+          return acc
+        }, new Array(256).fill(0))
+        .map(x => x / profile?.articles.length),
+      match_threshold: -1.0,
+      match_count: 1000,
+      order_by: sortParam
+    }))
   }
   else {
     ({ data: articles } = await supabase.from('articles')

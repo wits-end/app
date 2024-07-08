@@ -5,15 +5,25 @@ import type { Actions } from './$types'
 export const actions: Actions = {
     signup: async ({ request, locals: { supabase } }) => {
         const formData = await request.formData()
+        const username = formData.get('username') as string
         const email = formData.get('email') as string
         const password = formData.get('password') as string
 
-        const { error } = await supabase.auth.signUp({ email, password })
+        const { data, error } = await supabase.auth.signUp({ email, password })
+
         if (error) {
             console.error(error)
             return redirect(303, '/auth/error')
         } else {
-            return redirect(303, '/')
+            const { error } = await supabase
+                .from('profiles')
+                .insert({
+                    id: data?.user?.id,
+                    username: username,
+                    email: email,
+                })
+
+            return redirect(303, '/account/dashboard')
         }
     },
     login: async ({ request, locals: { supabase } }) => {

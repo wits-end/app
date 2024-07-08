@@ -103,10 +103,9 @@
 			<h3 class="minion">Embedding Fingerprint</h3>
 			<div class="embeddings">
 				<p>
-					All research articles on Wits End are represented with a 256 dimensional vector embedding.
-					These embeddings are used to measure article similarity and to make recommendations for
-					new papers based on the unique collection of research articles you have saved to your
-					account.
+					All research articles on Wits End are represented with vector embeddings. These embeddings
+					are used to measure article similarity and to make recommendations for new papers based on
+					the unique collection of research articles you have saved to your account.
 				</p>
 				{#if allEmbeddings.length}
 					<div id="chart-container">

@@ -58,7 +58,7 @@ export const filterHandler = (store) => {
         const withinTime = time == "alltime" ? true : new Date(item.published_at) > timeThreshold;
 
         return (hasSearch && hasCategory && hasTag && withinTime)
-    }).slice(from, to)
+    })
 
     if (sort == "recent") {
         store.filtered.sort((a, b) => {
@@ -74,7 +74,14 @@ export const filterHandler = (store) => {
         })
     } else if (sort == "foryou") {
         store.filtered.sort((a, b) => {
-            return a.similarity < b.similarity
+            if (a.similarity && b.similarity) {
+                return a.similarity < b.similarity
+            }
+            else {
+                return a.citations < b.citations
+            }
         })
     }
+
+    store.filtered = store.filtered.slice(from, to)
 }
