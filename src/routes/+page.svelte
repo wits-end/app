@@ -337,7 +337,7 @@
 			</div>
 
 			<div class="ads">
-				<h3 class="minion">Ads</h3>
+				<h3 class="minion">Sponsors</h3>
 				<script
 					async
 					src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1498186405228029"

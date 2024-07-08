@@ -80,11 +80,7 @@ export const actions: Actions = {
 
         if (error) {
             return fail(500, {
-                profileId,
-                firstName,
-                lastName,
-                username,
-                email
+                error: error.message
             })
         }
 

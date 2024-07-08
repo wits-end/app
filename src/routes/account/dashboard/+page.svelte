@@ -4,7 +4,9 @@
 	import { Chart } from '@highcharts/svelte'; // Chart is also exported by default
 	import type { PageData } from '../$types';
 	import FeedCondensed from '$lib/feedCondensed.svelte';
+
 	export let data: PageData;
+	export let form;
 
 	let { articles, profile } = data;
 
@@ -120,6 +122,7 @@
 			<h3 class="minion">Personal Info</h3>
 			<div class="personal-info">
 				<form method="post" action="?/saveProfile" use:enhance>
+					{#if form?.error}<p class="error">Error updating info.</p>{/if}
 					<div class="input-group">
 						<div>
 							<label for="first_name">first name</label>
