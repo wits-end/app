@@ -59,11 +59,11 @@
 
 	// Reactive filters
 	const categories = [
-		['cs.ai', 'Artificial Intelligence'],
 		['cs.cv', 'Computer Vision'],
 		['cs.lg', 'Machine Learning'],
 		['cs.cl', 'Natural Language Processing'],
-		['cs.ne', 'Neuroevolution']
+		['cs.ne', 'Neural Architecture'],
+		['cs.ai', 'Ontology']
 	];
 
 	const tags = [
