@@ -30,6 +30,26 @@
 </svelte:head>
 
 <div class="wrapper">
+	{#if session && profile}
+		<div class="tools">
+			<nav class="actions">
+				<!-- <button class="action-button">Comment</button> -->
+				{#if isSaved}
+					<form method="post" action="?/unsaveArticle" use:enhance={() => handleSubmit()}>
+						<input type="hidden" name="articleId" value={article?.id} />
+						<button class="action-button" title="Unsave">Unsave</button>
+					</form>
+				{:else}
+					<form method="post" action="?/saveArticle" use:enhance={() => handleSubmit()}>
+						<input type="hidden" name="articleId" value={article?.id} />
+						<button class="action-button" title="Save">Save</button>
+					</form>
+				{/if}
+				<button class="action-button-disabled">Share</button>
+				<button class="action-button-disabled">Report</button>
+			</nav>
+		</div>
+	{/if}
 	<div class="grid">
 		<div class="col">
 			<div class="article">
@@ -50,40 +70,21 @@
 					</div>
 				{/if}
 
-				{#if session && profile}
-					<div class="tools">
-						<nav class="actions">
-							<!-- <button class="action-button">Comment</button> -->
-							{#if isSaved}
-								<form method="post" action="?/unsaveArticle" use:enhance={() => handleSubmit()}>
-									<input type="hidden" name="articleId" value={article?.id} />
-									<button class="action-button" title="Unsave">Unsave</button>
-								</form>
-							{:else}
-								<form method="post" action="?/saveArticle" use:enhance={() => handleSubmit()}>
-									<input type="hidden" name="articleId" value={article?.id} />
-									<button class="action-button" title="Save">Save</button>
-								</form>
-							{/if}
-							<button class="action-button-disabled">Share</button>
-							<button class="action-button-disabled">Report</button>
-						</nav>
-					</div>
-				{/if}
-
-				<!-- <h3 class="minion">Comments</h3>
-				{#if session}
-					<form>
-						<textarea rows="8" cols="80"></textarea>
-						<button>Add Comment</button>
-					</form>
-				{/if} -->
-				<!-- <p style="margin-top:1rem;">Comments are currently disabled.</p> -->
-				<!-- {#each article.comments as comment}
-				<p>{comment.profile.username} | 1 hour ago</p>
-				<p>{comment.message}</p>
-				<p>Reply</p>
+				<div class="comments">
+					<h3 class="minion">Comments</h3>
+					{#if session}
+						<form>
+							<textarea rows="8" cols="80"></textarea>
+							<button>Add Comment</button>
+						</form>
+					{/if}
+					<p style="margin-top:1rem;">Comments are currently disabled.</p>
+					<!-- {#each article.comments as comment}
+					<p>{comment.profile.username} | 1 hour ago</p>
+					<p>{comment.message}</p>
+					<p>Reply</p>
 				{/each} -->
+				</div>
 			</div>
 		</div>
 		<div class="col">
@@ -125,6 +126,60 @@
 
 <style lang="scss">
 	.wrapper {
+		.tools {
+			border-bottom: 1px solid #ddd;
+			margin-bottom: 2rem;
+
+			.actions {
+				padding-bottom: 2rem;
+
+				form {
+					display: inline-block;
+				}
+
+				.action-button {
+					font-family: 'Open Sans';
+					font-size: 1.2rem;
+					font-weight: 500;
+					text-transform: uppercase;
+					text-decoration: none;
+					margin-right: 2rem;
+					color: #aaa;
+					background: none;
+					border: none;
+
+					&.active,
+					&:hover {
+						color: #d33682;
+						font-weight: bold;
+						cursor: pointer;
+					}
+
+					&:before {
+						display: block;
+						content: attr(title);
+						font-weight: bold;
+						height: 0;
+						overflow: hidden;
+						visibility: hidden;
+					}
+				}
+				.action-button-disabled {
+					font-family: 'Open Sans';
+					font-size: 1.2rem;
+					font-weight: 500;
+					text-transform: uppercase;
+					text-decoration: line-through;
+					margin-right: 2rem;
+					color: #aaa;
+					display: inline-block;
+					border: none;
+					background: none;
+					cursor: text;
+				}
+			}
+		}
+
 		.grid {
 			display: grid;
 			grid-template-rows: auto;
@@ -148,7 +203,6 @@
 						font-family: 'Open Sans';
 						font-size: 3.2rem;
 						line-height: 1.25;
-						margin-top: -1rem;
 					}
 					.thumbnail {
 						max-width: 100%;
@@ -181,56 +235,23 @@
 							font-family: 'Open Sans';
 						}
 					}
-					.tools {
-						border-top: 1px solid #ddd;
-						margin-top: 2rem;
 
-						.actions {
-							padding-top: 1rem;
+					.comments {
+						textarea {
+							margin-bottom: 1rem;
+							background: white;
+							border: 1px solid #ddd;
+							padding: 1rem;
+						}
+						button {
+							display: block;
+							background: white;
+							border: 1px solid #ddd;
+							padding: 1rem 2rem;
+							transition: all 0.2s ease;
 
-							form {
-								display: inline-block;
-							}
-
-							.action-button {
-								font-family: 'Open Sans';
-								font-size: 1.2rem;
-								font-weight: 500;
-								text-transform: uppercase;
-								text-decoration: none;
-								margin-right: 2rem;
-								color: #aaa;
-								background: none;
-								border: none;
-
-								&.active,
-								&:hover {
-									color: #d33682;
-									font-weight: bold;
-									cursor: pointer;
-								}
-
-								&:before {
-									display: block;
-									content: attr(title);
-									font-weight: bold;
-									height: 0;
-									overflow: hidden;
-									visibility: hidden;
-								}
-							}
-							.action-button-disabled {
-								font-family: 'Open Sans';
-								font-size: 1.2rem;
-								font-weight: 500;
-								text-transform: uppercase;
-								text-decoration: line-through;
-								margin-right: 2rem;
-								color: #aaa;
-								display: inline-block;
-								border: none;
-								background: none;
-								cursor: text;
+							&:hover {
+								border: 1px solid #666;
 							}
 						}
 					}

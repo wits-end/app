@@ -49,10 +49,7 @@ export const filterHandler = (store) => {
         timeThreshold.setFullYear(timeThreshold.getFullYear() - 3)
     } else if (time == "pastyear") {
         timeThreshold.setFullYear(timeThreshold.getFullYear() - 1)
-    } else if (time == "pastmonth") {
-        timeThreshold.setMonth(timeThreshold.getMonth() - 1)
     }
-
 
     store.filtered = store.data.filter((item) => {
         const hasSearch = item.searchTerms?.toLowerCase().includes(searchTerm);
@@ -74,6 +71,10 @@ export const filterHandler = (store) => {
     } else if (sort == "influential") {
         store.filtered.sort((a, b) => {
             return a.citations < b.citations
+        })
+    } else if (sort == "foryou") {
+        store.filtered.sort((a, b) => {
+            return a.similarity < b.similarity
         })
     }
 }

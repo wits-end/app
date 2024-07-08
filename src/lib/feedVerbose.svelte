@@ -30,10 +30,10 @@
 <div class="feed">
 	{#each articles as article}
 		<div class="post">
+			<p>{article.similarity}</p>
 			<p class="published-date">
 				{dayjs(article.published_at).format('YYYY-MM-DD')}
 			</p>
-			<small class="categories">{article.categories}</small>
 			<h1 class="title"><a href="/article/{article.id}">{article.title}</a></h1>
 			<p class="authors">
 				{article.authors.substr(0, 200)}{article.authors.length > 200 ? '...' : ''}
@@ -61,11 +61,6 @@
 					{/if}
 				{/if}
 			</div>
-			<!-- <p>
-				<small
-					>c: {article.citations} | h: {article.h_index}</small
-				>
-			</p> -->
 		</div>
 	{/each}
 </div>
@@ -85,9 +80,6 @@
 			.authors {
 				font-size: 1.3rem;
 				margin-bottom: 1rem;
-			}
-			.categories {
-				display: none;
 			}
 			h1.title {
 				font-family: 'Open Sans';
@@ -138,7 +130,7 @@
 						font-size: 1.4rem;
 
 						&:hover {
-							color: #0085a1;
+							color: #410e27;
 						}
 					}
 				}

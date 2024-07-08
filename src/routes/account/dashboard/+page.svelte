@@ -9,6 +9,7 @@
 	export let form;
 
 	let { articles, profile } = data;
+	$: ({ profile } = data);
 
 	let embeddings = articles.map((article) => {
 		return JSON.parse(article.embedding);
@@ -119,9 +120,12 @@
 				{/if}
 			</div>
 
-			<h3 class="minion">Personal Info</h3>
 			<div class="personal-info">
-				<form method="post" action="?/saveProfile" use:enhance>
+				<h3 class="minion">Personal Info</h3>
+				<p>username: {profile?.username}</p>
+				<p>email: {profile?.email}</p>
+
+				<form method="post" action="?/saveProfile">
 					{#if form?.error}<p class="error">Error updating info.</p>{/if}
 					<div class="input-group">
 						<div>
@@ -133,17 +137,7 @@
 							<input placeholder="last name" name="last_name" value={profile?.last_name} />
 						</div>
 					</div>
-					<div class="input-group">
-						<div>
-							<label for="username">username</label>
-							<input placeholder="username" name="username" value={profile?.username} />
-						</div>
-						<div>
-							<label for="email">email</label>
-							<input placeholder="email" name="email" value={profile?.email} />
-						</div>
-					</div>
-					<label for="interests">interests</label>
+					<label for="bio">bio</label>
 					<textarea
 						placeholder="Research, Summary, Bio, etc..."
 						name="bio"
@@ -218,8 +212,11 @@
 
 			.personal-info {
 				margin-bottom: 2rem;
-
+				p {
+					margin: 0;
+				}
 				form {
+					margin-top: 2rem;
 					.input-group {
 						display: grid;
 						grid-template-columns: 1fr 1fr;

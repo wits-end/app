@@ -59,8 +59,6 @@ export const actions: Actions = {
 
         const firstName = params.get("first_name")
         const lastName = params.get("last_name")
-        const username = params.get("username")
-        const email = params.get("email")
         const bio = params.get("bio")
 
         const { data, error } = await supabase
@@ -68,8 +66,6 @@ export const actions: Actions = {
             .update({
                 first_name: firstName,
                 last_name: lastName,
-                username: username,
-                email: email,
                 bio: bio
             })
             .eq("id", profileId)

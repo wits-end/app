@@ -56,19 +56,41 @@ export const actions: Actions = {
 
 
 export const load: PageServerLoad = async ({ params, url, locals: { supabase, session, profile } }) => {
-  const sort = url.searchParams.get('sort') || "recent";
+  const sortParam = url.searchParams.get('sort') || "recent";
+  const sortMap = {
+    "recent": "published_at",
+    "featured": "featured_at",
+    "influential": "citations",
+  }
+
   let articles: any;
 
-  if (sort == "recent") {
-    ({ data: articles } = await supabase.from('articles')
-      .select().order('published_at', { ascending: false }))
-  } else if (sort == "featured") {
-    ({ data: articles } = await supabase.from('articles')
-      .select().order('featured_at', { ascending: false }))
-  } else if (sort == "influential") {
-    ({ data: articles } = await supabase.from('articles')
-      .select().order('citations', { ascending: false }))
+  if (profile && session) {
+    if (profile?.articles.length) {
+      ({ data: articles } = await supabase.rpc('match_articles', {
+        query_embedding: profile?.articles.map(x => JSON.parse(x.embedding))
+          .reduce((acc, obj) => {
+            for (let i = 0; i < 256; i++) {
+              acc[i] += obj[i]
+            }
+            return acc
+          }, new Array(256).fill(0))
+          .map(x => x / profile?.articles.length),
+        match_threshold: -1.0,
+        match_count: 1000,
+        order_by: sortParam
+      }))
+    }
+    else {
+      ({ data: articles } = await supabase.from('articles')
+        .select().order(sortMap[sortParam], { ascending: false }))
+    }
   }
+  else {
+    ({ data: articles } = await supabase.from('articles')
+      .select().order(sortMap[sortParam], { ascending: false }))
+  }
+
 
   return { articles: articles ?? [], profile, session }
 }

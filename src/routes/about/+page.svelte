@@ -12,10 +12,11 @@
 		<div class="intro">
 			<h1>An AI Platform To<br /> Empower Researchers</h1>
 			<p>
-				Deep learning has absolutely exploded over the last decade as tens of thousands of papers
-				are newly published every year. Exploring state of the art research can often feel like
-				drinking from a fire hose. Wits End serves as a valuable resource for machine learning
-				practitioners to better explore the research landscape.
+				Deep learning has exploded over the last decade as tens of thousands of papers are newly
+				published every year. Exploring state of the art research can be difficult and time
+				consuming when finding quality papers can feel like trying to drink from a fire hose. This
+				website aims to serve as a valuable resource for machine learning practitioners to better
+				explore the research landscape.
 			</p>
 			<p>
 				This project is inspired by my experience trying to navigate research during my time in

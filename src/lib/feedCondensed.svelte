@@ -30,6 +30,7 @@
 <div class="feed">
 	{#each articles as article}
 		<div class="post">
+			<p>{article.similarity}</p>
 			<p class="published-date">
 				{dayjs(article?.published_at).format('YYYY-MM-DD')}
 			</p>
@@ -122,7 +123,7 @@
 						font-size: 1.2rem;
 
 						&:hover {
-							color: #0085a1;
+							color: #410e27;
 						}
 					}
 				}
