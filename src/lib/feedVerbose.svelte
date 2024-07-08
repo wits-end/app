@@ -98,7 +98,7 @@
 					text-decoration: none;
 
 					&:hover {
-						color: red;
+						color: #d33682;
 					}
 				}
 			}
@@ -129,12 +129,17 @@
 				}
 				form {
 					display: inline-block;
+
 					button {
 						background: none;
 						border: none;
-						color: red;
+						color: #d33682;
 						text-decoration: underline;
 						font-size: 1.4rem;
+
+						&:hover {
+							color: #0085a1;
+						}
 					}
 				}
 			}
