@@ -25,7 +25,7 @@
 				community that is useful to new and experienced researchers alike. This is the website that
 				I wish I had during my time in academia. A place to find new ideas without needing to trudge
 				through the deluge of new research constantly being published. An inclusive place to
-				discover, organize, and discuss cutting edge ideas in machine learning.
+				discover, manage, and discuss cutting edge ideas in machine learning.
 			</p>
 		</div>
 	</div>
@@ -42,7 +42,6 @@
 		position: relative;
 		margin-top: -1rem;
 		margin-bottom: -1rem;
-		filter: grayscale(1);
 
 		.overlay {
 			position: absolute;
@@ -52,7 +51,7 @@
 			bottom: 0;
 			z-index: 0;
 			background: white;
-			opacity: 0.85;
+			opacity: 0.75;
 		}
 
 		.wrapper {

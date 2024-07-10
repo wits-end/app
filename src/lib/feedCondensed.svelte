@@ -117,12 +117,12 @@
 					button {
 						background: none;
 						border: none;
-						color: #d33682;
+						color: #1e66f5;
 						text-decoration: underline;
 						font-size: 1.2rem;
 
 						&:hover {
-							color: #410e27;
+							color: #04a5e5;
 						}
 					}
 				}
