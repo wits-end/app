@@ -74,13 +74,13 @@
 				<!-- <div class="comments">
 					<h3 class="minion">Comments</h3>
 					<!-- {#if session} -->
-					<form>
+				<!-- <form>
 						<textarea rows="8" cols="80"></textarea>
 						<button>Add Comment</button>
-					</form>
-					<!-- {/if} -->
-					<p style="margin-top:1rem;">Comments are currently disabled.</p>
-					<!-- {#each article.comments as comment}
+					</form> -->
+				<!-- {/if} -->
+				<!-- <p style="margin-top:1rem;">Comments are currently disabled.</p> -->
+				<!-- {#each article.comments as comment}
 					<p>{comment.profile.username} | 1 hour ago</p>
 					<p>{comment.message}</p>
 					<p>Reply</p>
