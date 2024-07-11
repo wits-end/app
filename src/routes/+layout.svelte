@@ -40,9 +40,10 @@
 			<a href="/about">About</a>
 			{#if session}
 				<a href="/account/dashboard" title="Account">Account</a>
-				<a href="/" on:click={logout} title="Logout">Logout</a>
+				<a href="/" on:click={logout} title="Log Out">Log Out</a>
 			{:else}
-				<a href="/auth" title="Login / Register">Login / Register</a>
+				<a href="/auth/login" title="Log In">Log In</a>
+				<a href="/auth/register" title="Register">Register</a>
 			{/if}
 		</nav>
 	</div>

@@ -129,7 +129,7 @@
 						font-size: 1.4rem;
 
 						&:hover {
-							color: #410e27;
+							color: #e99ac0;
 						}
 					}
 				}

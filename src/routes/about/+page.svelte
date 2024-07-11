@@ -12,20 +12,14 @@
 		<div class="intro">
 			<h1>An AI Platform To<br /> Empower Researchers</h1>
 			<p>
-				Deep learning research has exploded over the last decade as tens of thousands of interesting
-				and impactful papers are being published every year. This surge in activity has made it
-				difficult and time consuming to discover quality research that is applicable to your
-				interests. This website aims to serve as a valuable resource for machine learning
-				practitioners to better explore the research landscape.We do this by leveraging algorithms
-				to not only aggregate and curate the most influential research papers but also to provide
-				succinct summaries, highlight key contributions, and offer personalized recommendations.
-			</p>
-			<p>
-				My name is Tim Whitaker and I am a recent PhD graduate who is trying to build a platform and
-				community that is useful to new and experienced researchers alike. This is the website that
-				I wish I had during my time in academia. A place to find new ideas without needing to trudge
-				through the deluge of new research constantly being published. An inclusive place to
-				discover, organize, and discuss cutting edge ideas in machine learning.
+				Deep learning research has exploded over the last decade with tens of thousands of papers
+				being published at top conferences every year. This surge in activity has made it difficult
+				for experienced researchers to stay up to date on cutting edge ideas and for new researchers
+				to find their bearings. This website aims to serve as a valuable resource for machine
+				learning practitioners to better explore the research landscape. We do this by leveraging
+				algorithms to not only aggregate and curate the most influential research papers but also to
+				provide succinct summaries, highlight key contributions, and offer personalized paper
+				recommendations.
 			</p>
 		</div>
 	</div>

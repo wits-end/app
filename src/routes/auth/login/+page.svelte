@@ -2,10 +2,6 @@
 	<div class="wrapper">
 		<form method="POST" action="?/login">
 			<label>
-				Username
-				<input name="username" type="text" />
-			</label>
-			<label>
 				Email
 				<input name="email" type="email" />
 			</label>
@@ -13,8 +9,7 @@
 				Password
 				<input name="password" type="password" />
 			</label>
-			<button>Login</button>
-			<button formaction="?/signup">Sign up</button>
+			<button>Log In</button>
 		</form>
 	</div>
 </main>

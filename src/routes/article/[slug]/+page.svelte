@@ -64,13 +64,14 @@
 				>
 				<p><b>Abstract:</b> {article?.abstract}</p>
 				{#if article?.synopsis}
-					<h3 class="minion">Synopsis</h3>
-					<div class="ai">
+					<div class="synopsis">
+						<h3 class="minion">Synopsis</h3>
+
 						{@html marked(article?.synopsis)}
 					</div>
 				{/if}
 
-				<div class="comments">
+				<!-- <div class="comments">
 					<h3 class="minion">Comments</h3>
 					{#if session}
 						<form>
@@ -83,8 +84,8 @@
 					<p>{comment.profile.username} | 1 hour ago</p>
 					<p>{comment.message}</p>
 					<p>Reply</p>
-				{/each} -->
-				</div>
+				{/each}
+				</div>-->
 			</div>
 		</div>
 		<div class="col">
@@ -101,11 +102,7 @@
 				<p>Citations: {article?.citations}</p>
 				<p>H Index: {article?.h_index}</p>
 				<p>Categories: {article?.categories}</p>
-			</div>
-			<div class="meta">
-				<h3 class="minion">Model</h3>
-				<p>Name: {article?.model_id}</p>
-				<p>Updated: {dayjs(article?.model_updated_at).format('YYYY-MM-DD')}</p>
+				<p>Model: {article?.model_id}</p>
 			</div>
 			<div class="related">
 				<h3 class="minion">Related</h3>
@@ -219,11 +216,8 @@
 						border-bottom: 1px solid #ddd;
 					}
 
-					.ai {
-						// padding: 1rem;
-						// background: #f7f7f7;
-						// border: 1px solid #ddd;
-
+					.synopsis {
+						margin-top: 2rem;
 						:global(p) {
 							font-size: 1.8rem;
 						}
