@@ -225,18 +225,18 @@
 						input {
 							padding: 1rem;
 							width: 100%;
-							border: 1px solid #ddd;
+							border: 1px solid #aaa;
 						}
 					}
 					textarea {
 						width: 100%;
 						padding: 1rem;
-						border: 1px solid #ddd;
+						border: 1px solid #aaa;
 						margin-bottom: 2rem;
 					}
 					button {
 						background: white;
-						border: 1px solid #ddd;
+						border: 1px solid #aaa;
 						padding: 1rem 2rem;
 						transition: all 0.2s ease;
 

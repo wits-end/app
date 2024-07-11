@@ -1,6 +1,6 @@
 <main>
 	<div class="wrapper">
-		<form method="POST" action="?/login">
+		<form method="POST" action="?/register">
 			<label>
 				Username
 				<input name="username" type="text" />
@@ -13,8 +13,7 @@
 				Password
 				<input name="password" type="password" />
 			</label>
-			<button>Login</button>
-			<button formaction="?/signup">Sign up</button>
+			<button>Create Account</button>
 		</form>
 	</div>
 </main>
@@ -34,12 +33,19 @@
 					display: block;
 					padding: 0.5rem;
 					margin-bottom: 0.5rem;
+					border: 1px solid #aaa;
 					width: 30rem;
 				}
 				button {
-					padding: 0.5rem 1rem;
-					margin-top: 0.5rem;
-					margin-right: 0.5rem;
+					background: white;
+					border: 1px solid #aaa;
+					padding: 1rem 2rem;
+					transition: all 0.2s ease;
+					margin-top: 1rem;
+
+					&:hover {
+						border: 1px solid #666;
+					}
 				}
 			}
 		}
