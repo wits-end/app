@@ -43,8 +43,7 @@ You can preview the production build with `npm run preview`.
 - [x] User Dashboard
     - [x] Save Articles
     - [x] Embedding Fingerprint
-- [ ] User Settings
-    - [ ] Subscription Info
+- [x] User Settings
     - [x] Personal Info
 - [x] Home Page
     - [x] Subject Categories
@@ -53,7 +52,7 @@ You can preview the production build with `npm run preview`.
         - [x] Sort by author prestige + citations + recency
     - [x] Influential Feed
         - [x] Sort by citations
-    - [ ] For You Feed
+    - [x] For You Feed
     - [x] Sidebar Filters
         - [x] Search
         - [x] Sort
@@ -61,15 +60,15 @@ You can preview the production build with `npm run preview`.
 - [x] Paper feeds
     - [x] Add/remove papers to user
 - [x] Article Detail
-    - [ ] Comments
     - [x] Sparknotes
         - [x] Prompt Engineering
         - [x] PDF RAG
             - [x] Experiment with foundational RAG context (e.g. a collection of textbooks on machine learning/math)
         - [x] Synopsis
     - [ ] Report
-- [ ] User submit new paper request
-- [ ] SAAS
-    - [x] Signup for Stripe
-    - [ ] Integrate Stripe Subscription w/ app
-    - [x] Setup Supabase for Stripe
+
+- [ ] Premium
+    - [ ] Setup Stripe
+    - [ ] No Ads
+    - [ ] Submit new paper request
+    - [ ] Organized reading lists
