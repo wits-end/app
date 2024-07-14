@@ -256,7 +256,7 @@
 					</div>
 					<input
 						type="text"
-						placeholder="Titles, Keywords, Authors and More..."
+						placeholder="Titles, Keywords, Arxiv IDs, Authors and More..."
 						bind:value={$articleStore.search}
 						on:input={() => {
 							$page.url.searchParams.set('search', $articleStore.search);

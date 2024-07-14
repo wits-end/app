@@ -69,6 +69,7 @@ You can preview the production build with `npm run preview`.
 
 - [ ] Premium
     - [ ] Setup Stripe
+    - [ ] Setup DB
     - [ ] No Ads
-    - [ ] Submit new paper request
-    - [ ] Organized reading lists
+    - [ ] Submit new paper
+    - [ ] Custom reading lists

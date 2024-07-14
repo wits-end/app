@@ -37,7 +37,8 @@
 	<div class="wrapper">
 		<Logo />
 		<nav>
-			<a href="/about">About</a>
+			<!-- <a href="/about">About</a> -->
+			<a href="/premium" title="Premium">Premium</a>
 			{#if session}
 				<a href="/account/dashboard" title="Account">Account</a>
 				<a href="/" on:click={logout} title="Log Out">Log Out</a>
