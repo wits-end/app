@@ -1,13 +1,11 @@
 <script></script>
 
 <svelte:head>
-	<title>About | Wits End</title>
+	<title>Premium | Wits End</title>
 	<meta name="description" content="An AI platform to empower researchers." />
 </svelte:head>
 
 <div class="hero">
-	<div class="overlay"></div>
-
 	<div class="wrapper">
 		<div class="intro">
 			<h1>Premium Memberships <br /> To Empower Researchers</h1>
@@ -18,7 +16,7 @@
 				<li>Theme Settings</li>
 				<li>Early access to new features</li>
 			</ul>
-			<button>$6/month</button>
+			<button>$5/month</button>
 			<button>$50/Year (Save 30%)</button>
 		</div>
 	</div>
@@ -26,26 +24,15 @@
 
 <style lang="scss">
 	.hero {
-		background: url('$lib/assets/anatomical-skull.jpg');
-		background-position: right 7% center;
+		background: url('$lib/assets/brain.svg');
+		background-position: center right;
+		background-size: 60vw;
 		background-repeat: no-repeat;
-		background-size: auto 100%;
 		height: 80vh;
 		width: 100%;
 		position: relative;
 		margin-top: -1rem;
 		margin-bottom: -1rem;
-
-		.overlay {
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			z-index: 0;
-			background: white;
-			opacity: 0.75;
-		}
 
 		.wrapper {
 			position: relative;
@@ -77,13 +64,20 @@
 				}
 
 				button {
-					background: white;
-					border: 1px solid #ddd;
+					background: #d33682;
+					color: white;
+					border: none;
 					padding: 1rem 2rem;
+					margin-right: 1rem;
+					font-family: 'Open Sans';
+					font-size: 1.2rem;
+					font-weight: bold;
+					text-transform: uppercase;
+					text-decoration: none;
 					transition: all 0.2s ease;
 
 					&:hover {
-						border: 1px solid #666;
+						background-color: #e99ac0;
 					}
 				}
 			}

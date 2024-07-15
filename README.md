@@ -68,6 +68,7 @@ You can preview the production build with `npm run preview`.
     - [ ] Report
 
 - [ ] Premium
+    - [ ] Marketing Page
     - [ ] Setup Stripe
     - [ ] Setup DB
     - [ ] No Ads
