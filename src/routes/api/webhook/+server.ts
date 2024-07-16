@@ -1,5 +1,6 @@
 import { json } from "@sveltejs/kit"
 import { stripe } from "$lib/server/stripe"
+import { supabaseAdmin } from "$lib/server/supabase-admin";
 import { PRIVATE_STRIPE_SIGNING_SECRET } from '$env/static/private'
 
 import type { RequestHandler } from "./$types";
@@ -28,57 +29,54 @@ export const POST: RequestHandler = async (event) => {
 
     try {
         switch (stripeEvent.type) {
-            case 'checkout.session.completed':
-                const checkoutSession = stripeEvent.data.object as Stripe.Checkout.Session;
+            case 'checkout.session.completed': {
+                const session = stripeEvent.data.object as Stripe.Checkout.Session;
 
                 const subscription = await stripe.subscriptions.retrieve(
-                    checkoutSession.subscription as string,
+                    session.subscription as string,
                 );
 
-                // const { error } = await supabaseAdmin
-                // .from("profiles")
-                // .update(customer)
-                // .eq("id", customer.id);
+                const { error } = await supabaseAdmin
+                    .from("profiles")
+                    .update({
+                        stripeSubscriptionId: subscription.id,
+                        stripeCustomerId: subscription.customer as string,
+                        stripePriceId: subscription.items.data[0].price.id,
+                        stripeCurrentPeriodEnd: new Date(
+                            subscription.current_period_end * 1000
+                        )
+                    })
+                    .eq("id", session?.metadata?.userId);
 
-                // await update user in supabase 
-                // where: {
-                //     id: session?.metadata?.userId,
-                //   },
-                // data: {
-                //     stripeSubscriptionId: subscription.id,
-                //     stripeCustomerId: subscription.customer as string,
-                //     stripePriceId: subscription.items.data[0].price.id,
-                //     stripeCurrentPeriodEnd: new Date(
-                //       subscription.current_period_end * 1000,
-                //     ),
-                //   },
                 break
-            case 'invoice.payment_succeeded':
-                const invoiceSession = stripeEvent.data.object as Stripe.Invoice;
+            }
+            case 'invoice.payment_succeeded': {
+                const session = stripeEvent.data.object as Stripe.Invoice;
 
-                if (invoiceSession.billing_reason != "subscription_create") {
-                    const invoiceSubscription = await stripe.subscriptions.retrieve(
-                        invoiceSession.subscription as string
+                // If the billing reason is not subscription_create, it means the customer has updated their subscription.
+                // If it is subscription_create, we don't need to update the subscription id and it will handle by the checkout.session.completed event.
+                if (session.billing_reason != "subscription_create") {
+                    const subscription = await stripe.subscriptions.retrieve(
+                        session.subscription as string
                     )
 
-                    // Update price id and set new period end
-                    // await update user in supabase
-                    // where: {
-                    //   stripeSubscriptionId: subscription.id,
-                    //     },
-                    //     data: {
-                    //     stripePriceId: subscription.items.data[0].price.id,
-                    //     stripeCurrentPeriodEnd: new Date(
-                    //         subscription.current_period_end * 1000,
-                    //     ),
-                    //     },
-                    //   
+                    const { error } = await supabaseAdmin
+                        .from("profiles")
+                        .update({
+                            stripePriceId: subscription.items.data[0].price.id,
+                            stripeCurrentPeriodEnd: new Date(
+                                subscription.current_period_end * 1000
+                            )
+                        })
+                        .eq("stripe_subscription_id", subscription.id)
                 }
 
                 break
-            default:
+            }
+            default: {
                 console.warn(`Unhandled event type: ${stripeEvent.type}`);
                 return json({ received: true }, { status: 200 });
+            }
         }
     } catch (e) {
         console.log(e)
