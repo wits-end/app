@@ -38,8 +38,8 @@
 		<Logo />
 		<nav>
 			<!-- <a href="/about">About</a> -->
-			<a href="/premium" title="Premium">Premium</a>
 			{#if session}
+				<a href="/premium" title="Premium">Premium</a>
 				<a href="/account/dashboard" title="Account">Account</a>
 				<a href="/" on:click={logout} title="Log Out">Log Out</a>
 			{:else}
@@ -94,6 +94,7 @@
 			<div class="link-list">
 				<a href="/about">About</a>
 				<a href="https://github.com/wits-end">Code</a>
+				<a href="/premium">Premium</a>
 				<a href="/privacy">Privacy</a>
 				<a href="/terms">Terms</a>
 			</div>

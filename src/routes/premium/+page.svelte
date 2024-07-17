@@ -1,4 +1,6 @@
-<script></script>
+<script>
+	const priceIds = ['price_1PdICXCfyJF5ohGUmfEZhNe9', 'price_1PdICJCfyJF5ohGUtbrJHC5R'];
+</script>
 
 <svelte:head>
 	<title>Premium | Wits End</title>
@@ -16,8 +18,8 @@
 				<li>Theme Settings</li>
 				<li>Early access to new features</li>
 			</ul>
-			<button>$5/month</button>
-			<button>$50/Year (Save 30%)</button>
+			<a href="/api/checkout?id={priceIds[1]}">$5/month</a>
+			<a href="/api/checkout?id={priceIds[0]}">$50/Year (Save 30%)</a>
 		</div>
 	</div>
 </div>
@@ -63,7 +65,7 @@
 					margin-bottom: 2rem;
 				}
 
-				button {
+				a {
 					background: #d33682;
 					color: white;
 					border: none;

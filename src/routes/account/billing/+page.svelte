@@ -1,5 +1,5 @@
 <script></script>
 
-<div class="wrapper"></div>
+<div class="wrapper">Billing</div>
 
 <style></style>
