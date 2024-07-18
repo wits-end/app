@@ -1,13 +1,18 @@
 <script>
 	import { onMount, onDestroy } from 'svelte';
 	import { Editor } from '@tiptap/core';
+	import Placeholder from '@tiptap/extension-placeholder';
+
 	import Bold from './icons/bold.svelte';
+	import BulletList from './icons/bulletList.svelte';
 	import Code from './icons/code.svelte';
 	import Italic from './icons/italic.svelte';
+	import NumberList from './icons/numberList.svelte';
 	import Redo from './icons/redo.svelte';
 	import Strikethrough from './icons/strikethrough.svelte';
 	import Underline from './icons/underline.svelte';
 	import Undo from './icons/undo.svelte';
+	import Quote from './icons/quote.svelte';
 	import StarterKit from '@tiptap/starter-kit';
 
 	let element;
@@ -16,8 +21,13 @@
 	onMount(() => {
 		editor = new Editor({
 			element: element,
-			extensions: [StarterKit],
-			content: '<p>Hello World! 🌍️ </p>',
+			extensions: [
+				StarterKit,
+				Placeholder.configure({
+					placeholder: 'Save your personal notes here...'
+				})
+			],
+			content: '',
 			onTransaction: () => {
 				// force re-render so `editor.isActive` works as expected
 				editor = editor;
@@ -34,25 +44,64 @@
 
 {#if editor}
 	<div class="tools">
-		<button>
+		<button
+			on:click={() => editor.chain().focus().undo().run()}
+			class:disabled={!editor.can().undo()}
+		>
 			<Undo />
 		</button>
-		<button>
+		<button
+			on:click={() => editor.chain().focus().redo().run()}
+			class:disabled={!editor.can().redo()}
+		>
 			<Redo />
 		</button>
-		<button>
+		<button
+			on:click={() => editor.chain().focus().toggleBold().run()}
+			class:active={editor.isActive('bold')}
+		>
 			<Bold />
 		</button>
-		<button>
+		<button
+			on:click={() => editor.chain().focus().toggleUnderline().run()}
+			class:active={editor.isActive('underline')}
+		>
 			<Underline />
 		</button>
-		<button>
+		<button
+			on:click={() => editor.chain().focus().toggleItalic().run()}
+			class:active={editor.isActive('italic')}
+		>
 			<Italic />
 		</button>
-		<button>
+		<button
+			on:click={() => editor.chain().focus().toggleStrike().run()}
+			class:active={editor.isActive('strike')}
+		>
 			<Strikethrough />
 		</button>
-		<button>
+		<button
+			on:click={() => editor.chain().focus().toggleBulletList().run()}
+			class:active={editor.isActive('bullet-list')}
+		>
+			<BulletList />
+		</button>
+		<button
+			on:click={() => editor.chain().focus().toggleOrderedList().run()}
+			class:active={editor.isActive('number-list')}
+		>
+			<NumberList />
+		</button>
+		<button
+			on:click={() => editor.chain().focus().toggleBlockquote().run()}
+			class:active={editor.isActive('blockquote')}
+		>
+			<Quote />
+		</button>
+		<button
+			on:click={() => editor.chain().focus().toggleCodeBlock().run()}
+			class:active={editor.isActive('code')}
+		>
 			<Code />
 		</button>
 	</div>
@@ -83,6 +132,32 @@
 		border: 1px solid #ddd;
 		border-top: none;
 		padding: 1rem;
+		min-height: 128px;
+
+		:global(p.is-editor-empty:first-child::before) {
+			color: #adb5bd;
+			content: attr(data-placeholder);
+			float: left;
+			height: 0;
+			pointer-events: none;
+		}
+
+		:global(pre) {
+			background: #ddd;
+			padding: 0.5rem;
+
+			:global(code) {
+				line-height: 1.5;
+			}
+		}
+
+		:global(blockquote) {
+			border-left: 5px solid #ddd;
+			padding-left: 1rem;
+		}
+	}
+	:global(.ProseMirror-focused) {
+		outline: none;
 	}
 	.tools {
 		padding: 1rem;
@@ -92,8 +167,8 @@
 		gap: 8px;
 
 		button {
-			height: 32px;
-			width: 32px;
+			height: 36px;
+			width: 36px;
 			padding: 0;
 			display: flex;
 			align-items: center;
@@ -108,7 +183,13 @@
 			}
 
 			&.disabled {
-				color: #ddd;
+				&:hover {
+					background: none;
+					cursor: default;
+				}
+				:global(svg) {
+					fill: #ddd;
+				}
 			}
 		}
 	}
