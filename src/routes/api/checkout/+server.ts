@@ -1,12 +1,12 @@
 import { error, redirect } from "@sveltejs/kit"
 import type { RequestHandler } from "./$types"
-import { createCheckoutSession } from "$lib/server/subscriptions"
+import { createCheckoutSession } from "$lib/server/stripe"
 
 export const GET: RequestHandler = async (event) => {
     const { session, profile } = await event.locals.safeGetSession()
 
     if (!session || !profile) {
-        throw redirect(302, "/auth/login")
+        throw redirect(302, "/auth/register")
     }
 
     // If they already have a subscription then redirect to billing

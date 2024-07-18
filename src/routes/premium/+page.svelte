@@ -14,6 +14,7 @@
 			<p>Help support Wits End and get access to an ad-free experience with exclusive features.</p>
 			<ul>
 				<li>No Ads</li>
+				<li>Personal Notes</li>
 				<li>Custom Reading Lists</li>
 				<li>Theme Settings</li>
 				<li>Early access to new features</li>

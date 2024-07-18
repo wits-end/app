@@ -1,8 +1,7 @@
 <script lang="ts">
-	import FeedVerbose from '$lib/feedVerbose.svelte';
-	import FeedCondensed from '$lib/feedCondensed.svelte';
-	import Sort from '$lib/sort.svelte';
-	import Tags from '$lib/tags.svelte';
+	import FeedVerbose from '$lib/components/feedVerbose.svelte';
+	import FeedCondensed from '$lib/components/feedCondensed.svelte';
+	import { isPremium } from '$lib/utils/subscriptions.js';
 	import { createArticleStore, filterHandler } from '$lib/stores/articles.js';
 	import { onDestroy, beforeUpdate, onMount } from 'svelte';
 	import { goto } from '$app/navigation';
@@ -354,21 +353,23 @@
 				{/each}
 			</div>
 
-			<div class="ads">
-				<h3 class="minion">Ads</h3>
-				<!-- Sidebar -->
-				<ins
-					class="adsbygoogle"
-					style="display:block"
-					data-ad-client="ca-pub-1498186405228029"
-					data-ad-slot="3897793383"
-					data-ad-format="auto"
-					data-full-width-responsive="true"
-				></ins>
-				<script>
-					(adsbygoogle = window.adsbygoogle || []).push({});
-				</script>
-			</div>
+			{#if !isPremium(profile)}
+				<div class="ads">
+					<h3 class="minion">Ads</h3>
+					<!-- Sidebar -->
+					<ins
+						class="adsbygoogle"
+						style="display:block"
+						data-ad-client="ca-pub-1498186405228029"
+						data-ad-slot="3897793383"
+						data-ad-format="auto"
+						data-full-width-responsive="true"
+					></ins>
+					<script>
+						(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>
+				</div>
+			{/if}
 		</div>
 	</div>
 	<div class="pagination">

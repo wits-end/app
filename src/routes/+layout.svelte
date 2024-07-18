@@ -1,5 +1,5 @@
 <script>
-	import Logo from '$lib/logo.svelte';
+	import Logo from '$lib/components/logo.svelte';
 	import { goto, invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 

@@ -3,7 +3,7 @@
 	import Highcharts from 'highcharts';
 	import { Chart } from '@highcharts/svelte'; // Chart is also exported by default
 	import type { PageData } from '../$types';
-	import FeedCondensed from '$lib/feedCondensed.svelte';
+	import FeedCondensed from '$lib/components/feedCondensed.svelte';
 
 	export let data: PageData;
 	export let form;
