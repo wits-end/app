@@ -50,14 +50,66 @@ export const actions: Actions = {
             articleId,
             profileId,
         }
+    },
+
+    saveNotes: async ({ request, locals: { supabase, session, profile } }) => {
+        const params = await request.formData()
+        const content = params.get("content")
+
+        const noteId = params.get("noteId")
+        const articleId = params.get("articleId")
+        const profileId = session?.user.id
+
+        console.log({
+            ...(noteId ? { id: noteId } : null),
+            updated_at: new Date().toISOString(),
+            profile_id: profileId,
+            article_id: articleId,
+            content: content,
+        })
+
+        const { error } = await supabase
+            .from('notes')
+            .upsert({
+                ...(noteId ? { id: noteId } : null),
+                updated_at: new Date().toISOString(),
+                profile_id: profileId,
+                article_id: articleId,
+                content: content,
+            })
+            .eq("profile_id", profileId)
+            .eq("article_id", articleId);
+
+        if (error) {
+            return fail(500, {
+                articleId,
+                profileId,
+                content,
+            })
+        }
+
+        return {
+            articleId,
+            profileId,
+            content,
+        }
+
     }
 }
 
 export const load: PageServerLoad = async ({ locals: { supabase, session, profile }, params }) => {
-    const { data: article } = await supabase.from('articles').select(`
-        *
-        comments ( id, message, parent_id, profile:profile_id (username) )
-    `).eq('id', params.slug).single()
+    const { data: article } = await supabase
+        .from('articles')
+        .select()
+        .eq('id', params.slug)
+        .single()
+
+    const { data: note } = await supabase
+        .from('notes')
+        .select()
+        .eq('profile_id', profile?.id)
+        .eq('article_id', article?.id)
+        .single()
 
     const { data: relatedArticles } = await supabase.rpc('match_articles', {
         query_embedding: article?.embedding,
@@ -65,5 +117,5 @@ export const load: PageServerLoad = async ({ locals: { supabase, session, profil
         match_count: 14,
     }).neq('id', article?.id)
 
-    return { article: article ?? {}, relatedArticles: relatedArticles ?? [], session, profile }
+    return { article: article ?? {}, note: note ?? {}, relatedArticles: relatedArticles ?? [], session, profile }
 }

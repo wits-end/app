@@ -9,7 +9,7 @@
 	import dayjs from 'dayjs';
 
 	export let data;
-	let { article, relatedArticles } = data;
+	let { article, note, relatedArticles } = data;
 	$: ({ article, session, profile } = data);
 
 	$: relatedFeedData = {
@@ -76,7 +76,7 @@
 				{#if isPremium(profile)}
 					<div class="notes">
 						<h3 class="minion">Notes</h3>
-						<Tiptap />
+						<Tiptap {note} />
 					</div>
 				{/if}
 				<!-- <div class="comments">

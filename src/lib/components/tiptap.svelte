@@ -1,6 +1,8 @@
 <script>
 	import { onMount, onDestroy } from 'svelte';
+	import { enhance } from '$app/forms';
 	import { Editor } from '@tiptap/core';
+	import { page } from '$app/stores';
 	import Placeholder from '@tiptap/extension-placeholder';
 	import Bold from './icons/bold.svelte';
 	import BulletList from './icons/bulletList.svelte';
@@ -15,6 +17,8 @@
 	import Title from './icons/title.svelte';
 	import StarterKit from '@tiptap/starter-kit';
 
+	export let note;
+
 	let element;
 	let editor;
 
@@ -24,10 +28,10 @@
 			extensions: [
 				StarterKit,
 				Placeholder.configure({
-					placeholder: 'Save your personal notes here...'
+					placeholder: 'Write your personal notes here...'
 				})
 			],
-			content: '',
+			content: note?.content ? JSON.parse(note.content) : '',
 			onTransaction: () => {
 				// force re-render so `editor.isActive` works as expected
 				editor = editor;
@@ -40,6 +44,10 @@
 			editor.destroy();
 		}
 	});
+
+	const handleSaveContent = (e) => {
+		console.log();
+	};
 </script>
 
 {#if editor}
@@ -133,14 +141,27 @@
 
 <div bind:this={element} />
 
-<button class="save-button">save</button>
+<form
+	action="?/saveNotes"
+	method="POST"
+	use:enhance={({ formData }) => {
+		formData.append('content', JSON.stringify(editor.getJSON()));
+
+		if (note?.id) {
+			formData.append('noteId', note.id);
+		}
+	}}
+>
+	<input type="text" name="articleId" value={$page.params.slug} hidden />
+	<button class="save-button">save</button>
+</form>
 
 <style lang="scss">
 	:global(.tiptap) {
 		border: 1px solid #ddd;
 		border-top: none;
 		padding: 1rem;
-		min-height: 128px;
+		min-height: 180px;
 
 		:global(p.is-editor-empty:first-child::before) {
 			color: #adb5bd;
