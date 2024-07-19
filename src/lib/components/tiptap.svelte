@@ -2,7 +2,6 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { Editor } from '@tiptap/core';
 	import Placeholder from '@tiptap/extension-placeholder';
-
 	import Bold from './icons/bold.svelte';
 	import BulletList from './icons/bulletList.svelte';
 	import Code from './icons/code.svelte';
@@ -13,6 +12,7 @@
 	import Underline from './icons/underline.svelte';
 	import Undo from './icons/undo.svelte';
 	import Quote from './icons/quote.svelte';
+	import Title from './icons/title.svelte';
 	import StarterKit from '@tiptap/starter-kit';
 
 	let element;
@@ -55,6 +55,12 @@
 			class:disabled={!editor.can().redo()}
 		>
 			<Redo />
+		</button>
+		<button
+			on:click={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+			class:active={editor.isActive('title')}
+		>
+			<Title />
 		</button>
 		<button
 			on:click={() => editor.chain().focus().toggleBold().run()}
@@ -127,6 +133,8 @@
 
 <div bind:this={element} />
 
+<button class="save-button">save</button>
+
 <style lang="scss">
 	:global(.tiptap) {
 		border: 1px solid #ddd;
@@ -193,8 +201,18 @@
 			}
 		}
 	}
-	button.active {
-		background: black;
-		color: white;
+	.save-button {
+		margin-top: 1rem;
+		background: white;
+		border: 1px solid #ddd;
+		font-size: 1.4rem;
+		color: #999;
+		padding: 0.5rem 1rem;
+		transition: all 0.2s ease;
+
+		&:hover {
+			border: 1px solid #666;
+			color: #000;
+		}
 	}
 </style>

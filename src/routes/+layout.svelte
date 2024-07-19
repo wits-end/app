@@ -222,6 +222,7 @@
 
 						&:hover {
 							border: 1px solid #666;
+							color: #000;
 						}
 					}
 				}
