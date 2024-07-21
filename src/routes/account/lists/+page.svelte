@@ -3,15 +3,29 @@
 	import DndFeedCondensed from './DndFeedCondensed.svelte';
 	import type { PageData } from '../$types';
 	import Edit from '$lib/components/icons/edit.svelte';
+	import EditableMinion from './EditableMinion.svelte';
+	import { enhance } from '$app/forms';
 
 	export let data: PageData;
 
 	let { articles, lists, profile } = data;
+	$: ({ lists } = data);
 
-	console.log(lists[lists.length - 1].position);
+	lists.forEach((list) => {
+		if (list.name == 'New List') {
+			list.isNew = true;
+		}
+	});
 
-	function handleDeleteList() {
-		console.log('Delete');
+	function submitMinionName(list) {
+		list.isNew = false;
+
+		// Reassign to Force reactive update
+		lists = lists;
+
+		return ({ detail: newValue }) => {
+			console.log(`updated ${list.name}, new value is: "${newValue}"`);
+		};
 	}
 </script>
 
@@ -32,19 +46,32 @@
 		{#each lists as list}
 			<div class="list">
 				<div class="heading">
-					{#if list.name == 'New List'}
+					{#if list.isNew}
 						<div class="edit-icon">
 							<Edit />
 						</div>
-						<h3 class="minion" contenteditable>
-							{list.name}
+						<h3 class="minion">
+							<EditableMinion
+								bind:value={list.name}
+								on:submit={() => {
+									list.isNew = false;
+									lists = lists;
+								}}
+								listId={list.id}
+							/>
 						</h3>
 					{:else}
-						<h3 class="minion" contenteditable>
-							{list.name}
+						<h3 class="minion">
+							<EditableMinion
+								bind:value={list.name}
+								on:submit={() => {
+									lists = lists;
+								}}
+								listId={list.id}
+							/>
 						</h3>
 					{/if}
-					<form action="?/deleteList" method="POST">
+					<form action="?/deleteList" method="POST" use:enhance>
 						<input type="hidden" name="id" value={list.id} />
 						<button type="submit">delete list</button>
 					</form>
@@ -53,7 +80,7 @@
 			</div>
 		{/each}
 		<div class="new">
-			<form action="?/createList" method="POST">
+			<form action="?/createList" method="POST" use:enhance>
 				<input type="hidden" name="name" value="New List" />
 				<input type="hidden" name="previousRank" value={lists[lists.length - 1].position} />
 				<button type="submit">+ Add another list</button>
@@ -114,12 +141,14 @@
 						border-bottom: 0;
 						padding: 0;
 						margin: 0;
-						flex: 1 0 auto;
+						flex: 0 0 auto;
 						margin-right: 1rem;
 						line-height: 1.75;
 					}
 					form {
 						font-size: 0;
+						margin-left: auto;
+
 						button {
 							background: none;
 							border: none;

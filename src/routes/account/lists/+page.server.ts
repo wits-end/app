@@ -66,8 +66,37 @@ export const actions: Actions = {
             id,
             profileId,
         }
-    }
+    },
+    updateListName: async ({ request, locals: { supabase, session } }) => {
+        const params = await request.formData();
 
+        console.log("server submit update name")
+
+        const listId = params.get('listId')
+        const name = params.get('name')
+
+        const profileId = session?.user.id
+
+        const { error } = await supabase
+            .from('lists')
+            .update({
+                name: name,
+            })
+            .eq("id", listId)
+            .eq("profile_id", profileId);
+
+        if (error) {
+            return fail(500, {
+                listId,
+                name,
+            })
+        }
+
+        return {
+            listId,
+            name,
+        }
+    }
 }
 export const load: PageServerLoad = async ({ locals: { supabase, session, profile } }) => {
     // const { data: profile } = await supabase.from('profiles').select(
