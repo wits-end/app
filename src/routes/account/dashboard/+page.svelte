@@ -189,13 +189,20 @@
 						margin-bottom: 2rem;
 					}
 					button {
+						font-family: 'Open Sans';
+						font-size: 1.2rem;
+						font-weight: 500;
+						text-transform: uppercase;
+						text-decoration: none;
 						background: white;
-						border: 1px solid #aaa;
+						border: 1px solid #ddd;
+						color: #999;
 						padding: 1rem 2rem;
 						transition: all 0.2s ease;
 
 						&:hover {
 							border: 1px solid #666;
+							color: #000;
 						}
 					}
 				}

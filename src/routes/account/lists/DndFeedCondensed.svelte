@@ -1,0 +1,147 @@
+<script lang="ts">
+	import dayjs from 'dayjs';
+	import relativeTime from 'dayjs/plugin/relativeTime.js';
+	import { flip } from 'svelte/animate';
+	import { dndzone, TRIGGERS, SHADOW_ITEM_MARKER_PROPERTY_NAME } from 'svelte-dnd-action';
+
+	dayjs.extend(relativeTime);
+
+	export let articles;
+
+	let items = articles;
+	items.map((item) => {
+		item.ogId = item.id;
+	});
+
+	const flipDurationMs = 300;
+	let shouldIgnoreDndEvents = false;
+
+	function handleDndConsider(e) {
+		console.warn(`got consider ${JSON.stringify(e.detail, null, 2)}`);
+		const { trigger, id } = e.detail.info;
+		if (trigger === TRIGGERS.DRAG_STARTED) {
+			console.warn(`copying ${id}`);
+			const idx = items.findIndex((item) => item.id === id);
+			const newId = `${id}_copy_${Math.round(Math.random() * 100000)}`;
+			// the line below was added in order to be compatible with version svelte-dnd-action 0.7.4 and above
+			e.detail.items = e.detail.items.filter((item) => !item[SHADOW_ITEM_MARKER_PROPERTY_NAME]);
+			e.detail.items.splice(idx, 0, { ...items[idx], id: newId });
+			items = e.detail.items;
+			shouldIgnoreDndEvents = true;
+		} else if (!shouldIgnoreDndEvents) {
+			items = e.detail.items;
+		} else {
+			items = [...items];
+		}
+	}
+	function handleDndFinalize(e) {
+		console.warn(`got finalize ${JSON.stringify(e.detail, null, 2)}`);
+		if (!shouldIgnoreDndEvents) {
+			items = e.detail.items;
+		} else {
+			items = [...items];
+			shouldIgnoreDndEvents = false;
+		}
+	}
+	function handleRemoveFromList() {
+		console.log('Remove');
+	}
+</script>
+
+<div
+	class="feed"
+	use:dndzone={{ items, flipDurationMs }}
+	on:consider={handleDndConsider}
+	on:finalize={handleDndFinalize}
+>
+	{#each items as item (item.id)}
+		<div class="post" animate:flip={{ duration: flipDurationMs }}>
+			<p class="published-date">
+				{dayjs(item?.published_at).format('YYYY-MM-DD')}
+			</p>
+			<h2 class="title"><a href="/article/{item?.ogId}">{item?.title}</a></h2>
+			<div class="actions">
+				<p class="date">{dayjs().to(dayjs(item?.published_at))}</p>
+				<a class="read-more" href="/article/{item?.ogId}">read more</a>
+				<button
+					on:click={() => {
+						handleRemoveFromList();
+					}}>remove from list</button
+				>
+			</div>
+		</div>
+	{/each}
+</div>
+
+<style lang="scss">
+	.feed {
+		margin-right: 2rem;
+		height: 100%;
+	}
+	.post {
+		background: white;
+		padding: 2rem 0;
+		border-bottom: 1px solid #ddd;
+
+		.published-date {
+			font-size: 1.3rem;
+			margin: 0;
+		}
+
+		h2.title {
+			font-family: 'Open Sans';
+			font-size: 1.6rem;
+
+			a {
+				color: black;
+				text-decoration: none;
+
+				&:hover {
+					color: #d33682;
+				}
+			}
+		}
+
+		.actions {
+			font-size: 0;
+			p {
+				display: inline-block;
+				font-size: 1.2rem;
+				margin: 0;
+			}
+			a {
+				font-size: 1.2rem;
+			}
+			.date,
+			.read-more {
+				padding-right: 1rem;
+				padding-bottom: 0.25rem;
+			}
+			.read-more,
+			button {
+				border-left: 1px solid #ddd;
+				padding-left: 1rem;
+				padding-bottom: 0.25rem;
+			}
+			button {
+				background: none;
+				border: none;
+				border-left: 1px solid #ddd;
+				color: #d33682;
+				text-decoration: underline;
+				font-size: 1.2rem;
+
+				&:hover {
+					color: #e99ac0;
+				}
+			}
+		}
+		&:last-child {
+			border: none;
+		}
+
+		&:first-child {
+			padding-top: 0;
+		}
+	}
+</style>

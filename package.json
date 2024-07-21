@@ -48,11 +48,13 @@
 		"fast-xml-parser": "^4.4.0",
 		"highcharts": "^11.4.3",
 		"katex": "^0.16.10",
+		"lexorank": "^1.0.5",
 		"marked": "^12.0.2",
 		"node-html-parser": "^6.1.13",
 		"openai": "^4.47.1",
 		"pdf2pic": "^3.1.1",
 		"stripe": "^16.2.0",
+		"svelte-dnd-action": "^0.9.49",
 		"xml2js": "^0.6.2"
 	}
 }

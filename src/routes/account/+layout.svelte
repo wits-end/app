@@ -4,7 +4,7 @@
 	<div class="menu">
 		<nav class="categories">
 			<a href="/account/dashboard" class="active" title="Dashboard">Dashboard</a>
-			<a href="/account/settings">Reading Lists</a>
+			<a href="/account/lists">Reading Lists</a>
 			<a href="/account/settings">Settings</a>
 		</nav>
 	</div>

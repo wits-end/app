@@ -212,10 +212,14 @@
 						}
 					}
 					button {
+						font-family: 'Open Sans';
+						font-size: 1.2rem;
+						font-weight: 500;
+						text-transform: uppercase;
+						text-decoration: none;
 						margin-left: 1rem;
 						background: white;
 						border: 1px solid #ddd;
-						font-size: 1.4rem;
 						color: #999;
 						padding: 0.5rem 1rem;
 						transition: all 0.2s ease;
