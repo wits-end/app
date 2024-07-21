@@ -31,22 +31,24 @@
 	<div class="board">
 		{#each lists as list}
 			<div class="list">
-				{#if list.name == 'New List'}
-					<div class="edit-icon">
-						<Edit />
-					</div>
-					<h3 class="minion" contenteditable>
-						{list.name}
-					</h3>
-				{:else}
-					<h3 class="minion" contenteditable>
-						{list.name}
-					</h3>
-				{/if}
-				<form action="?/deleteList" method="POST">
-					<input type="hidden" name="id" value={list.id} />
-					<button type="submit">x</button>
-				</form>
+				<div class="heading">
+					{#if list.name == 'New List'}
+						<div class="edit-icon">
+							<Edit />
+						</div>
+						<h3 class="minion" contenteditable>
+							{list.name}
+						</h3>
+					{:else}
+						<h3 class="minion" contenteditable>
+							{list.name}
+						</h3>
+					{/if}
+					<form action="?/deleteList" method="POST">
+						<input type="hidden" name="id" value={list.id} />
+						<button type="submit">delete list</button>
+					</form>
+				</div>
 				<DndFeedCondensed articles={list.articles} />
 			</div>
 		{/each}
@@ -71,6 +73,13 @@
 			width: 350px;
 
 			.minion {
+				padding: 0;
+				margin: 0;
+				flex: 1 0 auto;
+				line-height: 1.75;
+				padding: 1rem 0;
+				margin-top: -1rem;
+				margin-bottom: 1rem;
 				margin-right: 2rem;
 			}
 
@@ -87,36 +96,40 @@
 				width: 350px;
 				position: relative;
 
-				.edit-icon {
-					float: left;
-					height: 16px;
-					width: 16px;
-					margin-right: 1rem;
-					margin-top: -0.5rem;
-				}
-				.minion {
+				.heading {
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+					padding: 1rem 0;
+					margin-top: -1rem;
+					margin-bottom: 1rem;
 					margin-right: 2rem;
-				}
-				form {
-					float: right;
+					border-bottom: 1px solid #ddd;
 
-					button {
-						font-family: 'Open Sans';
-						font-size: 1.2rem;
-						font-weight: 500;
-						text-transform: uppercase;
-						text-decoration: none;
-						margin-left: 1rem;
-						background: white;
-						border: 1px solid #ddd;
-						color: #999;
-						// padding: 0.5rem 1rem;
-						padding: 0 0.5rem;
-						transition: all 0.2s ease;
+					.edit-icon {
+						height: 18px;
+						margin-right: 0.5rem;
+					}
+					.minion {
+						border-bottom: 0;
+						padding: 0;
+						margin: 0;
+						flex: 1 0 auto;
+						margin-right: 1rem;
+						line-height: 1.75;
+					}
+					form {
+						font-size: 0;
+						button {
+							background: none;
+							border: none;
+							color: #d33682;
+							text-decoration: underline;
+							font-size: 1.2rem;
 
-						&:hover {
-							border: 1px solid #666;
-							color: #000;
+							&:hover {
+								color: #e99ac0;
+							}
 						}
 					}
 				}

@@ -7,5 +7,7 @@
 <style>
 	svg {
 		fill: #777;
+		height: 100%;
+		width: auto;
 	}
 </style>
