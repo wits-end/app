@@ -24,24 +24,36 @@
 		if (trigger === TRIGGERS.DRAG_STARTED) {
 			const idx = items.findIndex((item) => item.id === id);
 			draggedItem = items[idx];
+			draggedItem.oldListId = listId;
 		}
 
 		items = e.detail.items;
 	}
 	function handleDndFinalize(e) {
+		const { trigger, id } = e.detail.info;
+		if (trigger === TRIGGERS.DROPPED_INTO_ZONE) {
+			const res = fetch('?/addArticleToList', {
+				method: 'POST',
+				body: JSON.stringify({
+					oldListId: draggedItem.oldListId,
+					newListId: listId,
+					articleId: draggedItem.ogId,
+					position: '0'
+				})
+			});
+		}
+
 		items = e.detail.items;
 		draggedItem = null;
 		dropFromOthersDisabled = false;
-		// items = items;
 	}
+
 	function handleRemoveFromList() {
 		console.log('Remove');
 	}
 
 	function checkItemInList() {
 		let arxivIds = items.map((item) => item.arxiv_id);
-		console.log(arxivIds);
-		console.log('in list', arxivIds.includes(draggedItem?.arxiv_id));
 		dropFromOthersDisabled = arxivIds.includes(draggedItem?.arxiv_id);
 	}
 </script>

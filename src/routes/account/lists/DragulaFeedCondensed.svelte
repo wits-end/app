@@ -27,7 +27,10 @@
 			// the line below was added in order to be compatible with version svelte-dnd-action 0.7.4 and above
 			e.detail.items = e.detail.items.filter((item) => !item[SHADOW_ITEM_MARKER_PROPERTY_NAME]);
 			e.detail.items.splice(idx, 0, { ...items[idx], id: newId });
+
 			draggedItem = e.detail.items[idx];
+			draggedItem.oldListId = null;
+
 			items = e.detail.items;
 			shouldIgnoreDndEvents = true;
 		} else if (!shouldIgnoreDndEvents) {

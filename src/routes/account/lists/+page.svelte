@@ -73,7 +73,11 @@
 		<div class="new">
 			<form action="?/createList" method="POST" use:enhance>
 				<input type="hidden" name="name" value="New List" />
-				<input type="hidden" name="previousRank" value={lists[lists.length - 1].position} />
+				<input
+					type="hidden"
+					name="previousRank"
+					value={lists.length ? lists[lists.length - 1].position : ''}
+				/>
 				<button type="submit">+ Add another list</button>
 			</form>
 		</div>

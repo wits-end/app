@@ -96,6 +96,59 @@ export const actions: Actions = {
             listId,
             name,
         }
+    },
+    addArticleToList: async ({ request, locals: { supabase, session } }) => {
+        const { oldListId, newListId, articleId, position } = await request.json()
+
+        const profileId = session?.user.id
+
+        console.log({ oldListId, newListId, articleId, position })
+        // If moving between lists
+        if (oldListId) {
+            const { error } = await supabase
+                .from('lists_articles')
+                .update({
+                    list_id: newListId,
+                    article_id: articleId,
+                    profile_id: profileId,
+                })
+                .eq("list_id", oldListId)
+                .eq("profile_id", profileId)
+
+            if (error) {
+                return fail(500, {
+                    newListId,
+                    articleId,
+                })
+            }
+
+
+        } else {
+            const { error } = await supabase
+                .from('lists_articles')
+                .insert({
+                    list_id: newListId,
+                    article_id: articleId,
+                    profile_id: profileId
+                })
+                .eq("profile_id", profileId)
+
+            if (error) {
+                return fail(500, {
+                    newListId,
+                    articleId,
+                })
+            }
+
+
+        }
+
+        return {
+            newListId,
+            articleId,
+        }
+
+
     }
 }
 export const load: PageServerLoad = async ({ locals: { supabase, session, profile } }) => {
