@@ -11,22 +11,13 @@
 	let { articles, lists, profile } = data;
 	$: ({ lists } = data);
 
+	let draggedItem;
+
 	lists.forEach((list) => {
 		if (list.name == 'New List') {
 			list.isNew = true;
 		}
 	});
-
-	function submitMinionName(list) {
-		list.isNew = false;
-
-		// Reassign to Force reactive update
-		lists = lists;
-
-		return ({ detail: newValue }) => {
-			console.log(`updated ${list.name}, new value is: "${newValue}"`);
-		};
-	}
 </script>
 
 <svelte:head>
@@ -40,7 +31,7 @@
 <div class="library">
 	<div class="saved-articles">
 		<h3 class="minion">Saved Articles</h3>
-		<DragulaFeedCondensed {articles} />
+		<DragulaFeedCondensed {articles} bind:draggedItem />
 	</div>
 	<div class="board">
 		{#each lists as list}
@@ -76,7 +67,7 @@
 						<button type="submit">delete list</button>
 					</form>
 				</div>
-				<DndFeedCondensed articles={list.articles} />
+				<DndFeedCondensed articles={list.articles} listId={list.id} bind:draggedItem />
 			</div>
 		{/each}
 		<div class="new">
@@ -97,7 +88,7 @@
 		.saved-articles {
 			padding-left: 2rem;
 			border-right: 1px solid #ddd;
-			width: 350px;
+			width: 35rem;
 
 			.minion {
 				padding: 0;
@@ -106,7 +97,7 @@
 				line-height: 1.75;
 				padding: 1rem 0;
 				margin-top: -1rem;
-				margin-bottom: 1rem;
+				margin-bottom: 0;
 				margin-right: 2rem;
 			}
 
@@ -120,7 +111,7 @@
 			.list {
 				padding-left: 2rem;
 				border-right: 1px solid #ddd;
-				width: 350px;
+				width: 36rem;
 				position: relative;
 
 				.heading {
@@ -129,7 +120,7 @@
 					justify-content: space-between;
 					padding: 1rem 0;
 					margin-top: -1rem;
-					margin-bottom: 1rem;
+					margin-bottom: 0;
 					margin-right: 2rem;
 					border-bottom: 1px solid #ddd;
 

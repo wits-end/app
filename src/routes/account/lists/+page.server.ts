@@ -115,6 +115,8 @@ export const load: PageServerLoad = async ({ locals: { supabase, session, profil
     lists?.forEach((list) => {
         for (let i = 0; i < list.articles.length; i++) {
             list.articles[i].position = list.lists_articles[i].position
+            list.articles[i].ogId = list.articles[i].id
+            list.articles[i].id = `${list.id}:` + list.articles[i].id
         }
     })
 
