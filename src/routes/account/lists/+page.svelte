@@ -34,7 +34,7 @@
 		<DragulaFeedCondensed {articles} bind:draggedItem />
 	</div>
 	<div class="board">
-		{#each lists as list}
+		{#each lists as list (list.id)}
 			<div class="list">
 				<div class="heading">
 					{#if list.isNew}
@@ -111,12 +111,15 @@
 		}
 		.board {
 			display: flex;
+			overflow-x: auto;
+			overflow-y: hidden;
 
 			.list {
 				padding-left: 2rem;
 				border-right: 1px solid #ddd;
 				width: 36rem;
 				position: relative;
+				flex: 0 0 auto;
 
 				.heading {
 					display: flex;
@@ -159,6 +162,7 @@
 				}
 			}
 			.new {
+				min-width: 16rem;
 				button {
 					font-family: 'Open Sans';
 					font-size: 1.2rem;

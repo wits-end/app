@@ -86,7 +86,6 @@
 <style lang="scss">
 	.feed {
 		margin-right: 2rem;
-		height: 100%;
 	}
 	:global(#dnd-action-dragged-el) {
 		// box-shadow: 0 0 3px #000;
