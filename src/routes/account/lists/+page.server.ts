@@ -49,6 +49,8 @@ export const actions: Actions = {
         const id = params.get("id")
         const profileId = session?.user.id
 
+        console.log(id, profileId)
+
         const { error } = await supabase
             .from('lists')
             .delete()
@@ -56,6 +58,7 @@ export const actions: Actions = {
             .eq("profile_id", profileId);
 
         if (error) {
+            console.log(error)
             return fail(500, {
                 id,
                 profileId,
@@ -99,10 +102,13 @@ export const actions: Actions = {
     },
     addArticleToList: async ({ request, locals: { supabase, session } }) => {
         const { oldListId, newListId, articleId, position } = await request.json()
-
         const profileId = session?.user.id
 
-        console.log({ oldListId, newListId, articleId, position })
+        console.log(position)
+
+
+        console.log(position)
+
         // If moving between lists
         if (oldListId) {
             const { error } = await supabase
@@ -111,6 +117,7 @@ export const actions: Actions = {
                     list_id: newListId,
                     article_id: articleId,
                     profile_id: profileId,
+                    position: position
                 })
                 .eq("list_id", oldListId)
                 .eq("profile_id", profileId)
@@ -129,7 +136,8 @@ export const actions: Actions = {
                 .insert({
                     list_id: newListId,
                     article_id: articleId,
-                    profile_id: profileId
+                    profile_id: profileId,
+                    position: position
                 })
                 .eq("profile_id", profileId)
 
@@ -154,6 +162,7 @@ export const actions: Actions = {
 export const load: PageServerLoad = async ({ locals: { supabase, session, profile } }) => {
     // const { data: profile } = await supabase.from('profiles').select(
     //     '*, articles (*)').eq('id', user?.id).single()
+    console.log("load called")
 
     const { data: lists } = await supabase
         .from("lists")
@@ -163,14 +172,25 @@ export const load: PageServerLoad = async ({ locals: { supabase, session, profil
             lists_articles (position)
         `)
         .eq("profile_id", profile?.id)
+        .order('position')
 
     // Add article position to lists
     lists?.forEach((list) => {
         for (let i = 0; i < list.articles.length; i++) {
+            // We do this reassignment because we store position info in the join table but need in the actual article object
             list.articles[i].position = list.lists_articles[i].position
+
+            // svelte dnd action uses the id field as a unique key for the foreach loops. we use ogid here to keep track of the raw id.
             list.articles[i].ogId = list.articles[i].id
+
+            // here we ensure every article has a unique id by prepending the list id to it.
+            // two of the same article can not be in the same list but the same article can be in two different lists.
             list.articles[i].id = `${list.id}:` + list.articles[i].id
         }
+
+        list.articles.sort((a, b) => {
+            return (a.position < b.position) ? -1 : 1
+        })
     })
 
     return { articles: profile?.articles || [], lists: lists || [], profile, session }

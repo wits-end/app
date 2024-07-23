@@ -4,6 +4,7 @@
 	import { flip } from 'svelte/animate';
 	import { dndzone, TRIGGERS, SHADOW_ITEM_MARKER_PROPERTY_NAME } from 'svelte-dnd-action';
 	import { onMount } from 'svelte';
+	import { LexoRank } from 'lexorank';
 
 	dayjs.extend(relativeTime);
 
@@ -30,15 +31,53 @@
 		items = e.detail.items;
 	}
 	function handleDndFinalize(e) {
+		// Need to get position here
+		// Get previous item and get next item.
 		const { trigger, id } = e.detail.info;
 		if (trigger === TRIGGERS.DROPPED_INTO_ZONE) {
+			const idx = e.detail.items.findIndex((item) => item.id === id);
+
+			let position;
+			let previousPosition;
+			let nextPosition;
+
+			if (idx == 0 && e.detail.items.length == 1) {
+				// Empty list
+				console.log('empty list');
+				previousPosition = null;
+				nextPosition = null;
+				position = LexoRank.middle().toString();
+			} else if (idx == 0) {
+				// Start of list
+				console.log('start of list');
+				previousPosition = null;
+				nextPosition = e.detail.items[1].position;
+				position = LexoRank.parse(nextPosition).genPrev().toString();
+			} else if (idx == e.detail.items.length - 1) {
+				// End of list
+				console.log('end of list');
+				previousPosition = e.detail.items[idx - 1].position;
+				nextPosition = null;
+				position = LexoRank.parse(previousPosition).genNext().toString();
+			} else {
+				// Middle of list
+				console.log('middle of list');
+				previousPosition = e.detail.items[idx - 1].position;
+				nextPosition = e.detail.items[idx + 1].position;
+				position = LexoRank.parse(previousPosition)
+					.between(LexoRank.parse(nextPosition))
+					.toString();
+			}
+
+			e.detail.items[idx].position = position;
+
 			const res = fetch('?/addArticleToList', {
 				method: 'POST',
 				body: JSON.stringify({
 					oldListId: draggedItem.oldListId,
 					newListId: listId,
 					articleId: draggedItem.ogId,
-					position: '0'
+					position: position
 				})
 			});
 		}
