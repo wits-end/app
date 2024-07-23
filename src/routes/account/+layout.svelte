@@ -1,11 +1,31 @@
-<script></script>
+<script>
+	import { page } from '$app/stores';
+</script>
 
 <div class="wrapper">
 	<div class="menu">
 		<nav class="categories">
-			<a href="/account/dashboard" class="active" title="Dashboard">Dashboard</a>
-			<a href="/account/lists">Reading Lists</a>
-			<a href="/account/settings">Settings</a>
+			<a
+				href="/account/dashboard"
+				class:active={$page.url.pathname === '/account/dashboard'}
+				title="Dashboard">Dashboard</a
+			>
+			<a
+				href="/account/billing"
+				class:active={$page.url.pathname === '/account/billing'}
+				title="billing">Billing</a
+			>
+			<a href="/account/lists" class:active={$page.url.pathname === '/account/lists'} title="lists"
+				>Lists</a
+			>
+			<a href="/account/notes" class:active={$page.url.pathname === '/account/notes'} title="notes"
+				>Notes</a
+			>
+			<a
+				href="/account/settings"
+				class:active={$page.url.pathname === '/account/settings'}
+				title="settings">Settings</a
+			>
 		</nav>
 	</div>
 
