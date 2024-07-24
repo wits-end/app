@@ -7,9 +7,13 @@
 	import FeedCondensed from '$lib/components/feedCondensed.svelte';
 	import Tiptap from '$lib/components/tiptap.svelte';
 	import dayjs from 'dayjs';
-	import { findParentNode } from '@tiptap/core';
+	import FigureModal from '$lib/components/figureModal.svelte';
 
 	export let data;
+	let showModal = false;
+	let figureCaption;
+	let figureUrl;
+
 	let { article, note, relatedArticles } = data;
 	$: ({ article, figures, session, profile } = data);
 
@@ -31,6 +35,15 @@
 	<title>{article?.title} | Wits End</title>
 	<meta name="description" content={article?.abstract} />
 </svelte:head>
+
+<FigureModal bind:showModal>
+	<figure>
+		<img src={figureUrl} alt={figureCaption} />
+		<figcaption>
+			<p>{figureCaption}</p>
+		</figcaption>
+	</figure>
+</FigureModal>
 
 <div class="wrapper">
 	{#if session && profile}
@@ -69,12 +82,20 @@
 
 				<div class="figures">
 					<h3 class="minion">Figures</h3>
+
 					<div class="gallery">
 						{#each figures as figure_object}
 							{#if figure_object.figType == 'Figure'}
-								<a class="item" href={figure_object.renderURL}>
+								<div
+									class="item"
+									on:click={() => {
+										showModal = true;
+										figureCaption = figure_object.caption;
+										figureUrl = figure_object.renderURL;
+									}}
+								>
 									<img src={figure_object.renderURL} alt="" />
-								</a>
+								</div>
 							{/if}
 						{/each}
 					</div>
