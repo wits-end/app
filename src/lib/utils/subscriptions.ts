@@ -1,15 +1,15 @@
 import { error } from '@sveltejs/kit';
 
 export const getSubscriptionDetails = async (profile) => {
-    const isPaid = profile.stripePriceId &&
-        profile.stripeCurrentPeriodEnd?.getTime() + 86_400_000 > Date.now() ? true : false;
+    const isPaid = profile?.stripePriceId &&
+        profile?.stripeCurrentPeriodEnd?.getTime() + 86_400_000 > Date.now() ? true : false;
 
     let interval: string;
 
-    if (profile.stripePriceId == "price_1PdICXCfyJF5ohGUmfEZhNe9") {
+    if (profile?.stripePriceId == "price_1PdICXCfyJF5ohGUmfEZhNe9") {
         interval = 'yearly'
     }
-    else if (profile.stripePriceId == "price_1PdICJCfyJF5ohGUtbrJHC5R") {
+    else if (profile?.stripePriceId == "price_1PdICJCfyJF5ohGUtbrJHC5R") {
         interval = 'monthly'
     }
     else {
@@ -18,9 +18,9 @@ export const getSubscriptionDetails = async (profile) => {
 
     let isCanceled = false;
 
-    if (isPaid && profile.stripeSubscriptionId) {
+    if (isPaid && profile?.stripeSubscriptionId) {
         const stripePlan = await stripe.subscriptions.retrieve(
-            profile.stripeSubscriptionId
+            profile?.stripeSubscriptionId
         )
         isCanceled = stripePlan.cancel_at_period_end
     }

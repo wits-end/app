@@ -1,6 +1,7 @@
 import type { PageServerLoad, Actions } from './$types'
 import { fail, redirect } from '@sveltejs/kit'
 
+
 export const actions: Actions = {
     saveArticle: async ({ request, locals: { supabase, session } }) => {
         const params = await request.formData()
@@ -117,5 +118,7 @@ export const load: PageServerLoad = async ({ locals: { supabase, session, profil
         match_count: 14,
     }).neq('id', article?.id)
 
-    return { article: article ?? {}, note: note ?? {}, relatedArticles: relatedArticles ?? [], session, profile }
+    const figures = JSON.parse(article?.figures)
+
+    return { article: article ?? {}, figures: figures || [], note: note ?? {}, relatedArticles: relatedArticles ?? [], session, profile }
 }

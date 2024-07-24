@@ -7,10 +7,11 @@
 	import FeedCondensed from '$lib/components/feedCondensed.svelte';
 	import Tiptap from '$lib/components/tiptap.svelte';
 	import dayjs from 'dayjs';
+	import { findParentNode } from '@tiptap/core';
 
 	export let data;
 	let { article, note, relatedArticles } = data;
-	$: ({ article, session, profile } = data);
+	$: ({ article, figures, session, profile } = data);
 
 	$: relatedFeedData = {
 		articles: relatedArticles,
@@ -61,10 +62,23 @@
 				{:else}
 					<p class="authors">{article?.authors}</p>
 				{/if}
-				<a href="https://arxiv.org/pdf/{article?.arxiv_id}"
-					><img class="thumbnail" src={article?.thumb_url} alt="PDF Thumbnail" /></a
+				<a class="thumbnail" href="https://arxiv.org/pdf/{article?.arxiv_id}"
+					><img src={article?.thumb_url} alt="PDF Thumbnail" /></a
 				>
 				<p><b>Abstract:</b> {article?.abstract}</p>
+
+				<div class="figures">
+					<h3 class="minion">Figures</h3>
+					<div class="gallery">
+						{#each figures as figure_object}
+							{#if figure_object.figType == 'Figure'}
+								<a class="item" href={figure_object.renderURL}>
+									<img src={figure_object.renderURL} alt="" />
+								</a>
+							{/if}
+						{/each}
+					</div>
+				</div>
 				{#if article?.synopsis}
 					<div class="synopsis">
 						<h3 class="minion">Synopsis</h3>
@@ -203,10 +217,6 @@
 						font-size: 3.2rem;
 						line-height: 1.25;
 					}
-					.thumbnail {
-						max-width: 100%;
-						width: 100%;
-					}
 					.minion {
 						font-family: 'Open Sans';
 						text-transform: uppercase;
@@ -216,6 +226,36 @@
 						padding-bottom: 1rem;
 						margin-bottom: 1rem;
 						border-bottom: 1px solid #ddd;
+					}
+
+					.figures {
+						.thumbnail {
+							display: block;
+							margin: 2rem 0;
+
+							img {
+								max-width: 100%;
+								width: 100%;
+							}
+						}
+						.gallery {
+							display: grid;
+							grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
+							grid-gap: 2rem;
+
+							.item {
+								display: block;
+								border: 1px solid #ddd;
+								padding: 1rem;
+								aspect-ratio: 1/1;
+
+								img {
+									object-fit: cover;
+									width: 100%;
+									height: 100%;
+								}
+							}
+						}
 					}
 
 					.synopsis {
