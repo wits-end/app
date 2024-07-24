@@ -65,10 +65,17 @@ You can preview the production build with `npm run preview`.
         - [x] PDF RAG
             - [x] Experiment with foundational RAG context (e.g. a collection of textbooks on machine learning/math)
         - [x] Synopsis
+    - [x] Personal Notes
+        - [x] Tiptap Editor
+        - [ ] Premium Membership Check
     - [ ] Report
 
 - [ ] Premium
-    - [ ] Setup Stripe
+    - [ ] Marketing Page
+    - [x] Setup Stripe
     - [ ] No Ads
-    - [ ] Submit new paper request
-    - [ ] Organized reading lists
+    - [ ] Custom reading lists
+        - [x] DB setup
+        - [ ] Lexorank
+        - [ ] Drag n Drop
+        - [ ] New lists

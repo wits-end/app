@@ -4,7 +4,7 @@ import { writable } from "svelte/store"
 export const createArticleStore = (data) => {
     data = data.map((article) => ({
         ...article,
-        searchTerms: `${article.title} ${article.authors} ${article.abstract} ${article.keywords}`
+        searchTerms: `${article.title} ${article.authors} ${article.abstract} ${article.keywords} ${article.arxiv_id}`
     }));
 
     const { subscribe, set, update } = writable({

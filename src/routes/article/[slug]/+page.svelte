@@ -3,11 +3,13 @@
 	import { marked } from 'marked';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import FeedCondensed from '$lib/feedCondensed.svelte';
+	import { isPremium } from '$lib/utils/subscriptions.js';
+	import FeedCondensed from '$lib/components/feedCondensed.svelte';
+	import Tiptap from '$lib/components/tiptap.svelte';
 	import dayjs from 'dayjs';
 
 	export let data;
-	let { article, relatedArticles } = data;
+	let { article, note, relatedArticles } = data;
 	$: ({ article, session, profile } = data);
 
 	$: relatedFeedData = {
@@ -71,6 +73,12 @@
 					</div>
 				{/if}
 
+				{#if isPremium(profile)}
+					<div class="notes">
+						<h3 class="minion">Notes</h3>
+						<Tiptap {note} />
+					</div>
+				{/if}
 				<!-- <div class="comments">
 					<h3 class="minion">Comments</h3>
 					<!-- {#if session} -->
@@ -113,12 +121,6 @@
 			</div> -->
 		</div>
 	</div>
-	<script
-		type="text/javascript"
-		id="MathJax-script"
-		async
-		src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
-	></script>
 </div>
 
 <style lang="scss">

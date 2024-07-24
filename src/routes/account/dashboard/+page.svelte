@@ -3,7 +3,7 @@
 	import Highcharts from 'highcharts';
 	import { Chart } from '@highcharts/svelte'; // Chart is also exported by default
 	import type { PageData } from '../$types';
-	import FeedCondensed from '$lib/feedCondensed.svelte';
+	import FeedCondensed from '$lib/components/feedCondensed.svelte';
 
 	export let data: PageData;
 	export let form;
@@ -90,110 +90,64 @@
 	/>
 </svelte:head>
 
-<div class="wrapper">
-	<!-- <div class="menu">
-		<nav class="categories">
-			<span class="active">@{profile?.username}</span>
-			<span>Settings</span>
-		</nav>
-	</div> -->
-
-	<div class="grid">
-		<div class="col">
-			<h3 class="minion">Embedding Fingerprint</h3>
-			<div class="embeddings">
+<div class="grid">
+	<div class="col">
+		<h3 class="minion">Embedding Fingerprint</h3>
+		<div class="embeddings">
+			<p>
+				All research articles on Wits End are represented with vector embeddings. These embeddings
+				are used to measure article similarity and to make recommendations for new papers applicable
+				to your interests. The following graph is a visualization of your unique embedding
+				fingerprint as a scatterplot of all the embeddings of the research articles you have saved.
+			</p>
+			{#if allEmbeddings.length}
+				<div id="chart-container">
+					<Chart {options} highcharts={Highcharts} />
+				</div>
+			{:else}
 				<p>
-					All research articles on Wits End are represented with vector embeddings. These embeddings
-					are used to measure article similarity and to make recommendations for new papers based on
-					the unique collection of research articles you have saved to your account.
+					If you don't see a graph here, try saving some articles to get a visualization of your
+					profile's fingerprint.
 				</p>
-				{#if allEmbeddings.length}
-					<div id="chart-container">
-						<Chart {options} highcharts={Highcharts} />
-					</div>
-				{:else}
-					<p>
-						If you don't see a graph here, try saving some articles to get a visualization of your
-						profile's fingerprint.
-					</p>
-				{/if}
-			</div>
-
-			<div class="personal-info">
-				<h3 class="minion">Personal Info</h3>
-				<p>username: {profile?.username}</p>
-				<p>email: {profile?.email}</p>
-
-				<form method="post" action="?/saveProfile">
-					{#if form?.error}<p class="error">Error updating info.</p>{/if}
-					<div class="input-group">
-						<div>
-							<label for="first_name">first name</label>
-							<input placeholder="first name" name="first_name" value={profile?.first_name} />
-						</div>
-						<div>
-							<label for="last_name">last name</label>
-							<input placeholder="last name" name="last_name" value={profile?.last_name} />
-						</div>
-					</div>
-					<label for="bio">bio</label>
-					<textarea
-						placeholder="Research, Summary, Bio, etc..."
-						name="bio"
-						rows="8"
-						value={profile?.bio}
-					/>
-
-					<button>Save</button>
-				</form>
-			</div>
+			{/if}
 		</div>
-		<div class="tree col">
-			<h3 class="minion">Saved Articles</h3>
-			<FeedCondensed {data} />
+
+		<div class="personal-info">
+			<h3 class="minion">Personal Info</h3>
+			<p>username: {profile?.username}</p>
+			<p>email: {profile?.email}</p>
+
+			<form method="post" action="?/saveProfile">
+				{#if form?.error}<p class="error">Error updating info.</p>{/if}
+				<div class="input-group">
+					<div>
+						<label for="first_name">first name</label>
+						<input placeholder="first name" name="first_name" value={profile?.first_name} />
+					</div>
+					<div>
+						<label for="last_name">last name</label>
+						<input placeholder="last name" name="last_name" value={profile?.last_name} />
+					</div>
+				</div>
+				<label for="bio">bio</label>
+				<textarea
+					placeholder="Research, Summary, Bio, etc..."
+					name="bio"
+					rows="8"
+					value={profile?.bio}
+				/>
+
+				<button>Save</button>
+			</form>
 		</div>
+	</div>
+	<div class="tree col">
+		<h3 class="minion">Saved Articles</h3>
+		<FeedCondensed {data} />
 	</div>
 </div>
 
 <style lang="scss">
-	.menu {
-		border-bottom: 1px solid #ddd;
-
-		.categories {
-			padding-bottom: 2rem;
-
-			h2 {
-				display: inline-block;
-				font-size: 1.2rem;
-				font-family: 'Open Sans';
-				text-transform: uppercase;
-				margin-right: 2rem;
-			}
-			span {
-				font-family: 'Open Sans';
-				font-size: 1.2rem;
-				font-weight: 500;
-				text-transform: uppercase;
-				text-decoration: none;
-				margin-right: 2rem;
-				color: #aaa;
-
-				&.active,
-				&:hover {
-					color: red;
-					cursor: pointer;
-				}
-			}
-			@media screen and (max-width: 600px) {
-				display: none;
-			}
-		}
-
-		@media screen and (max-width: 600px) {
-			grid-column: auto;
-		}
-	}
-
 	.grid {
 		display: grid;
 		grid-template-rows: auto auto;
@@ -235,13 +189,20 @@
 						margin-bottom: 2rem;
 					}
 					button {
+						font-family: 'Open Sans';
+						font-size: 1.2rem;
+						font-weight: 500;
+						text-transform: uppercase;
+						text-decoration: none;
 						background: white;
-						border: 1px solid #aaa;
+						border: 1px solid #ddd;
+						color: #999;
 						padding: 1rem 2rem;
 						transition: all 0.2s ease;
 
 						&:hover {
 							border: 1px solid #666;
+							color: #000;
 						}
 					}
 				}

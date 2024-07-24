@@ -49,7 +49,7 @@ const supabase: Handle = async ({ event, resolve }) => {
             return { session: null, user: null, profile: null }
         }
 
-        const { data: profile } = await event.locals.supabase.from('profiles').select('id, articles (id, title, embedding) ').eq('id', user?.id).single()
+        const { data: profile } = await event.locals.supabase.from('profiles').select('id, articles (id, arxiv_id, title, embedding) ').eq('id', user?.id).single()
 
         return { session, user, profile }
     }
@@ -72,11 +72,15 @@ const authGuard: Handle = async ({ event, resolve }) => {
     event.locals.profile = profile
 
     if (!event.locals.session && event.url.pathname.startsWith('/account')) {
-        return redirect(303, '/auth')
+        return redirect(303, '/auth/register')
+    }
+
+    if (!event.locals.session && event.url.pathname.startsWith('/account')) {
+        return redirect(303, '/auth/register')
     }
 
     if (event.locals.session && event.url.pathname === '/auth') {
-        return redirect(303, '/account')
+        return redirect(303, '/account/dashboard')
     }
 
     return resolve(event)
