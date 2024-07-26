@@ -1,6 +1,7 @@
 import { createServerClient } from '@supabase/ssr'
 import { type Handle, redirect } from '@sveltejs/kit'
 import { sequence } from '@sveltejs/kit/hooks'
+import { isPremium } from '$lib/utils/subscriptions'
 
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_KEY } from '$env/static/public'
 
@@ -71,17 +72,22 @@ const authGuard: Handle = async ({ event, resolve }) => {
     event.locals.user = user
     event.locals.profile = profile
 
+    const premiumRoutes = ["/account/lists", "/account/notes", "/account/billing"]
+
+    // Redirect /account links to register
     if (!event.locals.session && event.url.pathname.startsWith('/account')) {
         return redirect(303, '/auth/register')
     }
 
-    if (!event.locals.session && event.url.pathname.startsWith('/account')) {
-        return redirect(303, '/auth/register')
+    // Redirect premium routes
+    if (!isPremium(event.locals.profile) && premiumRoutes.includes(event.url.pathname)) {
+        return redirect(303, '/account/dashboard')
     }
 
     if (event.locals.session && event.url.pathname === '/auth') {
         return redirect(303, '/account/dashboard')
     }
+
 
     return resolve(event)
 }

@@ -4,17 +4,17 @@
 	import { Editor } from '@tiptap/core';
 	import Underline from '@tiptap/extension-underline';
 	import Placeholder from '@tiptap/extension-placeholder';
-	import Bold from '$lib/components/icons/bold.svelte';
-	import BulletList from '$lib/components/icons/bulletList.svelte';
-	import Code from '$lib/components/icons/code.svelte';
-	import Italic from '$lib/components/icons/italic.svelte';
-	import NumberList from '$lib/components/icons/numberList.svelte';
-	import Redo from '$lib/components/icons/redo.svelte';
-	import Strikethrough from '$lib/components/icons/strikethrough.svelte';
-	import Under from '$lib/components/icons/underline.svelte';
-	import Undo from '$lib/components/icons/undo.svelte';
-	import Quote from '$lib/components/icons/quote.svelte';
-	import Title from '$lib/components/icons/title.svelte';
+	import BoldIcon from '$lib/components/icons/bold.svelte';
+	import BulletListIcon from '$lib/components/icons/bulletList.svelte';
+	import CodeIcon from '$lib/components/icons/code.svelte';
+	import ItalicIcon from '$lib/components/icons/italic.svelte';
+	import NumberListIcon from '$lib/components/icons/numberList.svelte';
+	import RedoIcon from '$lib/components/icons/redo.svelte';
+	import StrikethroughIcon from '$lib/components/icons/strikethrough.svelte';
+	import UnderlineIcon from '$lib/components/icons/underline.svelte';
+	import UndoIcon from '$lib/components/icons/undo.svelte';
+	import QuoteIcon from '$lib/components/icons/quote.svelte';
+	import TitleIcon from '$lib/components/icons/title.svelte';
 	import StarterKit from '@tiptap/starter-kit';
 
 	export let note;
@@ -53,67 +53,67 @@
 			on:click={() => editor.chain().focus().undo().run()}
 			class:disabled={!editor.can().undo()}
 		>
-			<Undo />
+			<UndoIcon />
 		</button>
 		<button
 			on:click={() => editor.chain().focus().redo().run()}
 			class:disabled={!editor.can().redo()}
 		>
-			<Redo />
+			<RedoIcon />
 		</button>
 		<button
 			on:click={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
 			class:active={editor.isActive('title')}
 		>
-			<Title />
+			<TitleIcon />
 		</button>
 		<button
 			on:click={() => editor.chain().focus().toggleBold().run()}
 			class:active={editor.isActive('bold')}
 		>
-			<Bold />
+			<BoldIcon />
 		</button>
 		<button
 			on:click={() => editor.chain().focus().toggleUnderline().run()}
 			class:active={editor.isActive('underline')}
 		>
-			<Under />
+			<UnderlineIcon />
 		</button>
 		<button
 			on:click={() => editor.chain().focus().toggleItalic().run()}
 			class:active={editor.isActive('italic')}
 		>
-			<Italic />
+			<ItalicIcon />
 		</button>
 		<button
 			on:click={() => editor.chain().focus().toggleStrike().run()}
 			class:active={editor.isActive('strike')}
 		>
-			<Strikethrough />
+			<StrikethroughIcon />
 		</button>
 		<button
 			on:click={() => editor.chain().focus().toggleBulletList().run()}
 			class:active={editor.isActive('bullet-list')}
 		>
-			<BulletList />
+			<BulletListIcon />
 		</button>
 		<button
 			on:click={() => editor.chain().focus().toggleOrderedList().run()}
 			class:active={editor.isActive('number-list')}
 		>
-			<NumberList />
+			<NumberListIcon />
 		</button>
 		<button
 			on:click={() => editor.chain().focus().toggleBlockquote().run()}
 			class:active={editor.isActive('blockquote')}
 		>
-			<Quote />
+			<QuoteIcon />
 		</button>
 		<button
 			on:click={() => editor.chain().focus().toggleCodeBlock().run()}
 			class:active={editor.isActive('code')}
 		>
-			<Code />
+			<CodeIcon />
 		</button>
 	</div>
 	<!-- <button

@@ -6,6 +6,7 @@
 	import { onDestroy, beforeUpdate, onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import Tooltip from '$lib/components/tooltip.svelte';
 
 	export let data;
 	let { articles, profile, session } = data;
@@ -276,6 +277,20 @@
 				<h3 class="minion">Sort</h3>
 				<div class="options">
 					<div class="group">
+						{#if isPremium(profile)}
+							<button
+								class="sort-button"
+								id="sort-button-foryou"
+								title="For You"
+								on:click={(e) => {
+									handleSort(e, 'foryou');
+								}}>For You</button
+							>
+						{:else}
+							<Tooltip title="premium feature disabled">
+								<button class="sort-button-disabled">For You</button>
+							</Tooltip>
+						{/if}
 						<button
 							class="sort-button active"
 							id="sort-button-featured"
@@ -294,18 +309,6 @@
 								}}>{value}</button
 							>
 						{/each}
-						{#if session && profile && profile?.articles.length}
-							<button
-								class="sort-button"
-								id="sort-button-foryou"
-								title="For You"
-								on:click={(e) => {
-									handleSort(e, 'foryou');
-								}}>For You</button
-							>
-						{:else}
-							<button class="sort-button-disabled">For You</button>
-						{/if}
 					</div>
 					<div class="group">
 						<button

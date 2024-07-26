@@ -5,20 +5,21 @@
 	import { page } from '$app/stores';
 	import Underline from '@tiptap/extension-underline';
 	import Placeholder from '@tiptap/extension-placeholder';
-	import Bold from './icons/bold.svelte';
-	import BulletList from './icons/bulletList.svelte';
-	import Code from './icons/code.svelte';
-	import Italic from './icons/italic.svelte';
-	import NumberList from './icons/numberList.svelte';
-	import Redo from './icons/redo.svelte';
-	import Strikethrough from './icons/strikethrough.svelte';
-	import Under from './icons/underline.svelte';
-	import Undo from './icons/undo.svelte';
-	import Quote from './icons/quote.svelte';
-	import Title from './icons/title.svelte';
+	import BoldIcon from './icons/bold.svelte';
+	import BulletListIcon from './icons/bulletList.svelte';
+	import CodeIcon from './icons/code.svelte';
+	import ItalicIcon from './icons/italic.svelte';
+	import NumberListIcon from './icons/numberList.svelte';
+	import RedoIcon from './icons/redo.svelte';
+	import StrikethroughIcon from './icons/strikethrough.svelte';
+	import UnderlineIcon from './icons/underline.svelte';
+	import UndoIcon from './icons/undo.svelte';
+	import QuoteIcon from './icons/quote.svelte';
+	import TitleIcon from './icons/title.svelte';
 	import StarterKit from '@tiptap/starter-kit';
 
 	export let note;
+	export let isEnabled;
 
 	let element;
 	let editor;
@@ -26,6 +27,7 @@
 	onMount(() => {
 		editor = new Editor({
 			element: element,
+			editable: isEnabled,
 			extensions: [
 				StarterKit,
 				Underline,
@@ -54,67 +56,76 @@
 			on:click={() => editor.chain().focus().undo().run()}
 			class:disabled={!editor.can().undo()}
 		>
-			<Undo />
+			<UndoIcon />
 		</button>
 		<button
 			on:click={() => editor.chain().focus().redo().run()}
 			class:disabled={!editor.can().redo()}
 		>
-			<Redo />
+			<RedoIcon />
 		</button>
 		<button
 			on:click={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
 			class:active={editor.isActive('title')}
+			class:disabled={!isEnabled}
 		>
-			<Title />
+			<TitleIcon />
 		</button>
 		<button
 			on:click={() => editor.chain().focus().toggleBold().run()}
 			class:active={editor.isActive('bold')}
+			class:disabled={!isEnabled}
 		>
-			<Bold />
+			<BoldIcon />
 		</button>
 		<button
 			on:click={() => editor.chain().focus().toggleUnderline().run()}
 			class:active={editor.isActive('underline')}
+			class:disabled={!isEnabled}
 		>
-			<Under />
+			<UnderlineIcon />
 		</button>
 		<button
 			on:click={() => editor.chain().focus().toggleItalic().run()}
 			class:active={editor.isActive('italic')}
+			class:disabled={!isEnabled}
 		>
-			<Italic />
+			<ItalicIcon />
 		</button>
 		<button
 			on:click={() => editor.chain().focus().toggleStrike().run()}
 			class:active={editor.isActive('strike')}
+			class:disabled={!isEnabled}
 		>
-			<Strikethrough />
+			<StrikethroughIcon />
 		</button>
 		<button
 			on:click={() => editor.chain().focus().toggleBulletList().run()}
 			class:active={editor.isActive('bullet-list')}
+			class:disabled={!isEnabled}
 		>
-			<BulletList />
+			<BulletListIcon />
 		</button>
 		<button
 			on:click={() => editor.chain().focus().toggleOrderedList().run()}
 			class:active={editor.isActive('number-list')}
+			class:disabled={!isEnabled}
 		>
-			<NumberList />
+			<NumberListIcon />
 		</button>
 		<button
 			on:click={() => editor.chain().focus().toggleBlockquote().run()}
 			class:active={editor.isActive('blockquote')}
+			class:disabled={!isEnabled}
 		>
-			<Quote />
+			<QuoteIcon />
 		</button>
 		<button
 			on:click={() => editor.chain().focus().toggleCodeBlock().run()}
 			class:active={editor.isActive('code')}
+			class:disabled={!isEnabled}
 		>
-			<Code />
+			<CodeIcon />
 		</button>
 	</div>
 	<!-- <button
@@ -137,7 +148,7 @@
 	</button> -->
 {/if}
 
-<div bind:this={element} />
+<div bind:this={element} class:disabled={!isEnabled} />
 
 <form
 	action="?/saveNotes"
@@ -151,7 +162,7 @@
 	}}
 >
 	<input type="text" name="articleId" value={$page.params.slug} hidden />
-	<button class="save-button">save</button>
+	<button class="save-button" disabled={!isEnabled} class:disabled={!isEnabled}>save</button>
 </form>
 
 <style lang="scss">
@@ -185,6 +196,10 @@
 	}
 	:global(.ProseMirror-focused) {
 		outline: none;
+	}
+
+	:global(.disabled) {
+		background: #eee;
 	}
 	.tools {
 		padding: 1rem;
@@ -232,6 +247,15 @@
 		&:hover {
 			border: 1px solid #666;
 			color: #000;
+		}
+
+		&.disabled {
+			&:hover {
+				background: none;
+				cursor: default;
+				color: #999;
+				border: 1px solid #ddd;
+			}
 		}
 	}
 </style>

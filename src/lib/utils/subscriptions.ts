@@ -32,7 +32,7 @@ export const getSubscriptionDetails = async (profile) => {
     }
 }
 
-export const isPremium = async (profile) => {
+export const isPremium = (profile) => {
     return profile?.stripePriceId &&
         profile?.stripeCurrentPeriodEnd?.getTime() + 86_400_000 > Date.now() ? true : false;
 }

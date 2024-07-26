@@ -4,6 +4,7 @@
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { isPremium } from '$lib/utils/subscriptions.js';
+	import Tooltip from '$lib/components/tooltip.svelte';
 	import FeedCondensed from '$lib/components/feedCondensed.svelte';
 	import Tiptap from '$lib/components/tiptap.svelte';
 	import dayjs from 'dayjs';
@@ -15,6 +16,7 @@
 	let figureUrl;
 
 	let { article, note, relatedArticles } = data;
+
 	$: ({ article, figures, note, relatedArticles, session, profile } = data);
 
 	$: relatedFeedData = {
@@ -108,12 +110,16 @@
 					</div>
 				{/if}
 
-				{#if isPremium(profile)}
-					<div class="notes">
-						<h3 class="minion">Notes</h3>
-						<Tiptap {note} />
-					</div>
-				{/if}
+				<div class="notes">
+					<h3 class="minion">Notes</h3>
+					{#if isPremium(profile)}
+						<Tiptap {note} isEnabled={true} />
+					{:else}
+						<Tooltip title="premium feature disabled">
+							<Tiptap {note} isEnabled={false} />
+						</Tooltip>
+					{/if}
+				</div>
 			</div>
 		</div>
 		<div class="col">
