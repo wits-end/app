@@ -44,10 +44,6 @@
 			editor.destroy();
 		}
 	});
-
-	const handleSaveContent = (e) => {
-		console.log();
-	};
 </script>
 
 {#if editor}

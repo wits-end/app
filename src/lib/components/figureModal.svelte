@@ -15,7 +15,7 @@
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div on:click|stopPropagation>
 		<slot />
-		<button autofocus on:click={() => dialog.close()}>close</button>
+		<button on:click={() => dialog.close()}>close</button>
 	</div>
 </dialog>
 

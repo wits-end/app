@@ -15,7 +15,7 @@
 	let figureUrl;
 
 	let { article, note, relatedArticles } = data;
-	$: ({ article, figures, session, profile } = data);
+	$: ({ article, figures, note, relatedArticles, session, profile } = data);
 
 	$: relatedFeedData = {
 		articles: relatedArticles,
@@ -75,9 +75,9 @@
 				{:else}
 					<p class="authors">{article?.authors}</p>
 				{/if}
-				<a class="thumbnail" href="https://arxiv.org/pdf/{article?.arxiv_id}"
+				<!-- <a class="thumbnail" href="https://arxiv.org/pdf/{article?.arxiv_id}"
 					><img src={article?.thumb_url} alt="PDF Thumbnail" /></a
-				>
+				> -->
 				<p><b>Abstract:</b> {article?.abstract}</p>
 
 				<div class="figures">
@@ -114,21 +114,6 @@
 						<Tiptap {note} />
 					</div>
 				{/if}
-				<!-- <div class="comments">
-					<h3 class="minion">Comments</h3>
-					<!-- {#if session} -->
-				<!-- <form>
-						<textarea rows="8" cols="80"></textarea>
-						<button>Add Comment</button>
-					</form> -->
-				<!-- {/if} -->
-				<!-- <p style="margin-top:1rem;">Comments are currently disabled.</p> -->
-				<!-- {#each article.comments as comment}
-					<p>{comment.profile.username} | 1 hour ago</p>
-					<p>{comment.message}</p>
-					<p>Reply</p>
-				{/each}
-				</div>-->
 			</div>
 		</div>
 		<div class="col">
@@ -250,6 +235,7 @@
 					}
 
 					.figures {
+						margin-top: 4rem;
 						.thumbnail {
 							display: block;
 							margin: 2rem 0;
@@ -280,9 +266,13 @@
 					}
 
 					.synopsis {
-						margin-top: 2rem;
+						margin-top: 4rem;
+
 						:global(p) {
-							font-size: 1.8rem;
+							font-size: 1.6rem;
+						}
+						:global(li) {
+							font-size: 1.6rem;
 						}
 
 						:global(h2) {
@@ -293,24 +283,8 @@
 						}
 					}
 
-					.comments {
-						textarea {
-							margin-bottom: 1rem;
-							background: white;
-							border: 1px solid #ddd;
-							padding: 1rem;
-						}
-						button {
-							display: block;
-							background: white;
-							border: 1px solid #ddd;
-							padding: 1rem 2rem;
-							transition: all 0.2s ease;
-
-							&:hover {
-								border: 1px solid #666;
-							}
-						}
+					.notes {
+						margin-top: 4rem;
 					}
 				}
 

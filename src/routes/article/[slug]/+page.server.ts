@@ -114,8 +114,9 @@ export const load: PageServerLoad = async ({ locals: { supabase, session, profil
 
     const { data: relatedArticles } = await supabase.rpc('match_articles', {
         query_embedding: article?.embedding,
-        match_threshold: 0.0,
+        match_threshold: 0.25,
         match_count: 14,
+        order_by: "similarity",
     }).neq('id', article?.id)
 
     const figures = JSON.parse(article?.figures)

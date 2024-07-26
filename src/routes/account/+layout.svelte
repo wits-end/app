@@ -21,11 +21,6 @@
 			<a href="/account/notes" class:active={$page.url.pathname === '/account/notes'} title="notes"
 				>Notes</a
 			>
-			<a
-				href="/account/settings"
-				class:active={$page.url.pathname === '/account/settings'}
-				title="settings">Settings</a
-			>
 		</nav>
 	</div>
 

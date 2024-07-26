@@ -92,26 +92,6 @@
 
 <div class="grid">
 	<div class="col">
-		<h3 class="minion">Embedding Fingerprint</h3>
-		<div class="embeddings">
-			<p>
-				All research articles on Wits End are represented with vector embeddings. These embeddings
-				are used to measure article similarity and to make recommendations for new papers applicable
-				to your interests. The following graph is a visualization of your unique embedding
-				fingerprint as a scatterplot of all the embeddings of the research articles you have saved.
-			</p>
-			{#if allEmbeddings.length}
-				<div id="chart-container">
-					<Chart {options} highcharts={Highcharts} />
-				</div>
-			{:else}
-				<p>
-					If you don't see a graph here, try saving some articles to get a visualization of your
-					profile's fingerprint.
-				</p>
-			{/if}
-		</div>
-
 		<div class="personal-info">
 			<h3 class="minion">Personal Info</h3>
 			<p>username: {profile?.username}</p>
@@ -140,6 +120,50 @@
 				<button>Save</button>
 			</form>
 		</div>
+		<h3 class="minion">Embedding Fingerprint</h3>
+		<div class="embeddings">
+			<p>
+				All research articles on Wits End are represented with vector embeddings. These embeddings
+				are used to measure article similarity and to make recommendations for new papers applicable
+				to your interests. The following graph is a visualization of your unique embedding
+				fingerprint as a scatterplot of all the embeddings of the research articles you have saved.
+			</p>
+			{#if allEmbeddings.length}
+				<div id="chart-container">
+					<Chart {options} highcharts={Highcharts} />
+				</div>
+			{:else}
+				<p>
+					If you don't see a graph here, try saving some articles to get a visualization of your
+					profile's fingerprint.
+				</p>
+			{/if}
+		</div>
+	</div>
+	<div class="col">
+		<div class="activity">
+			<h3 class="minion">Recent Activity</h3>
+			<p>Coming soon...</p>
+			<table>
+				<thead>
+					<tr>
+						<th>Event</th>
+					</tr>
+				</thead>
+				<tr>
+					<td>Saved article 15cd321e-21cc-456d-a2d5-f4a626c892ed</td>
+				</tr>
+				<tr>
+					<td>Created reading list 15cd321e-21cc-456d-a2d5-f4a626c892ed</td>
+				</tr>
+				<tr>
+					<td>Unsaved article 15cd321e-21cc-456d-a2d5-f4a626c892ed</td>
+				</tr>
+				<tr>
+					<td>Logged in 2024-07-26T16:20:35.596Z</td>
+				</tr>
+			</table>
+		</div>
 	</div>
 	<div class="tree col">
 		<h3 class="minion">Saved Articles</h3>
@@ -151,7 +175,7 @@
 	.grid {
 		display: grid;
 		grid-template-rows: auto auto;
-		grid-template-columns: 3fr 1fr;
+		grid-template-columns: 2fr 2fr 1fr;
 		grid-gap: 2rem;
 
 		.col {
@@ -216,6 +240,26 @@
 					.chart-title {
 						margin-left: 1rem;
 						margin-bottom: 1rem;
+					}
+				}
+			}
+
+			.activity {
+				table {
+					width: 100%;
+					border-collapse: collapse;
+					font-size: 1.4rem;
+
+					thead {
+						text-align: left;
+						border: 1px solid #ddd;
+					}
+					tr {
+						border: 1px solid #ddd;
+					}
+					td,
+					th {
+						padding: 0.5rem;
 					}
 				}
 			}

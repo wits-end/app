@@ -22,5 +22,7 @@ export const GET: RequestHandler = async ({ locals: { supabase, session, profile
         }
 
         throw redirect(302, portalSession.url)
+    } else {
+        throw error(500, "Error retrieving subscription information.")
     }
 }
