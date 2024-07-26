@@ -29,10 +29,12 @@
 <style>
 	.tooltip {
 		border: 1px solid #ddd;
-		box-shadow: 1px 1px 1px #ddd;
+		box-shadow: 2px 2px 2px #ddd;
 		background: white;
 		border-radius: 4px;
 		padding: 4px;
 		position: absolute;
+		font-size: 1.4rem;
+		color: #666;
 	}
 </style>

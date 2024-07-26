@@ -261,6 +261,7 @@
 								border: 1px solid #ddd;
 								padding: 1rem;
 								aspect-ratio: 1/1;
+								cursor: pointer;
 
 								img {
 									object-fit: cover;
