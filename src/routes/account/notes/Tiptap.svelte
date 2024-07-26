@@ -2,20 +2,19 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { enhance } from '$app/forms';
 	import { Editor } from '@tiptap/core';
-	import { page } from '$app/stores';
 	import Underline from '@tiptap/extension-underline';
 	import Placeholder from '@tiptap/extension-placeholder';
-	import Bold from './icons/bold.svelte';
-	import BulletList from './icons/bulletList.svelte';
-	import Code from './icons/code.svelte';
-	import Italic from './icons/italic.svelte';
-	import NumberList from './icons/numberList.svelte';
-	import Redo from './icons/redo.svelte';
-	import Strikethrough from './icons/strikethrough.svelte';
-	import Under from './icons/underline.svelte';
-	import Undo from './icons/undo.svelte';
-	import Quote from './icons/quote.svelte';
-	import Title from './icons/title.svelte';
+	import Bold from '$lib/components/icons/bold.svelte';
+	import BulletList from '$lib/components/icons/bulletList.svelte';
+	import Code from '$lib/components/icons/code.svelte';
+	import Italic from '$lib/components/icons/italic.svelte';
+	import NumberList from '$lib/components/icons/numberList.svelte';
+	import Redo from '$lib/components/icons/redo.svelte';
+	import Strikethrough from '$lib/components/icons/strikethrough.svelte';
+	import Under from '$lib/components/icons/underline.svelte';
+	import Undo from '$lib/components/icons/undo.svelte';
+	import Quote from '$lib/components/icons/quote.svelte';
+	import Title from '$lib/components/icons/title.svelte';
 	import StarterKit from '@tiptap/starter-kit';
 
 	export let note;
@@ -150,7 +149,7 @@
 		}
 	}}
 >
-	<input type="text" name="articleId" value={$page.params.slug} hidden />
+	<input type="text" name="articleId" value={note?.articles?.id} hidden />
 	<button class="save-button">save</button>
 </form>
 

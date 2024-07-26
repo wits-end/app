@@ -1,6 +1,6 @@
 <script lang="ts">
 	import NotesList from './NotesList.svelte';
-	import Tiptap from '$lib/components/tiptap.svelte';
+	import Tiptap from './Tiptap.svelte';
 
 	export let data;
 

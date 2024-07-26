@@ -42,6 +42,7 @@
 		"@supabase/supabase-js": "^2.43.2",
 		"@tiptap/core": "^2.5.4",
 		"@tiptap/extension-placeholder": "^2.5.4",
+		"@tiptap/extension-underline": "^2.5.7",
 		"@tiptap/pm": "^2.5.4",
 		"@tiptap/starter-kit": "^2.5.4",
 		"dayjs": "^1.11.11",
