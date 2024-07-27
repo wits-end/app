@@ -46,7 +46,7 @@ export const POST: RequestHandler = async (event) => {
                             subscription.current_period_end * 1000
                         )
                     })
-                    .eq("id", session?.metadata?.userId);
+                    .eq("id", session?.metadata?.user_id);
 
                 break
             }

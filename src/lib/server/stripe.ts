@@ -23,7 +23,7 @@ export const createCheckoutSession = async (profile, priceId: string) => {
             cancel_url: 'https://witsend.ai/premium',
             subscription_data: {
                 metadata: {
-                    userId: profile.id
+                    user_id: profile.id
                 },
                 trial_period_days: 3,
                 trial_settings: {
@@ -53,7 +53,7 @@ export const createCheckoutSession = async (profile, priceId: string) => {
         cancel_url: 'https://witsend.ai/premium',
         subscription_data: {
             metadata: {
-                userId: profile.id
+                user_id: profile.id
             }
         }
     });
