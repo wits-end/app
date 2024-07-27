@@ -154,7 +154,7 @@
 	action="?/saveNotes"
 	method="POST"
 	use:enhance={({ formData }) => {
-		formData.append('content', JSON.stringify(editor.getJSON()));
+		formData.append('content', editor.isEmpty ? '' : JSON.stringify(editor.getJSON()));
 
 		if (note?.id) {
 			formData.append('noteId', note.id);

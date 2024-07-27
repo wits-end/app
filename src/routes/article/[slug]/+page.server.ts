@@ -69,25 +69,44 @@ export const actions: Actions = {
             content: content,
         })
 
-        const { error } = await supabase
-            .from('notes')
-            .upsert({
-                ...(noteId ? { id: noteId } : null),
-                updated_at: new Date().toISOString(),
-                profile_id: profileId,
-                article_id: articleId,
-                content: content,
-            })
-            .eq("profile_id", profileId)
-            .eq("article_id", articleId);
+        if (!content && noteId) {
+            const { error } = await supabase
+                .from('notes')
+                .delete()
+                .eq("id", noteId)
+                .eq("profile_id", profileId)
+                .eq("article_id", articleId)
 
-        if (error) {
-            return fail(500, {
-                articleId,
-                profileId,
-                content,
-            })
+            if (error) {
+                return fail(500, {
+                    articleId,
+                    profileId,
+                    content,
+                })
+            }
+        } else if (content) {
+            const { error } = await supabase
+                .from('notes')
+                .upsert({
+                    ...(noteId ? { id: noteId } : null),
+                    updated_at: new Date().toISOString(),
+                    profile_id: profileId,
+                    article_id: articleId,
+                    content: content,
+                })
+                .eq("profile_id", profileId)
+                .eq("article_id", articleId);
+
+            if (error) {
+                return fail(500, {
+                    articleId,
+                    profileId,
+                    content,
+                })
+            }
         }
+
+
 
         return {
             articleId,
