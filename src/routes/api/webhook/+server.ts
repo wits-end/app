@@ -39,10 +39,10 @@ export const POST: RequestHandler = async (event) => {
                 const { error } = await supabaseAdmin
                     .from("profiles")
                     .update({
-                        stripeSubscriptionId: subscription.id,
-                        stripeCustomerId: subscription.customer as string,
-                        stripePriceId: subscription.items.data[0].price.id,
-                        stripeCurrentPeriodEnd: new Date(
+                        stripe_subscription_id: subscription.id,
+                        stripe_customer_id: subscription.customer as string,
+                        stripe_price_id: subscription.items.data[0].price.id,
+                        stripe_current_period_end: new Date(
                             subscription.current_period_end * 1000
                         )
                     })
@@ -63,8 +63,8 @@ export const POST: RequestHandler = async (event) => {
                     const { error } = await supabaseAdmin
                         .from("profiles")
                         .update({
-                            stripePriceId: subscription.items.data[0].price.id,
-                            stripeCurrentPeriodEnd: new Date(
+                            stripe_price_id: subscription.items.data[0].price.id,
+                            stripe_current_period_end: new Date(
                                 subscription.current_period_end * 1000
                             )
                         })
@@ -83,5 +83,5 @@ export const POST: RequestHandler = async (event) => {
         return json(`Error processing event ${stripeEvent.type}`, { status: 500 })
     }
 
-    return json({ recieved: true }, { status: 200 })
+    return json({ received: true }, { status: 200 })
 };
