@@ -1,38 +1,17 @@
 import { error } from '@sveltejs/kit';
 
-export const getSubscriptionDetails = async (profile) => {
-    const isPaid = profile?.stripePriceId &&
-        profile?.stripeCurrentPeriodEnd?.getTime() + 86_400_000 > Date.now() ? true : false;
-
-    let interval: string;
-
-    if (profile?.stripePriceId == "price_1PdICXCfyJF5ohGUmfEZhNe9") {
-        interval = 'yearly'
-    }
-    else if (profile?.stripePriceId == "price_1PdICJCfyJF5ohGUtbrJHC5R") {
-        interval = 'monthly'
-    }
-    else {
-        return error(400, "Invalid price id")
-    }
-
-    let isCanceled = false;
-
-    if (isPaid && profile?.stripeSubscriptionId) {
-        const stripePlan = await stripe.subscriptions.retrieve(
-            profile?.stripeSubscriptionId
-        )
-        isCanceled = stripePlan.cancel_at_period_end
-    }
-
-    return {
-        isPaid,
-        interval,
-        isCanceled
-    }
+export const isPremium = (profile) => {
+    return profile?.stripe_price_id &&
+        Date.parse(profile?.stripe_current_period_end) > Date.now() ? true : false;
 }
 
-export const isPremium = (profile) => {
-    return profile?.stripePriceId &&
-        profile?.stripeCurrentPeriodEnd?.getTime() + 86_400_000 > Date.now() ? true : false;
+export const isCanceled = async (profile) => {
+    if (isPremium(profile) && profile?.stripe_subscription_id) {
+        const stripePlan = await stripe.subscriptions.retrieve(
+            profile?.stripe_subscription_id
+        )
+        return stripePlan.cancel_at_period_end
+    }
+
+    return false
 }

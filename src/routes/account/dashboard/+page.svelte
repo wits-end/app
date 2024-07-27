@@ -95,6 +95,7 @@
 	<div class="col">
 		<div class="personal-info">
 			<h3 class="minion">Personal Info</h3>
+			<p>premium: {isPremium(profile)}</p>
 			<p>username: {profile?.username}</p>
 			<p>email: {profile?.email}</p>
 
