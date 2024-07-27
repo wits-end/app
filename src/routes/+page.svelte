@@ -29,6 +29,12 @@
 		let timeParam = $page.url.searchParams.get('time') || 'alltime';
 		let pageParam: number = parseInt($page.url.searchParams.get('page') || '0');
 
+		if (sortParam == 'foryou' && !isPremium(profile)) {
+			sortParam = 'featured';
+			$page.url.searchParams.delete('sort');
+			goto(`?${$page.url.searchParams.toString()}`);
+		}
+
 		$articleStore.category = categoryParam;
 		$articleStore.tag = tagParam;
 		$articleStore.search = searchParam;

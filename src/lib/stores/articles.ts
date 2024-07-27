@@ -1,6 +1,5 @@
 import { writable } from "svelte/store"
 
-
 export const createArticleStore = (data) => {
     data = data.map((article) => ({
         ...article,

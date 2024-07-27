@@ -4,6 +4,7 @@
 	import { Chart } from '@highcharts/svelte'; // Chart is also exported by default
 	import type { PageData } from '../$types';
 	import FeedCondensed from '$lib/components/feedCondensed.svelte';
+	import { isPremium } from '$lib/utils/subscriptions';
 
 	export let data: PageData;
 	export let form;
@@ -126,7 +127,9 @@
 				All research articles on Wits End are represented with vector embeddings. These embeddings
 				are used to measure article similarity and to make recommendations for new papers applicable
 				to your interests. The following graph is a visualization of your unique embedding
-				fingerprint as a scatterplot of all the embeddings of the research articles you have saved.
+				fingerprint as a scatterplot of all the embeddings of the research articles you have saved. {#if isPremium(profile)}
+					Check out your <a href="/?sort=foryou">recommended articles</a> here.
+				{/if}
 			</p>
 			{#if allEmbeddings.length}
 				<div id="chart-container">
