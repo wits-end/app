@@ -9,6 +9,8 @@ export const stripe = new Stripe(PRIVATE_STRIPE_TEST_SECRET, {
 export const createCheckoutSession = async (profile, priceId: string) => {
     const isEligibleForTrial = profile.stripeSubscriptionId ? false : true;
 
+    console.log(profile.id)
+
     if (isEligibleForTrial) {
         const checkoutSession = await stripe.checkout.sessions.create({
             payment_method_types: ["card"],
@@ -22,16 +24,16 @@ export const createCheckoutSession = async (profile, priceId: string) => {
             success_url: 'https://witsend.ai/account',
             cancel_url: 'https://witsend.ai/premium',
             subscription_data: {
-                metadata: {
-                    user_id: profile.id
-                },
                 trial_period_days: 3,
                 trial_settings: {
                     end_behavior: {
                         missing_payment_method: "cancel"
                     }
                 }
-            }
+            },
+            metadata: {
+                user_id: profile.id
+            },
         });
 
         if (!checkoutSession.url) {
@@ -51,11 +53,10 @@ export const createCheckoutSession = async (profile, priceId: string) => {
         ],
         success_url: 'https://witsend.ai/account',
         cancel_url: 'https://witsend.ai/premium',
-        subscription_data: {
-            metadata: {
-                user_id: profile.id
-            }
+        metadata: {
+            user_id: profile.id
         }
+
     });
 
     if (!checkoutSession.url) {
