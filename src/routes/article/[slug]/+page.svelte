@@ -112,7 +112,7 @@
 
 				<div class="notes">
 					<h3 class="minion">Notes</h3>
-					{#if !isPremium(profile)}
+					{#if isPremium(profile)}
 						<Tiptap {note} isEnabled={true} />
 					{:else}
 						<Tooltip title="premium feature disabled">

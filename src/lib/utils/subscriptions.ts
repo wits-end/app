@@ -1,12 +1,19 @@
 import { error } from '@sveltejs/kit';
 
 export const isPremium = (profile) => {
-    return profile?.stripe_price_id &&
-        Date.parse(profile?.stripe_current_period_end) > Date.now() ? true : false;
+    if (!profile) {
+        return false
+    } else {
+        return profile?.stripe_price_id &&
+            Date.parse(profile?.stripe_current_period_end) > Date.now() ? true : false;
+    }
 }
 
 export const isCanceled = async (profile) => {
-    if (isPremium(profile) && profile?.stripe_subscription_id) {
+    if (!profile) {
+        return false
+    }
+    else if (isPremium(profile) && profile?.stripe_subscription_id) {
         const stripePlan = await stripe.subscriptions.retrieve(
             profile?.stripe_subscription_id
         )
