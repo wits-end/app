@@ -23,6 +23,7 @@
 
 	let element;
 	let editor;
+	let pending;
 
 	onMount(() => {
 		editor = new Editor({
@@ -159,10 +160,22 @@
 		if (note?.id) {
 			formData.append('noteId', note.id);
 		}
+
+		pending = true;
+
+		return async ({ result, update }) => {
+			await update();
+			pending = false;
+		};
 	}}
 >
 	<input type="text" name="articleId" value={$page.params.slug} hidden />
 	<button class="save-button" disabled={!isEnabled} class:disabled={!isEnabled}>save</button>
+	{#if pending}
+		<p>Saving...</p>
+	{:else if $page.form?.success}
+		<p>Note saved</p>
+	{/if}
 </form>
 
 <style lang="scss">

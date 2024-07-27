@@ -112,6 +112,7 @@ export const actions: Actions = {
             articleId,
             profileId,
             content,
+            success: true,
         }
 
     }
