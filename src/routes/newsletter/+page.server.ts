@@ -21,6 +21,7 @@ export const actions: Actions = {
 
         return {
             email,
+            success: true
         }
     }
 }

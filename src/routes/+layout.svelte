@@ -3,9 +3,12 @@
 	import { goto, invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { enhance } from '$app/forms';
+	import { page } from '$app/stores';
 
 	export let data;
 	$: ({ session, supabase } = data);
+	let pending;
+	let saved;
 
 	onMount(() => {
 		const { data } = supabase.auth.onAuthStateChange((_, newSession) => {
@@ -59,7 +62,19 @@
 	<div class="wrapper">
 		<div class="newsletter">
 			<h2>Newsletter</h2>
-			<form action="/newsletter/?/addNewsletterEmail" method="POST" use:enhance>
+			<form
+				action="/newsletter/?/addNewsletterEmail"
+				method="POST"
+				use:enhance={({ formData }) => {
+					pending = true;
+
+					return async ({ result, update }) => {
+						await update();
+						pending = false;
+						saved = true;
+					};
+				}}
+			>
 				<div class="input-group">
 					<div class="field-group">
 						<div class="icon">
@@ -82,6 +97,12 @@
 						<input type="email" name="email" placeholder="email@example.com" />
 					</div>
 					<button type="submit">subscribe</button>
+
+					{#if pending}
+						<p class="flash">saving...</p>
+					{:else if saved}
+						<p class="flash">email saved</p>
+					{/if}
 				</div>
 			</form>
 		</div>
@@ -231,6 +252,14 @@
 							border: 1px solid #666;
 							color: #000;
 						}
+					}
+
+					.flash {
+						flex: 0 0 auto;
+						margin: 0;
+						margin-left: 1rem;
+						align-self: center;
+						font-size: 1.4rem;
 					}
 				}
 			}
