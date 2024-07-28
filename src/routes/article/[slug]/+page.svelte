@@ -72,14 +72,21 @@
 		<div class="col">
 			<div class="article">
 				<h1 class="title">{article?.title}</h1>
-				{#if article?.authors.length > 400}
+
+				<!-- {#if article?.authors.length > 400}
 					<p class="authors">{article?.authors.substr(0, 400)}...</p>
 				{:else}
 					<p class="authors">{article?.authors}</p>
-				{/if}
-				<!-- <a class="thumbnail" href="https://arxiv.org/pdf/{article?.arxiv_id}"
+				{/if} -->
+				<a class="thumbnail" href="https://arxiv.org/pdf/{article?.arxiv_id}"
 					><img src={article?.thumb_url} alt="PDF Thumbnail" /></a
-				> -->
+				>
+				<!-- <p>
+					<b>PDF: </b>
+					<a href={'https://arxiv.org/pdf/' + article?.arxiv_id + '.pdf'}
+						>{'https://arxiv.org/pdf/' + article?.arxiv_id + '.pdf'}</a
+					>
+				</p> -->
 				<p><b>Abstract:</b> {article?.abstract}</p>
 
 				<div class="figures">
@@ -228,6 +235,7 @@
 						font-family: 'Open Sans';
 						font-size: 3.2rem;
 						line-height: 1.25;
+						margin-bottom: 2rem;
 					}
 					.minion {
 						font-family: 'Open Sans';
