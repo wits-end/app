@@ -2,6 +2,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { enhance } from '$app/forms';
 	import { Editor } from '@tiptap/core';
+	import { page } from '$app/stores';
 	import Underline from '@tiptap/extension-underline';
 	import Placeholder from '@tiptap/extension-placeholder';
 	import BoldIcon from '$lib/components/icons/bold.svelte';
@@ -21,6 +22,7 @@
 
 	let element;
 	let editor;
+	let pending;
 
 	onMount(() => {
 		editor = new Editor({
@@ -147,10 +149,22 @@
 		if (note?.id) {
 			formData.append('noteId', note.id);
 		}
+
+		pending = true;
+
+		return async ({ result, update }) => {
+			await update();
+			pending = false;
+		};
 	}}
 >
 	<input type="text" name="articleId" value={note?.articles?.id} hidden />
 	<button class="save-button">save</button>
+	{#if pending}
+		<p>Saving...</p>
+	{:else if $page.form?.success}
+		<p>Note saved</p>
+	{/if}
 </form>
 
 <style lang="scss">
