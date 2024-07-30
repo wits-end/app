@@ -39,10 +39,10 @@
 	<div>
 		<h1>Frequently Asked Questions</h1>
 		<p>
-			Thank you for your interest in supporting Wits End! This website is a one-man passion project
-			and I am doing my best to create a useful platform that researchers will love to explore. If
-			you run into any issues or have additional questions, please reach out to me at tim@witsend.ai
-			and I will get back to you as soon as possible!
+			Thank you for your interest in supporting Wits End! This website is a passion project and I am
+			doing my best to create a platform that AI enthusiasts will love to use and explore. If you
+			run into any issues or have additional questions, please reach out to me at tim@witsend.ai and
+			I will get back to you as soon as possible.
 		</p>
 		<div class="questions">
 			<div>
@@ -66,20 +66,21 @@
 			<div>
 				<h2>Is my payment information private and secure?</h2>
 				<p>
-					We exclusively use Stripe to manage subscriptions and do not store any payment information
-					on our private servers. Stripe is an industry standard that we trust.
+					We exclusively use Stripe, a trusted industry standard, to manage subscriptions and do not
+					store any payment information on our private servers.
+				</p>
+			</div>
+			<div>
+				<h2>Why are my premium features not working?</h2>
+				<p>
+					Premium is activated on a successful invoicing event with our payment provider. If there
+					are any issues, please contact me at tim@witsend.ai and I will make things right as soon
+					as possible.
 				</p>
 			</div>
 			<div>
 				<h2>Will my membership ever increase in cost?</h2>
 				<p>Your membership price will be locked in as long as your subscription is sustained.</p>
-			</div>
-			<div>
-				<h2>Will premium members get access to new features for free?</h2>
-				<p>
-					Yes! I have big plans for Wits End and premium members will have access to any and all
-					future premium features.
-				</p>
 			</div>
 		</div>
 	</div>
@@ -221,7 +222,6 @@
 			p {
 				color: black;
 				font-size: 1.6rem;
-				max-width: 800px;
 				margin-bottom: 3rem;
 			}
 
