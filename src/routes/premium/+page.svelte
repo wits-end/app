@@ -24,8 +24,8 @@
 					<li>Personalized recommendations</li>
 				</ul>
 				<ul>
-					<li>Editable notebook</li>
-					<li>Theme settings</li>
+					<li>Editable notebooks</li>
+					<li>Theme settings (coming soon...)</li>
 					<li>Early access to new features</li>
 				</ul>
 			</div>
@@ -38,9 +38,50 @@
 <div class="faqs">
 	<div>
 		<h1>Frequently Asked Questions</h1>
-		<p>We rely on support from people like you to keep Wits End up and running.</p>
-		<a href="/api/checkout?id={priceIds[1]}">$5/month</a>
-		<a href="/api/checkout?id={priceIds[0]}">$50/Year (Save 30%)</a>
+		<p>
+			Thank you for your interest in supporting Wits End! This website is a one-man passion project
+			and I am doing my best to create a useful platform that researchers will love to explore. If
+			you run into any issues or have additional questions, please reach out to me at tim@witsend.ai
+			and I will get back to you as soon as possible!
+		</p>
+		<div class="questions">
+			<div>
+				<h2>Can I change/cancel my monthly support?</h2>
+				<p>
+					Yes, you can cancel or change your membership at any time from your account's billing
+					page.
+				</p>
+			</div>
+			<div>
+				<h2>Can I try premium for free?</h2>
+				<p>
+					All premium memberships include a free three day trial for new customers. You need a
+					credit card to activate but you can cancel at any time within that time frame at no cost.
+				</p>
+			</div>
+			<div>
+				<h2>Does my membership renew automatically?</h2>
+				<p>Yes, memberships renew automatically each month or year based on your plan.</p>
+			</div>
+			<div>
+				<h2>Is my payment information private and secure?</h2>
+				<p>
+					We exclusively use Stripe to manage subscriptions and do not store any payment information
+					on our private servers. Stripe is an industry standard that we trust.
+				</p>
+			</div>
+			<div>
+				<h2>Will my membership ever increase in cost?</h2>
+				<p>Your membership price will be locked in as long as your subscription is sustained.</p>
+			</div>
+			<div>
+				<h2>Will premium members get access to new features for free?</h2>
+				<p>
+					Yes! I have big plans for Wits End and premium members will have access to any and all
+					future premium features.
+				</p>
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -71,20 +112,20 @@
 			opacity: 0.65;
 		}
 		.wrapper {
-			display: flex;
+			display: grid;
+			grid-template-columns: 1fr 1fr;
 			align-items: center;
 			justify-content: center;
-			gap: 10rem;
+			gap: 5rem;
+			max-width: 90vw;
+			margin: 0 auto;
 
 			position: relative;
 			z-index: 1;
 			top: 50%;
 			transform: translateY(-50%);
-			padding: 2rem;
 
 			.intro {
-				flex: 0 0 auto;
-
 				h2 {
 					font-family: 'Open Sans';
 					font-size: 1.6rem;
@@ -149,20 +190,20 @@
 			.video {
 				height: 40rem;
 				background: black;
-				flex: 0 0 45%;
 			}
 		}
 	}
 
 	.faqs {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: 1fr 1.5fr;
 		align-items: center;
 		background: url('$lib/assets/brain.svg');
 		background-position: center left;
 		background-size: 45vw;
 		background-repeat: no-repeat;
-		padding: 16rem 0;
+		padding: 14rem;
+		padding-right: 8rem;
 
 		div {
 			grid-column: 2;
@@ -182,6 +223,20 @@
 				font-size: 1.6rem;
 				max-width: 800px;
 				margin-bottom: 3rem;
+			}
+
+			.questions {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-between;
+
+				div {
+					flex: 0 0 30%;
+					h2 {
+						font-size: 1.6rem;
+						color: #666;
+					}
+				}
 			}
 
 			a {
