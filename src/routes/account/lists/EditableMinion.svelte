@@ -57,7 +57,7 @@
 	</div>
 {/if}
 
-<style>
+<style lang="scss">
 	input {
 		border: none;
 		background: none;
@@ -69,5 +69,8 @@
 		text-align: inherit;
 		text-transform: inherit;
 		box-shadow: none;
+		&:focus {
+			outline: none;
+		}
 	}
 </style>

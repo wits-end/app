@@ -65,17 +65,19 @@ You can preview the production build with `npm run preview`.
         - [x] PDF RAG
             - [x] Experiment with foundational RAG context (e.g. a collection of textbooks on machine learning/math)
         - [x] Synopsis
-    - [x] Personal Notes
-        - [x] Tiptap Editor
-        - [ ] Premium Membership Check
+        - [x] Peronsal notes
     - [ ] Report
 
 - [ ] Premium
     - [ ] Marketing Page
     - [x] Setup Stripe
-    - [ ] No Ads
-    - [ ] Custom reading lists
+    - [x] No Ads
+    - [x] Custom reading lists
         - [x] DB setup
-        - [ ] Lexorank
-        - [ ] Drag n Drop
-        - [ ] New lists
+        - [x] Lexorank
+        - [x] Drag n Drop
+        - [x] New lists
+    - [x] Personal notebooks
+        - [x] Article detail
+        - [x] Markdown editor
+        - [x] Admin management

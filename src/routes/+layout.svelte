@@ -63,7 +63,7 @@
 		<div class="newsletter">
 			<h2>Newsletter</h2>
 			<form
-				action="/newsletter/?/addNewsletterEmail"
+				action="/api/newsletter/?/addNewsletterEmail"
 				method="POST"
 				use:enhance={({ formData }) => {
 					pending = true;

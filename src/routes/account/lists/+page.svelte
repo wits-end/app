@@ -5,6 +5,7 @@
 	import Edit from '$lib/components/icons/edit.svelte';
 	import EditableMinion from './EditableMinion.svelte';
 	import { enhance } from '$app/forms';
+	import Loading from '$lib/components/icons/loading.svelte';
 
 	export let data: PageData;
 
@@ -12,12 +13,8 @@
 	$: ({ lists } = data);
 
 	let draggedItem;
-
-	lists.forEach((list) => {
-		if (list.name == 'New List') {
-			list.isNew = true;
-		}
-	});
+	let pending;
+	let deleting = [];
 </script>
 
 <svelte:head>
@@ -34,35 +31,32 @@
 		<DragulaFeedCondensed {articles} bind:draggedItem />
 	</div>
 	<div class="board">
-		{#each lists as list (list.id)}
+		{#each lists.filter((list) => !deleting.includes(list.id)) as list (list.id)}
 			<div class="list">
 				<div class="heading">
-					{#if list.isNew}
-						<div class="edit-icon">
-							<Edit />
-						</div>
-						<h3 class="minion">
-							<EditableMinion
-								bind:value={list.name}
-								on:submit={() => {
-									list.isNew = false;
-									lists = lists;
-								}}
-								listId={list.id}
-							/>
-						</h3>
-					{:else}
-						<h3 class="minion">
-							<EditableMinion
-								bind:value={list.name}
-								on:submit={() => {
-									lists = lists;
-								}}
-								listId={list.id}
-							/>
-						</h3>
-					{/if}
-					<form action="?/deleteList" method="POST" use:enhance>
+					<div class="edit-icon">
+						<Edit />
+					</div>
+					<h3 class="minion">
+						<EditableMinion
+							bind:value={list.name}
+							on:submit={() => {
+								lists = lists;
+							}}
+							listId={list.id}
+						/>
+					</h3>
+					<form
+						action="?/deleteList"
+						method="POST"
+						use:enhance={() => {
+							deleting = [...deleting, list.id];
+							return async ({ update }) => {
+								await update();
+								deleting = deleting.filter((id) => id !== list.id);
+							};
+						}}
+					>
 						<input type="hidden" name="id" value={list.id} />
 						<button type="submit">delete list</button>
 					</form>
@@ -71,15 +65,32 @@
 			</div>
 		{/each}
 		<div class="new">
-			<form action="?/createList" method="POST" use:enhance>
-				<input type="hidden" name="name" value="New List" />
-				<input
-					type="hidden"
-					name="previousRank"
-					value={lists.length ? lists[lists.length - 1].position : ''}
-				/>
-				<button type="submit">+ Add another list</button>
-			</form>
+			{#if pending}
+				<div>
+					<Loading />
+				</div>
+			{:else}
+				<form
+					action="?/createList"
+					method="POST"
+					use:enhance={() => {
+						pending = true;
+
+						return async ({ result, update }) => {
+							await update();
+							pending = false;
+						};
+					}}
+				>
+					<input type="hidden" name="name" value="New List" />
+					<input
+						type="hidden"
+						name="previousRank"
+						value={lists.length ? lists[lists.length - 1].position : ''}
+					/>
+					<button type="submit">+ Add another list</button>
+				</form>
+			{/if}
 		</div>
 	</div>
 </div>
@@ -163,13 +174,14 @@
 			}
 			.new {
 				min-width: 16rem;
+				margin-left: 1rem;
+
 				button {
 					font-family: 'Open Sans';
 					font-size: 1.2rem;
 					font-weight: 500;
 					text-transform: uppercase;
 					text-decoration: none;
-					margin-left: 1rem;
 					background: white;
 					border: 1px solid #ddd;
 					color: #999;

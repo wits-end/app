@@ -17,9 +17,9 @@
 				for experienced researchers to stay up to date on cutting edge ideas and for new researchers
 				to find their bearings. This website aims to serve as a valuable resource for machine
 				learning practitioners to better explore the research landscape. We do this by leveraging
-				algorithms to not only aggregate and curate the most influential research papers but also to
-				provide succinct summaries, highlight key contributions, and offer personalized paper
-				recommendations.
+				algorithms to not only aggregate and curate the most influential research papers in machine
+				learning but also to provide succinct summaries, highlight key contributions, and offer
+				personalized paper recommendations.
 			</p>
 		</div>
 	</div>
@@ -36,6 +36,7 @@
 		position: relative;
 		margin-top: -1rem;
 		margin-bottom: -1rem;
+		filter: grayscale(1);
 
 		.overlay {
 			position: absolute;
