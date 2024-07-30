@@ -4,6 +4,7 @@
 	import { flip } from 'svelte/animate';
 	import { dndzone, TRIGGERS, SHADOW_ITEM_MARKER_PROPERTY_NAME } from 'svelte-dnd-action';
 	import { LexoRank } from 'lexorank';
+	import { enhance } from '$app/forms';
 
 	dayjs.extend(relativeTime);
 
@@ -11,7 +12,8 @@
 	export let listId;
 	export let draggedItem;
 
-	let items = articles;
+	$: items = articles;
+	let deleting = [];
 
 	$: draggedItem, checkItemInList();
 
@@ -81,10 +83,6 @@
 		dropFromOthersDisabled = false;
 	}
 
-	function handleRemoveFromList() {
-		console.log('Remove');
-	}
-
 	function checkItemInList() {
 		let arxivIds = items.map((item) => item.arxiv_id);
 		dropFromOthersDisabled = arxivIds.includes(draggedItem?.arxiv_id);
@@ -94,7 +92,7 @@
 <div
 	class="feed"
 	use:dndzone={{
-		items,
+		items: items.filter((item) => !deleting.includes(item.id)),
 		flipDurationMs,
 		dropTargetStyle: {
 			background: '#eee'
@@ -105,7 +103,7 @@
 	on:consider={handleDndConsider}
 	on:finalize={handleDndFinalize}
 >
-	{#each items as item (item.id)}
+	{#each items.filter((item) => !deleting.includes(item.id)) as item (item.id)}
 		<div class="post-wrapper" animate:flip={{ duration: flipDurationMs }}>
 			<!-- <p>{item.id}</p> -->
 			<div class="post">
@@ -116,11 +114,21 @@
 				<div class="actions">
 					<p class="date">{dayjs().to(dayjs(item?.published_at))}</p>
 					<a class="read-more" href="/article/{item?.ogId}">read more</a>
-					<button
-						on:click={() => {
-							handleRemoveFromList();
-						}}>remove from list</button
+					<form
+						action="?/removeArticleFromList"
+						method="POST"
+						use:enhance={() => {
+							deleting = [...deleting, item.id];
+							return async ({ update }) => {
+								await update();
+								deleting = deleting.filter((id) => id !== item.id);
+							};
+						}}
 					>
+						<input type="hidden" name="listId" value={listId} />
+						<input type="hidden" name="articleId" value={item.ogId} />
+						<button type="submit">remove from list</button>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -137,8 +145,6 @@
 		border: none;
 		outline: none;
 		background: white;
-	}
-	:global(#dnd-action-dragged-el .post) {
 	}
 	.post-wrapper {
 		background: white;
@@ -185,6 +191,9 @@
 					border-left: 1px solid #ddd;
 					padding-left: 1rem;
 					padding-bottom: 0.25rem;
+				}
+				form {
+					display: inline-block;
 				}
 				button {
 					background: none;

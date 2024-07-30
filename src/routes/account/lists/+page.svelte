@@ -61,7 +61,7 @@
 						<button type="submit">delete list</button>
 					</form>
 				</div>
-				<DndFeedCondensed articles={list.articles} listId={list.id} bind:draggedItem />
+				<DndFeedCondensed bind:articles={list.articles} listId={list.id} bind:draggedItem />
 			</div>
 		{/each}
 		<div class="new">

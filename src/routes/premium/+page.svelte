@@ -110,7 +110,7 @@
 			bottom: 0;
 			z-index: 0;
 			background: black;
-			opacity: 0.65;
+			opacity: 0.6;
 		}
 		.wrapper {
 			display: grid;
@@ -169,6 +169,7 @@
 					text-transform: uppercase;
 					text-decoration: none;
 					transition: all 0.2s ease;
+					box-shadow: 2px 2px 0px rgba(0, 0, 0, 1);
 
 					&:hover {
 						background-color: #e99ac0;

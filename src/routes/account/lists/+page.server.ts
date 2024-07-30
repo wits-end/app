@@ -73,8 +73,6 @@ export const actions: Actions = {
     updateListName: async ({ request, locals: { supabase, session } }) => {
         const params = await request.formData();
 
-        console.log("server submit update name")
-
         const listId = params.get('listId')
         const name = params.get('name')
 
@@ -103,11 +101,6 @@ export const actions: Actions = {
     addArticleToList: async ({ request, locals: { supabase, session } }) => {
         const { oldListId, newListId, articleId, position } = await request.json()
         const profileId = session?.user.id
-
-        console.log(position)
-
-
-        console.log(position)
 
         // If moving between lists
         if (oldListId) {
@@ -155,13 +148,47 @@ export const actions: Actions = {
             newListId,
             articleId,
         }
+    },
 
+    removeArticleFromList: async ({ request, locals: { supabase, session } }) => {
+        const params = await request.formData()
+
+        const listId = params.get("listId")
+        const articleId = params.get("articleId")
+        const profileId = session?.user.id
+
+        const { error } = await supabase
+            .from('lists_articles')
+            .delete()
+            .eq("list_id", listId)
+            .eq("article_id", articleId)
+            .eq("profile_id", profileId);
+
+        if (error) {
+            console.log(error)
+            return fail(500, {
+                listId,
+                articleId,
+                profileId,
+            })
+        }
+
+        return {
+            listId,
+            articleId,
+            profileId,
+        }
 
     }
 }
-export const load: PageServerLoad = async ({ locals: { supabase, session, profile } }) => {
-    // const { data: profile } = await supabase.from('profiles').select(
-    //     '*, articles (*)').eq('id', user?.id).single()
+export const load: PageServerLoad = async ({ locals: { supabase, session } }) => {
+    const { data: profile } = await supabase
+        .from('profiles')
+        .select(`
+            *, articles (*)
+        `)
+        .eq('id', session?.user.id)
+        .single()
 
     const { data: lists } = await supabase
         .from("lists")
