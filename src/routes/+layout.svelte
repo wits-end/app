@@ -4,6 +4,7 @@
 	import { onMount } from 'svelte';
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
+	import Loading from '$lib/components/icons/loading.svelte';
 
 	export let data;
 	$: ({ session, supabase } = data);
@@ -99,7 +100,7 @@
 					<button type="submit">subscribe</button>
 
 					{#if pending}
-						<p class="flash">saving...</p>
+						<p class="flash"><Loading /></p>
 					{:else if saved}
 						<p class="flash">email saved</p>
 					{/if}

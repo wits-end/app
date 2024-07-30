@@ -1,7 +1,8 @@
 <script lang="ts">
 	import NotesList from './NotesList.svelte';
 	import Tiptap from './Tiptap.svelte';
-
+	import { invalidate } from '$app/navigation';
+	import { page } from '$app/stores';
 	export let data;
 
 	let { notes, profile, session } = data;
@@ -24,6 +25,7 @@
 			data={{ notes, profile, session }}
 			on:setSelectedNote={(e) => {
 				selectedNote = e.detail.note;
+				invalidate($page.url);
 			}}
 		/>
 	</div>

@@ -17,6 +17,7 @@
 	import QuoteIcon from '$lib/components/icons/quote.svelte';
 	import TitleIcon from '$lib/components/icons/title.svelte';
 	import StarterKit from '@tiptap/starter-kit';
+	import Loading from '$lib/components/icons/loading.svelte';
 
 	export let note;
 
@@ -161,7 +162,7 @@
 	<input type="text" name="articleId" value={note?.articles?.id} hidden />
 	<button class="save-button">save</button>
 	{#if pending}
-		<p>Saving...</p>
+		<div class="loading"><Loading /></div>
 	{:else if $page.form?.success}
 		<p>Note saved</p>
 	{/if}
@@ -246,5 +247,8 @@
 			border: 1px solid #666;
 			color: #000;
 		}
+	}
+	.loading {
+		margin-top: 1rem;
 	}
 </style>
