@@ -1,5 +1,4 @@
-export const load: LayoutServerLoad = async ({ locals: { safeGetSession } }) => {
-    const { session, user, profile } = await safeGetSession()
+export const load: LayoutServerLoad = async ({ locals: { session, user, profile } }) => {
 
     return {
         session,

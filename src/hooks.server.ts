@@ -50,7 +50,11 @@ const supabase: Handle = async ({ event, resolve }) => {
             return { session: null, user: null, profile: null }
         }
 
-        const { data: profile } = await event.locals.supabase.from('profiles').select('*, articles (id, arxiv_id, title, embedding) ').eq('id', user?.id).single()
+        const { data: profile } = await event.locals.supabase
+            .from('profiles')
+            .select('*, articles (*)')
+            .eq('id', user?.id)
+            .single()
 
         return { session, user, profile }
     }
@@ -80,7 +84,7 @@ const authGuard: Handle = async ({ event, resolve }) => {
     }
 
     // Redirect premium routes
-    if (!isPremium(event.locals.profile) && premiumRoutes.includes(event.url.pathname)) {
+    if (premiumRoutes.includes(event.url.pathname) && !isPremium(event.locals.profile)) {
         return redirect(303, '/account/dashboard')
     }
 

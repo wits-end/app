@@ -2,7 +2,7 @@ import type { LayoutServerLoad } from './$types'
 import { fail, redirect } from '@sveltejs/kit'
 
 export const actions: Actions = {
-    addNewsletterEmail: async ({ request, locals: { supabase, session } }) => {
+    addNewsletterEmail: async ({ request, locals: { supabase } }) => {
         const params = await request.formData()
 
         const email = params.get("email")

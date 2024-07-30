@@ -86,11 +86,6 @@ export const actions: Actions = {
 }
 
 
-export const load: PageServerLoad = async ({ locals: { supabase, session, user } }) => {
-
-    const { data: profile } = await supabase.from('profiles').select(
-        '*, articles (*)').eq('id', user?.id).single()
-
+export const load: PageServerLoad = async ({ locals: { supabase, session, profile } }) => {
     return { articles: profile?.articles || [], profile, session }
-
 };

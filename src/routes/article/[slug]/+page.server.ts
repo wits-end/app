@@ -143,5 +143,12 @@ export const load: PageServerLoad = async ({ locals: { supabase, session, profil
         return a.page > b.page ? 1 : -1
     })
 
-    return { article: article ?? {}, figures: figures || [], note: note ?? {}, relatedArticles: relatedArticles ?? [], session, profile }
+    return {
+        article: article ?? {},
+        figures: figures || [],
+        note: note ?? {},
+        relatedArticles: relatedArticles ?? [],
+        profile,
+        session
+    }
 }

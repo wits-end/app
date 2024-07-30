@@ -1,6 +1,6 @@
 <script>
 	import Logo from '$lib/components/logo.svelte';
-	import { goto, invalidate } from '$app/navigation';
+	import { goto, invalidate, invalidateAll } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
@@ -32,6 +32,7 @@
 
 	$: logout = async () => {
 		const { error } = await supabase.auth.signOut();
+
 		if (error) {
 			console.error(error);
 		}
@@ -46,7 +47,9 @@
 			{#if session}
 				<a href="/premium" title="Premium">Premium</a>
 				<a href="/account/dashboard" title="Account">Account</a>
-				<a href="/" on:click={logout} title="Log Out">Log Out</a>
+				<form action="/auth/logout/?/logout" method="POST">
+					<button title="Log Out">Log Out</button>
+				</form>
 			{:else}
 				<a href="/auth/login" title="Log In">Log In</a>
 				<a href="/auth/register" title="Register">Register</a>
@@ -156,7 +159,12 @@
 			nav {
 				font-size: 0;
 
-				a {
+				form {
+					display: inline-block;
+				}
+				a,
+				button {
+					border: none;
 					background: rgba(255, 255, 255, 0.5);
 					color: black;
 					text-decoration: none;
