@@ -81,3 +81,12 @@ You can preview the production build with `npm run preview`.
         - [x] Article detail
         - [x] Markdown editor
         - [x] Admin management
+
+Arxiv Id 
+| Arxiv API(ID) -> General Metadata, Download PDF
+| Semantic Scholar(ID) -> Citations, H Indexes
+| Imagemagick(PDF) -> PDF Thumbnail Preview
+| Llamaparse(PDF) -> Figures, Tables
+| Open AI (PDF) -> Synopsis, RAG
+| Supabase Bucket(Media) -> Upload thumbnails, figures, tables
+| Supabase(Article) -> Upload article

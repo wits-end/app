@@ -139,7 +139,11 @@ export const load: PageServerLoad = async ({ locals: { supabase, session, profil
         order_by: "similarity",
     }).neq('id', article?.id)
 
-    const figures = JSON.parse(article?.figures)
+    const figures = JSON.parse(article?.figures).sort((a, b) => {
+        return a.page > b.page ? 1 : -1
+    })
+
+    console.log(figures)
 
     return { article: article ?? {}, figures: figures || [], note: note ?? {}, relatedArticles: relatedArticles ?? [], session, profile }
 }
