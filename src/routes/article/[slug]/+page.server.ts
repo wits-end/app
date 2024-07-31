@@ -9,22 +9,25 @@ export const actions: Actions = {
         const articleId = params.get("articleId")
         const profileId = session?.user.id
 
-        const { error } = await supabase
+        const { error: insertError } = await supabase
             .from('profiles_articles')
             .insert({ profile_id: profileId, article_id: articleId });
 
-        console.log(error)
+        const { error: activityError } = await supabase
+            .from('activity')
+            .insert({
+                profile_id: profileId,
+                message: `saved article ${articleId}`
+            });
 
-        if (error) {
+        if (insertError || activityError) {
             return fail(500, {
                 articleId,
-                profileId,
             })
         }
 
         return {
             articleId,
-            profileId,
         }
     },
 
@@ -34,22 +37,27 @@ export const actions: Actions = {
         const articleId = params.get("articleId")
         const profileId = session?.user.id
 
-        const { error } = await supabase
+        const { error: deleteError } = await supabase
             .from('profiles_articles')
             .delete()
             .eq("profile_id", profileId)
             .eq("article_id", articleId);
 
-        if (error) {
+        const { error: activityError } = await supabase
+            .from('activity')
+            .insert({
+                profile_id: profileId,
+                message: `unsaved article ${articleId}`
+            });
+
+        if (deleteError || activityError) {
             return fail(500, {
                 articleId,
-                profileId,
             })
         }
 
         return {
             articleId,
-            profileId,
         }
     },
 
@@ -61,31 +69,43 @@ export const actions: Actions = {
         const articleId = params.get("articleId")
         const profileId = session?.user.id
 
-        console.log({
-            ...(noteId ? { id: noteId } : null),
-            updated_at: new Date().toISOString(),
-            profile_id: profileId,
-            article_id: articleId,
-            content: content,
-        })
-
         if (!content && noteId) {
-            const { error } = await supabase
+            const { error: deleteError } = await supabase
                 .from('notes')
                 .delete()
                 .eq("id", noteId)
                 .eq("profile_id", profileId)
                 .eq("article_id", articleId)
 
-            if (error) {
+            const { error: activityError } = await supabase
+                .from('activity')
+                .insert({
+                    profile_id: profileId,
+                    message: `deleted note ${noteId}`
+                });
+
+            if (deleteError || activityError) {
                 return fail(500, {
                     articleId,
-                    profileId,
                     content,
                 })
             }
+
+            return {
+                articleId,
+                content,
+                success: true,
+            }
         } else if (content) {
-            const { error } = await supabase
+            console.log({
+                ...(noteId ? { id: noteId } : null),
+                updated_at: new Date().toISOString(),
+                profile_id: profileId,
+                article_id: articleId,
+                content: content,
+            })
+
+            const { data: [{ id }], error: upsertError } = await supabase
                 .from('notes')
                 .upsert({
                     ...(noteId ? { id: noteId } : null),
@@ -95,26 +115,30 @@ export const actions: Actions = {
                     content: content,
                 })
                 .eq("profile_id", profileId)
-                .eq("article_id", articleId);
+                .eq("article_id", articleId)
+                .select();
 
-            if (error) {
+            const { error: activityError } = await supabase
+                .from('activity')
+                .insert({
+                    profile_id: profileId,
+                    message: `upserted note ${id}`
+                });
+
+            if (upsertError || activityError) {
                 return fail(500, {
                     articleId,
-                    profileId,
                     content,
                 })
             }
+
+            return {
+                noteId: id,
+                articleId,
+                content,
+                success: true,
+            }
         }
-
-
-
-        return {
-            articleId,
-            profileId,
-            content,
-            success: true,
-        }
-
     }
 }
 

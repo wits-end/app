@@ -20,6 +20,7 @@
 	import Loading from '$lib/components/icons/loading.svelte';
 
 	export let note;
+	export let articleId;
 	export let isEnabled;
 
 	let element;
@@ -158,10 +159,6 @@
 	use:enhance={({ formData }) => {
 		formData.append('content', editor.isEmpty ? '' : JSON.stringify(editor.getJSON()));
 
-		if (note?.id) {
-			formData.append('noteId', note.id);
-		}
-
 		pending = true;
 
 		return async ({ result, update }) => {
@@ -170,7 +167,8 @@
 		};
 	}}
 >
-	<input type="text" name="articleId" value={$page.params.slug} hidden />
+	<input type="hidden" name="noteId" value={note?.id || ''} />
+	<input type="hidden" name="articleId" value={articleId} />
 	<button class="save-button" disabled={!isEnabled} class:disabled={!isEnabled}>save</button>
 	{#if pending}
 		<div class="loading"><Loading /></div>
