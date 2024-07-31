@@ -87,11 +87,6 @@
 </div>
 
 <style lang="scss">
-	// Break out of parent wrapper for full width backgrounds
-	:global(main) {
-		padding: 0 !important;
-	}
-
 	.hero {
 		width: 100%;
 		background: url('$lib/assets/carina.jpg');
@@ -101,6 +96,9 @@
 		background-repeat: no-repeat;
 		position: relative;
 		height: 75vh;
+		margin: -1rem;
+		padding: 1rem;
+		box-sizing: content-box;
 
 		.overlay {
 			position: absolute;
