@@ -168,7 +168,7 @@
 						<th>Event</th>
 					</tr>
 				</thead>
-				{#each activity as event}
+				{#each activity.slice(0, 35) as event}
 					<tr>
 						<td>{event.message}</td>
 					</tr>

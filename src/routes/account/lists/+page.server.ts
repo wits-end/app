@@ -137,7 +137,7 @@ export const actions: Actions = {
                 .from('activity')
                 .insert({
                     profile_id: profileId,
-                    message: `move article ${articleId} from list ${oldListId} to list ${newListId}`
+                    message: `move article ${articleId} to list ${newListId}`
                 });
 
             if (error) {
