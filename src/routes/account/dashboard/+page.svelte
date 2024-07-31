@@ -9,8 +9,8 @@
 	import { page } from '$app/stores';
 	export let data: PageData;
 
-	let { articles, profile } = data;
-
+	let { articles, profile, activity } = data;
+	$: ({ activity } = data);
 	let pending = false;
 
 	let embeddings = articles.map((article) => {
@@ -162,25 +162,17 @@
 	<div class="col">
 		<div class="activity">
 			<h3 class="minion">Recent Activity</h3>
-			<p>Coming soon...</p>
 			<table>
 				<thead>
 					<tr>
 						<th>Event</th>
 					</tr>
 				</thead>
-				<tr>
-					<td>Saved article 15cd321e-21cc-456d-a2d5-f4a626c892ed</td>
-				</tr>
-				<tr>
-					<td>Created reading list 15cd321e-21cc-456d-a2d5-f4a626c892ed</td>
-				</tr>
-				<tr>
-					<td>Unsaved article 15cd321e-21cc-456d-a2d5-f4a626c892ed</td>
-				</tr>
-				<tr>
-					<td>Logged in 2024-07-26T16:20:35.596Z</td>
-				</tr>
+				{#each activity as event}
+					<tr>
+						<td>{event.message}</td>
+					</tr>
+				{/each}
 			</table>
 		</div>
 	</div>

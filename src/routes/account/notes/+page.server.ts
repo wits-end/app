@@ -89,6 +89,7 @@ export const load: PageServerLoad = async ({ locals: { supabase, session, profil
             articles (*)
         `)
         .eq("profile_id", profile?.id)
+        .order('created_at', { ascending: false })
 
     return { notes: notes || [], profile, session }
 };

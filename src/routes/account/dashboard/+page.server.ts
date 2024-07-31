@@ -116,5 +116,14 @@ export const actions: Actions = {
 
 
 export const load: PageServerLoad = async ({ locals: { supabase, session, profile } }) => {
-    return { articles: profile?.articles || [], profile, session }
+    const { data: activity } = await supabase
+        .from("activity")
+        .select('*')
+        .eq("profile_id", profile?.id)
+
+    activity?.sort((a, b) => {
+        return Date.parse(a.created_at) > Date.parse(b.created_at) ? -1 : 1
+    })
+
+    return { articles: profile?.articles || [], activity: activity || [], profile, session }
 };
