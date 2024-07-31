@@ -8,22 +8,25 @@ export const actions: Actions = {
     const articleId = params.get("articleId")
     const profileId = session?.user.id
 
-    const { error } = await supabase
+    const { error: insertError } = await supabase
       .from('profiles_articles')
       .insert({ profile_id: profileId, article_id: articleId });
 
-    console.log(error)
+    const { error: activityError } = await supabase
+      .from('activity')
+      .insert({
+        profile_id: profileId,
+        message: `saved article ${articleId}`
+      });
 
-    if (error) {
+    if (insertError || activityError) {
       return fail(500, {
         articleId,
-        profileId,
       })
     }
 
     return {
       articleId,
-      profileId,
     }
   },
 
@@ -33,26 +36,30 @@ export const actions: Actions = {
     const articleId = params.get("articleId")
     const profileId = session?.user.id
 
-    const { error } = await supabase
+    const { error: deleteError } = await supabase
       .from('profiles_articles')
       .delete()
       .eq("profile_id", profileId)
       .eq("article_id", articleId);
 
-    if (error) {
+    const { error: activityError } = await supabase
+      .from('activity')
+      .insert({
+        profile_id: profileId,
+        message: `unsaved article ${articleId}`
+      });
+
+    if (deleteError || activityError) {
       return fail(500, {
         articleId,
-        profileId,
       })
     }
 
     return {
       articleId,
-      profileId,
     }
   }
 }
-
 
 
 export const load: PageServerLoad = async ({ params, url, locals: { supabase, session, profile } }) => {
