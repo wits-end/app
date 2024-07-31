@@ -5,12 +5,13 @@
 	import type { PageData } from '../$types';
 	import FeedCondensed from '$lib/components/feedCondensed.svelte';
 	import { isPremium } from '$lib/utils/subscriptions';
-
+	import Loading from '$lib/components/icons/loading.svelte';
+	import { page } from '$app/stores';
 	export let data: PageData;
-	export let form;
 
 	let { articles, profile } = data;
-	$: ({ profile } = data);
+
+	let pending = false;
 
 	let embeddings = articles.map((article) => {
 		return JSON.parse(article.embedding);
@@ -99,8 +100,17 @@
 			<p>username: {profile?.username}</p>
 			<p>email: {profile?.email}</p>
 
-			<form method="post" action="?/saveProfile">
-				{#if form?.error}<p class="error">Error updating info.</p>{/if}
+			<form
+				method="post"
+				action="?/saveProfile"
+				use:enhance={() => {
+					pending = true;
+					return async ({ update }) => {
+						await update({ reset: false });
+						pending = false;
+					};
+				}}
+			>
 				<div class="input-group">
 					<div>
 						<label for="first_name">first name</label>
@@ -120,6 +130,11 @@
 				/>
 
 				<button>Save</button>
+				{#if pending}
+					<div class="loading"><Loading /></div>
+				{:else if $page.form?.success}
+					<p>profile saved</p>
+				{/if}
 			</form>
 		</div>
 		<h3 class="minion">Embedding Fingerprint</h3>
@@ -232,6 +247,9 @@
 							border: 1px solid #666;
 							color: #000;
 						}
+					}
+					.loading {
+						margin-top: 1rem;
 					}
 				}
 			}

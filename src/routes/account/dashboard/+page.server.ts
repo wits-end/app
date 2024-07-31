@@ -12,6 +12,13 @@ export const actions: Actions = {
             .from('profiles_articles')
             .insert({ profile_id: profileId, article_id: articleId });
 
+        const { error: activityError } = await supabase
+            .from('activity')
+            .insert({
+                profile_id: profileId,
+                message: `save article ${articleId}`
+            });
+
         console.log(error)
 
         if (error) {
@@ -38,6 +45,13 @@ export const actions: Actions = {
             .delete()
             .eq("profile_id", profileId)
             .eq("article_id", articleId);
+
+        const { error: activityError } = await supabase
+            .from('activity')
+            .insert({
+                profile_id: profileId,
+                message: `unsave article ${articleId}`
+            });
 
         if (error) {
             return fail(500, {
@@ -71,8 +85,12 @@ export const actions: Actions = {
             .eq("id", profileId)
             .select()
 
-        console.log(error)
-        console.log(data)
+        const { error: activityError } = await supabase
+            .from('activity')
+            .insert({
+                profile_id: profileId,
+                message: `save profile ${profileId}`
+            });
 
         if (error) {
             return fail(500, {
@@ -80,7 +98,18 @@ export const actions: Actions = {
             })
         }
 
-        return data
+        console.log({
+            first_name: firstName,
+            last_name: lastName,
+            bio: bio
+        })
+
+        return {
+            first_name: firstName,
+            last_name: lastName,
+            bio: bio,
+            success: true
+        }
     },
 
 }

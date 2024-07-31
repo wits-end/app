@@ -48,6 +48,15 @@ export const POST: RequestHandler = async (event) => {
                     })
                     .eq("id", session?.metadata?.user_id);
 
+                formData.append('content', editor.isEmpty ? '' : JSON.stringify(editor.getJSON()));
+
+                const { error: activityError } = await supabaseAdmin
+                    .from('activity')
+                    .insert({
+                        profile_id: session?.metadata?.user_id,
+                        message: `subscribe to premium ${subscription.id}`
+                    });
+
                 break
             }
             case 'invoice.payment_succeeded': {
@@ -69,6 +78,13 @@ export const POST: RequestHandler = async (event) => {
                             )
                         })
                         .eq("stripe_subscription_id", subscription.id)
+
+                    const { error: activityError } = await supabaseAdmin
+                        .from('activity')
+                        .insert({
+                            profile_id: session?.metadata?.user_id,
+                            message: `pay premium invoice ${subscription.items.data[0].price.id}`
+                        });
                 }
 
                 break
