@@ -13,15 +13,6 @@
 
 	onMount(() => {
 		const { data } = supabase.auth.onAuthStateChange((_, newSession) => {
-			if (!newSession) {
-				/**
-				 * Queue this as a task so the navigation won't prevent the
-				 * triggering function from completing
-				 */
-				setTimeout(() => {
-					goto('/', { invalidateAll: true });
-				});
-			}
 			if (newSession?.expires_at !== session?.expires_at) {
 				invalidate('supabase:auth');
 			}
@@ -29,14 +20,6 @@
 
 		return () => data.subscription.unsubscribe();
 	});
-
-	$: logout = async () => {
-		const { error } = await supabase.auth.signOut();
-
-		if (error) {
-			console.error(error);
-		}
-	};
 </script>
 
 <header>
@@ -110,15 +93,7 @@
 				</div>
 			</form>
 		</div>
-		<!-- <div class="column">
-			<h2>Site</h2>
-			<a href="/about">About</a>
-			<a href="/models">Models</a>
-			<a href="/notebooks">Notebooks</a>
-			<a href="/research">Research</a>
-		</div> -->
 		<div class="links">
-			<!-- <h2>Links</h2> -->
 			<div class="link-list">
 				<a href="/about">About</a>
 				<a href="https://github.com/wits-end">Code</a>
@@ -127,12 +102,6 @@
 				<a href="/terms">Terms</a>
 			</div>
 		</div>
-		<!-- <div class="column">
-			<h2>Self</h2>
-			<a href="https://github.com/tjwhitaker">Github</a>
-			<a href="https://scholar.google.com/citations?user=Rb-16TYAAAAJ&hl=en">Scholar</a>
-			<a href="https://orcid.org/0000-0003-3792-3901">Orcid</a>
-		</div> -->
 	</div>
 </footer>
 
@@ -196,11 +165,6 @@
 		padding: 1rem;
 		padding-bottom: 1rem;
 		background: #eee;
-		// background-image: url('$lib/assets/chalk-5-invert.png');
-		// background-position: center;
-		// background-size: 50rem;
-		// background-color: rgba(255, 255, 255, 0.8);
-		// background-blend-mode: lighten;
 		border-top: 1px solid #ddd;
 
 		.wrapper {

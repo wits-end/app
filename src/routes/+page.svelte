@@ -98,12 +98,14 @@
 				}}>Prev</button
 			>
 		{/if}
-		<button
-			class="page-button"
-			on:click={() => {
-				handlePaginate($articleStore.page + 1);
-			}}>Next</button
-		>
+		{#if $articleStore.filtered.length == 14}
+			<button
+				class="page-button"
+				on:click={() => {
+					handlePaginate($articleStore.page + 1);
+				}}>Next</button
+			>
+		{/if}
 	</div>
 </div>
 

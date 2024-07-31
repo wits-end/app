@@ -84,6 +84,7 @@
 				font-family: 'Open Sans';
 				font-size: 2.4rem;
 				line-height: 1.25;
+				margin-bottom: 0;
 				a {
 					color: black;
 					text-decoration: none;

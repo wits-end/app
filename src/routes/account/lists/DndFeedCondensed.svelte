@@ -160,7 +160,7 @@
 			h2.title {
 				font-family: 'Open Sans';
 				font-size: 1.6rem;
-
+				margin-bottom: 0;
 				a {
 					color: black;
 					text-decoration: none;

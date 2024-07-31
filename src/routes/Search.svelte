@@ -1,7 +1,13 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-
+	import { onMount } from 'svelte';
 	export let articleStore;
+
+	onMount(() => {
+		let searchParam = $page.url.searchParams.get('search') || '';
+
+		$articleStore.search = searchParam;
+	});
 </script>
 
 <div class="search">

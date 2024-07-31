@@ -83,6 +83,10 @@ const authGuard: Handle = async ({ event, resolve }) => {
         return redirect(303, '/auth/register')
     }
 
+    // Redirect /premium links to register
+    if (!event.locals.session && event.url.pathname.startsWith('/premium')) {
+        return redirect(303, '/auth/register')
+    }
     // Redirect premium routes
     if (premiumRoutes.includes(event.url.pathname) && !isPremium(event.locals.profile)) {
         return redirect(303, '/account/dashboard')
