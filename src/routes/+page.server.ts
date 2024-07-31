@@ -16,7 +16,7 @@ export const actions: Actions = {
       .from('activity')
       .insert({
         profile_id: profileId,
-        message: `saved article ${articleId}`
+        message: `save article ${articleId}`
       });
 
     if (insertError || activityError) {
@@ -46,7 +46,7 @@ export const actions: Actions = {
       .from('activity')
       .insert({
         profile_id: profileId,
-        message: `unsaved article ${articleId}`
+        message: `unsave article ${articleId}`
       });
 
     if (deleteError || activityError) {

@@ -10,41 +10,74 @@ export const actions: Actions = {
         const articleId = params.get("articleId")
         const profileId = session?.user.id
 
-        console.log({
-            ...(noteId ? { id: noteId } : null),
-            updated_at: new Date().toISOString(),
-            profile_id: profileId,
-            article_id: articleId,
-            content: content,
-        })
+        if (!content && noteId) {
+            const { error: deleteError } = await supabase
+                .from('notes')
+                .delete()
+                .eq("id", noteId)
+                .eq("profile_id", profileId)
+                .eq("article_id", articleId)
 
-        const { error } = await supabase
-            .from('notes')
-            .upsert({
+            const { error: activityError } = await supabase
+                .from('activity')
+                .insert({
+                    profile_id: profileId,
+                    message: `delete note ${noteId}`
+                });
+
+            if (deleteError || activityError) {
+                return fail(500, {
+                    articleId,
+                    content,
+                })
+            }
+
+            return {
+                articleId,
+                content,
+                success: true,
+            }
+        } else if (content) {
+            console.log({
                 ...(noteId ? { id: noteId } : null),
                 updated_at: new Date().toISOString(),
                 profile_id: profileId,
                 article_id: articleId,
                 content: content,
             })
-            .eq("profile_id", profileId)
-            .eq("article_id", articleId);
 
-        if (error) {
-            return fail(500, {
+            const { error: updateError } = await supabase
+                .from('notes')
+                .update({
+                    updated_at: new Date().toISOString(),
+                    content: content,
+                })
+                .eq("id", noteId)
+                .eq("profile_id", profileId)
+                .eq("article_id", articleId)
+                .select();
+
+            const { error: activityError } = await supabase
+                .from('activity')
+                .insert({
+                    profile_id: profileId,
+                    message: `update note ${noteId}`
+                });
+
+            if (updateError || activityError) {
+                return fail(500, {
+                    articleId,
+                    content,
+                })
+            }
+
+            return {
+                noteId,
                 articleId,
-                profileId,
                 content,
-            })
+                success: true,
+            }
         }
-
-        return {
-            articleId,
-            profileId,
-            content,
-            success: true
-        }
-
     }
 }
 

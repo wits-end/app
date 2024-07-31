@@ -6,18 +6,21 @@
 	export let data;
 
 	let { notes, profile, session } = data;
+	$: ({ notes } = data);
 
-	let selectedNote = notes[0];
+	$: selectedNote = notes[0];
 </script>
 
 <div class="grid">
 	<div class="col editor-view">
-		<h1 class="title">{selectedNote.articles.title}</h1>
-		<p class="abstract"><strong>Abstract: </strong> {selectedNote.articles.abstract}</p>
+		{#if selectedNote}
+			<h1 class="title">{selectedNote.articles.title}</h1>
+			<p class="abstract"><strong>Abstract: </strong> {selectedNote.articles.abstract}</p>
 
-		{#key selectedNote.id}
-			<Tiptap note={selectedNote} />
-		{/key}
+			{#key selectedNote.id}
+				<Tiptap note={selectedNote} />
+			{/key}
+		{/if}
 	</div>
 	<div class="col articles">
 		<h3 class="minion">Articles With Saved Notes</h3>

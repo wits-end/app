@@ -17,7 +17,7 @@ export const actions: Actions = {
             .from('activity')
             .insert({
                 profile_id: profileId,
-                message: `saved article ${articleId}`
+                message: `save article ${articleId}`
             });
 
         if (insertError || activityError) {
@@ -47,7 +47,7 @@ export const actions: Actions = {
             .from('activity')
             .insert({
                 profile_id: profileId,
-                message: `unsaved article ${articleId}`
+                message: `unsave article ${articleId}`
             });
 
         if (deleteError || activityError) {
@@ -81,7 +81,7 @@ export const actions: Actions = {
                 .from('activity')
                 .insert({
                     profile_id: profileId,
-                    message: `deleted note ${noteId}`
+                    message: `delete note ${noteId}`
                 });
 
             if (deleteError || activityError) {
@@ -122,7 +122,7 @@ export const actions: Actions = {
                 .from('activity')
                 .insert({
                     profile_id: profileId,
-                    message: `upserted note ${id}`
+                    message: `update note ${id}`
                 });
 
             if (upsertError || activityError) {

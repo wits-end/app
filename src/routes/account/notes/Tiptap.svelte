@@ -145,11 +145,7 @@
 	action="?/saveNotes"
 	method="POST"
 	use:enhance={({ formData }) => {
-		formData.append('content', JSON.stringify(editor.getJSON()));
-
-		if (note?.id) {
-			formData.append('noteId', note.id);
-		}
+		formData.append('content', editor.isEmpty ? '' : JSON.stringify(editor.getJSON()));
 
 		pending = true;
 
@@ -159,7 +155,8 @@
 		};
 	}}
 >
-	<input type="text" name="articleId" value={note?.articles?.id} hidden />
+	<input type="hidden" name="noteId" value={note?.id || ''} />
+	<input type="hidden" name="articleId" value={note?.articles?.id || ''} />
 	<button class="save-button">save</button>
 	{#if pending}
 		<div class="loading"><Loading /></div>

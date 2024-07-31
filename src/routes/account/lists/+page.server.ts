@@ -19,12 +19,20 @@ export const actions: Actions = {
             position = LexoRank.middle().toString();
         }
 
-        const { error } = await supabase
+        const { data: [{ id }], error } = await supabase
             .from('lists')
             .insert({
                 name: name,
                 profile_id: profileId,
                 position: position
+            })
+            .select();
+
+        const { error: activityError } = await supabase
+            .from('activity')
+            .insert({
+                profile_id: profileId,
+                message: `create list ${id}`
             });
 
         console.log(error)
@@ -49,13 +57,18 @@ export const actions: Actions = {
         const id = params.get("id")
         const profileId = session?.user.id
 
-        console.log(id, profileId)
-
         const { error } = await supabase
             .from('lists')
             .delete()
             .eq("id", id)
             .eq("profile_id", profileId);
+
+        const { error: activityError } = await supabase
+            .from('activity')
+            .insert({
+                profile_id: profileId,
+                message: `delete list ${id}`
+            });
 
         if (error) {
             console.log(error)
@@ -86,6 +99,13 @@ export const actions: Actions = {
             .eq("id", listId)
             .eq("profile_id", profileId);
 
+        const { error: activityError } = await supabase
+            .from('activity')
+            .insert({
+                profile_id: profileId,
+                message: `update list name ${listId}`
+            });
+
         if (error) {
             return fail(500, {
                 listId,
@@ -108,12 +128,17 @@ export const actions: Actions = {
                 .from('lists_articles')
                 .update({
                     list_id: newListId,
-                    article_id: articleId,
-                    profile_id: profileId,
                     position: position
                 })
                 .eq("list_id", oldListId)
                 .eq("profile_id", profileId)
+
+            const { error: activityError } = await supabase
+                .from('activity')
+                .insert({
+                    profile_id: profileId,
+                    message: `move article ${articleId} from list ${oldListId} to list ${newListId}`
+                });
 
             if (error) {
                 return fail(500, {
@@ -133,6 +158,13 @@ export const actions: Actions = {
                     position: position
                 })
                 .eq("profile_id", profileId)
+
+            const { error: activityError } = await supabase
+                .from('activity')
+                .insert({
+                    profile_id: profileId,
+                    message: `add article ${articleId} to list ${newListId}`
+                });
 
             if (error) {
                 return fail(500, {
@@ -163,6 +195,13 @@ export const actions: Actions = {
             .eq("list_id", listId)
             .eq("article_id", articleId)
             .eq("profile_id", profileId);
+
+        const { error: activityError } = await supabase
+            .from('activity')
+            .insert({
+                profile_id: profileId,
+                message: `remove article ${articleId} from list ${listId}`
+            });
 
         if (error) {
             console.log(error)
