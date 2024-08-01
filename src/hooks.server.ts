@@ -38,7 +38,7 @@ const supabase: Handle = async ({ event, resolve }) => {
             data: { session },
         } = await event.locals.supabase.auth.getSession()
         if (!session) {
-            return { session: null, user: null, profile: null }
+            return { session: null, user: null }
         }
 
         const {
@@ -47,16 +47,16 @@ const supabase: Handle = async ({ event, resolve }) => {
         } = await event.locals.supabase.auth.getUser()
         if (error) {
             // JWT validation has failed
-            return { session: null, user: null, profile: null }
+            return { session: null, user: null }
         }
 
-        const { data: profile } = await event.locals.supabase
-            .from('profiles')
-            .select('*, articles (*)')
-            .eq('id', user?.id)
-            .single()
+        // const { data: profile } = await event.locals.supabase
+        //     .from('profiles')
+        //     .select('*, articles (*)')
+        //     .eq('id', user?.id)
+        //     .single()
 
-        return { session, user, profile }
+        return { session, user }
     }
 
     return resolve(event, {
@@ -71,10 +71,9 @@ const supabase: Handle = async ({ event, resolve }) => {
 }
 
 const authGuard: Handle = async ({ event, resolve }) => {
-    const { session, user, profile } = await event.locals.safeGetSession()
+    const { session, user } = await event.locals.safeGetSession()
     event.locals.session = session
     event.locals.user = user
-    event.locals.profile = profile
 
     const premiumRoutes = ["/account/lists", "/account/notes", "/account/billing"]
 
@@ -88,14 +87,21 @@ const authGuard: Handle = async ({ event, resolve }) => {
         return redirect(303, '/auth/register')
     }
     // Redirect premium routes
-    if (premiumRoutes.includes(event.url.pathname) && !isPremium(event.locals.profile)) {
-        return redirect(303, '/account/dashboard')
+    if (premiumRoutes.includes(event.url.pathname)) {
+        const { data: profile } = await event.locals.supabase
+            .from('profiles')
+            .select('stripe_price_id, stripe_current_period_end')
+            .eq('id', user?.id)
+            .single()
+
+        if (!isPremium(profile)) {
+            return redirect(303, '/account/dashboard')
+        }
     }
 
     if (event.locals.session && event.url.pathname === '/auth') {
         return redirect(303, '/account/dashboard')
     }
-
 
     return resolve(event)
 }

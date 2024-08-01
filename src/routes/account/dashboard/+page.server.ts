@@ -115,11 +115,32 @@ export const actions: Actions = {
 }
 
 
-export const load: PageServerLoad = async ({ locals: { supabase, session, profile } }) => {
+export const load: PageServerLoad = async ({ locals: { supabase, session } }) => {
+    const { data: profile } = await supabase
+        .from('profiles')
+        .select(`
+            id,
+            username,
+            email,
+            first_name,
+            last_name,
+            bio,
+            stripe_price_id, 
+            stripe_current_period_end, 
+            articles (
+                id,
+                published_at,
+                title,
+                embedding
+            )
+        `)
+        .eq('id', session?.user?.id)
+        .single()
+
     const { data: activity } = await supabase
-        .from("activity")
+        .from('activity')
         .select('*')
-        .eq("profile_id", profile?.id)
+        .eq("profile_id", session?.user.id)
 
     activity?.sort((a, b) => {
         return Date.parse(a.created_at) > Date.parse(b.created_at) ? -1 : 1

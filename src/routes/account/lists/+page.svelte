@@ -6,7 +6,7 @@
 	import EditableMinion from './EditableMinion.svelte';
 	import { enhance } from '$app/forms';
 	import Loading from '$lib/components/icons/loading.svelte';
-
+	import AccountMenu from '$lib/components/AccountMenu.svelte';
 	export let data: PageData;
 
 	let { articles, lists, profile } = data;
@@ -25,72 +25,76 @@
 	/>
 </svelte:head>
 
-<div class="library">
-	<div class="saved-articles">
-		<h3 class="minion">Saved Articles</h3>
-		<DragulaFeedCondensed {articles} bind:draggedItem />
-	</div>
-	<div class="board">
-		{#each lists.filter((list) => !deleting.includes(list.id)) as list (list.id)}
-			<div class="list">
-				<div class="heading">
-					<div class="edit-icon">
-						<Edit />
-					</div>
-					<h3 class="minion">
-						<EditableMinion
-							bind:value={list.name}
-							on:submit={() => {
-								lists = lists;
+<div class="wrapper">
+	<AccountMenu {profile} />
+
+	<div class="library">
+		<div class="saved-articles">
+			<h3 class="minion">Saved Articles</h3>
+			<DragulaFeedCondensed {articles} bind:draggedItem />
+		</div>
+		<div class="board">
+			{#each lists.filter((list) => !deleting.includes(list.id)) as list (list.id)}
+				<div class="list">
+					<div class="heading">
+						<div class="edit-icon">
+							<Edit />
+						</div>
+						<h3 class="minion">
+							<EditableMinion
+								bind:value={list.name}
+								on:submit={() => {
+									lists = lists;
+								}}
+								listId={list.id}
+							/>
+						</h3>
+						<form
+							action="?/deleteList"
+							method="POST"
+							use:enhance={() => {
+								deleting = [...deleting, list.id];
+								return async ({ update }) => {
+									await update();
+									deleting = deleting.filter((id) => id !== list.id);
+								};
 							}}
-							listId={list.id}
-						/>
-					</h3>
+						>
+							<input type="hidden" name="id" value={list.id} />
+							<button type="submit">delete list</button>
+						</form>
+					</div>
+					<DndFeedCondensed bind:articles={list.articles} listId={list.id} bind:draggedItem />
+				</div>
+			{/each}
+			<div class="new">
+				{#if pending}
+					<div>
+						<Loading />
+					</div>
+				{:else}
 					<form
-						action="?/deleteList"
+						action="?/createList"
 						method="POST"
 						use:enhance={() => {
-							deleting = [...deleting, list.id];
-							return async ({ update }) => {
+							pending = true;
+
+							return async ({ result, update }) => {
 								await update();
-								deleting = deleting.filter((id) => id !== list.id);
+								pending = false;
 							};
 						}}
 					>
-						<input type="hidden" name="id" value={list.id} />
-						<button type="submit">delete list</button>
+						<input type="hidden" name="name" value="New List" />
+						<input
+							type="hidden"
+							name="previousRank"
+							value={lists.length ? lists[lists.length - 1].position : ''}
+						/>
+						<button type="submit">+ Add another list</button>
 					</form>
-				</div>
-				<DndFeedCondensed bind:articles={list.articles} listId={list.id} bind:draggedItem />
+				{/if}
 			</div>
-		{/each}
-		<div class="new">
-			{#if pending}
-				<div>
-					<Loading />
-				</div>
-			{:else}
-				<form
-					action="?/createList"
-					method="POST"
-					use:enhance={() => {
-						pending = true;
-
-						return async ({ result, update }) => {
-							await update();
-							pending = false;
-						};
-					}}
-				>
-					<input type="hidden" name="name" value="New List" />
-					<input
-						type="hidden"
-						name="previousRank"
-						value={lists.length ? lists[lists.length - 1].position : ''}
-					/>
-					<button type="submit">+ Add another list</button>
-				</form>
-			{/if}
 		</div>
 	</div>
 </div>

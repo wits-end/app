@@ -1,5 +1,6 @@
 import type { PageServerLoad, Actions } from './$types'
 import { fail, redirect } from '@sveltejs/kit'
+import { isPremium } from '$lib/utils/subscriptions'
 
 export const actions: Actions = {
   saveArticle: async ({ request, locals: { supabase, session } }) => {
@@ -62,7 +63,17 @@ export const actions: Actions = {
 }
 
 
-export const load: PageServerLoad = async ({ params, url, locals: { supabase, session, profile } }) => {
+export const load: PageServerLoad = async ({ params, url, locals: { supabase, session } }) => {
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select(`
+      stripe_price_id, 
+      stripe_current_period_end, 
+      articles (id, embedding)
+    `)
+    .eq('id', session?.user?.id)
+    .single()
+
   const sortParam = url.searchParams.get('sort') || "recent";
   const sortMap = {
     "recent": "published_at",
@@ -72,7 +83,7 @@ export const load: PageServerLoad = async ({ params, url, locals: { supabase, se
 
   let articles: any;
 
-  if (profile && session && profile?.articles.length) {
+  if (sortParam == "foryou" && isPremium(profile)) {
     // map reduce to average embeddings together
     ({ data: articles } = await supabase.rpc('match_articles', {
       query_embedding: profile?.articles.map(x => JSON.parse(x.embedding))
@@ -87,12 +98,12 @@ export const load: PageServerLoad = async ({ params, url, locals: { supabase, se
       match_count: 1000,
       order_by: sortParam
     }))
+  } else {
+    ({ data: articles } = await supabase
+      .from('articles')
+      .select()
+      .order(sortMap[sortParam], { ascending: false }))
   }
-  else {
-    ({ data: articles } = await supabase.from('articles')
-      .select().order(sortMap[sortParam], { ascending: false }))
-  }
-
 
   return { articles: articles ?? [], profile, session }
 }

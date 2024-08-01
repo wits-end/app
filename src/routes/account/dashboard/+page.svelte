@@ -7,10 +7,13 @@
 	import { isPremium } from '$lib/utils/subscriptions';
 	import Loading from '$lib/components/icons/loading.svelte';
 	import { page } from '$app/stores';
+	import AccountMenu from '$lib/components/AccountMenu.svelte';
+
 	export let data: PageData;
 
 	let { articles, profile, activity } = data;
 	$: ({ activity } = data);
+
 	let pending = false;
 
 	let embeddings = articles.map((article) => {
@@ -92,93 +95,98 @@
 	/>
 </svelte:head>
 
-<div class="grid">
-	<div class="col">
-		<div class="personal-info">
-			<h3 class="minion">Personal Info</h3>
-			<p>premium: {isPremium(profile)}</p>
-			<p>username: {profile?.username}</p>
-			<p>email: {profile?.email}</p>
+<div class="wrapper">
+	<AccountMenu {profile} />
 
-			<form
-				method="post"
-				action="?/saveProfile"
-				use:enhance={() => {
-					pending = true;
-					return async ({ update }) => {
-						await update({ reset: false });
-						pending = false;
-					};
-				}}
-			>
-				<div class="input-group">
-					<div>
-						<label for="first_name">first name</label>
-						<input placeholder="first name" name="first_name" value={profile?.first_name} />
-					</div>
-					<div>
-						<label for="last_name">last name</label>
-						<input placeholder="last name" name="last_name" value={profile?.last_name} />
-					</div>
-				</div>
-				<label for="bio">bio</label>
-				<textarea
-					placeholder="Research, Summary, Bio, etc..."
-					name="bio"
-					rows="8"
-					value={profile?.bio}
-				/>
+	<div class="grid">
+		<div class="col">
+			<div class="personal-info">
+				<h3 class="minion">Personal Info</h3>
+				<p>premium: {isPremium(profile)}</p>
+				<p>username: {profile?.username}</p>
+				<p>email: {profile?.email}</p>
 
-				<button>Save</button>
-				{#if pending}
-					<div class="loading"><Loading /></div>
-				{:else if $page.form?.success}
-					<p>profile saved</p>
-				{/if}
-			</form>
-		</div>
-		<h3 class="minion">Embedding Fingerprint</h3>
-		<div class="embeddings">
-			<p>
-				All research articles on Wits End are represented with vector embeddings. These embeddings
-				are used to measure article similarity and to make recommendations for new papers applicable
-				to your interests. The following graph is a visualization of your unique embedding
-				fingerprint as a scatterplot of all the embeddings of the research articles you have saved. {#if isPremium(profile)}
-					Check out your <a href="/?sort=foryou">recommended articles</a> here.
-				{/if}
-			</p>
-			{#if allEmbeddings.length}
-				<div id="chart-container">
-					<Chart {options} highcharts={Highcharts} />
-				</div>
-			{:else}
+				<form
+					method="post"
+					action="?/saveProfile"
+					use:enhance={() => {
+						pending = true;
+						return async ({ update }) => {
+							await update({ reset: false });
+							pending = false;
+						};
+					}}
+				>
+					<div class="input-group">
+						<div>
+							<label for="first_name">first name</label>
+							<input placeholder="first name" name="first_name" value={profile?.first_name} />
+						</div>
+						<div>
+							<label for="last_name">last name</label>
+							<input placeholder="last name" name="last_name" value={profile?.last_name} />
+						</div>
+					</div>
+					<label for="bio">bio</label>
+					<textarea
+						placeholder="Research, Summary, Bio, etc..."
+						name="bio"
+						rows="8"
+						value={profile?.bio}
+					/>
+
+					<button>Save</button>
+					{#if pending}
+						<div class="loading"><Loading /></div>
+					{:else if $page.form?.success}
+						<p>profile saved</p>
+					{/if}
+				</form>
+			</div>
+			<h3 class="minion">Embedding Fingerprint</h3>
+			<div class="embeddings">
 				<p>
-					If you don't see a graph here, try saving some articles to get a visualization of your
-					profile's fingerprint.
+					All research articles on Wits End are represented with vector embeddings. These embeddings
+					are used to measure article similarity and to make recommendations for new papers
+					applicable to your interests. The following graph is a visualization of your unique
+					embedding fingerprint as a scatterplot of all the embeddings of the research articles you
+					have saved. {#if isPremium(profile)}
+						Check out your <a href="/?sort=foryou">recommended articles</a> here.
+					{/if}
 				</p>
-			{/if}
+				{#if allEmbeddings.length}
+					<div id="chart-container">
+						<Chart {options} highcharts={Highcharts} />
+					</div>
+				{:else}
+					<p>
+						If you don't see a graph here, try saving some articles to get a visualization of your
+						profile's fingerprint.
+					</p>
+				{/if}
+			</div>
 		</div>
-	</div>
-	<div class="col">
-		<div class="activity">
-			<h3 class="minion">Recent Activity</h3>
-			<table>
-				<thead>
-					<tr>
-						<th>Event</th>
-					</tr>
-				</thead>
-				{#each activity.slice(0, 35) as event}
-					<tr>
-						<td>{event.message}</td>
-					</tr>
-				{/each}
-			</table>
+		<div class="col">
+			<div class="activity">
+				<h3 class="minion">Recent Activity</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Event</th>
+						</tr>
+					</thead>
+					{#each activity.slice(0, 30) as event}
+						<tr>
+							<td>{event.message}</td>
+						</tr>
+					{/each}
+				</table>
+			</div>
 		</div>
-	</div>
-	<div class="tree col">
-		<h3 class="minion">Saved Articles</h3>
-		<FeedCondensed {data} />
+		<div class="tree col">
+			<h3 class="minion">Saved Articles</h3>
+			<FeedCondensed {data} />
+		</div>
 	</div>
 </div>
 

@@ -31,8 +31,6 @@
 		items = e.detail.items;
 	}
 	function handleDndFinalize(e) {
-		// Need to get position here
-		// Get previous item and get next item.
 		const { trigger, id } = e.detail.info;
 		if (trigger === TRIGGERS.DROPPED_INTO_ZONE) {
 			const idx = e.detail.items.findIndex((item) => item.id === id);

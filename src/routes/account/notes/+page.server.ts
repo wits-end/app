@@ -81,15 +81,36 @@ export const actions: Actions = {
     }
 }
 
-export const load: PageServerLoad = async ({ locals: { supabase, session, profile } }) => {
-    const { data: notes } = await supabase
-        .from("notes")
+export const load: PageServerLoad = async ({ locals: { supabase, session } }) => {
+    const { data: profile } = await supabase
+        .from('profiles')
         .select(`
-            *, 
-            articles (*)
+            id,
+            stripe_price_id, 
+            stripe_current_period_end, 
+            notes (
+                id,
+                article_id,
+                content,
+                articles (
+                    id,
+                    abstract,
+                    published_at,
+                    title
+                )
+            )
         `)
-        .eq("profile_id", profile?.id)
-        .order('created_at', { ascending: false })
+        .eq('id', session?.user?.id)
+        .single()
 
-    return { notes: notes || [], profile, session }
+    // const { data: notes } = await supabase
+    //     .from("notes")
+    //     .select(`
+    //         *, 
+    //         articles (*)
+    //     `)
+    //     .eq("profile_id", profile?.id)
+    //     .order('created_at', { ascending: false })
+
+    return { notes: profile?.notes || [], profile, session }
 };

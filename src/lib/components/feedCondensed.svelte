@@ -10,11 +10,7 @@
 	let { articles, profile, session } = data;
 	$: ({ articles, profile, session } = data);
 
-	let savedArticleIds = [];
-
-	if (profile?.articles) {
-		savedArticleIds = profile.articles.map((x) => x.id);
-	}
+	let savedArticleIds = profile?.articles?.map((x) => x.id);
 
 	const handleSubmit: SubmitFunction = (articleId) => {
 		if (savedArticleIds.includes(articleId)) {
@@ -55,11 +51,6 @@
 					{/if}
 				{/if}
 			</div>
-			<!-- <p>
-				<small
-					>f: {dayjs(article.featured_at).format('YYYY-MM-DD')} | c: {article.citations} | h: {article.h_index}</small
-				>
-			</p> -->
 		</div>
 	{/each}
 </div>

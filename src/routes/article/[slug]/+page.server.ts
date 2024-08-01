@@ -1,6 +1,6 @@
 import type { PageServerLoad, Actions } from './$types'
 import { fail, redirect } from '@sveltejs/kit'
-
+import { isPremium } from '$lib/utils/subscriptions'
 
 export const actions: Actions = {
     saveArticle: async ({ request, locals: { supabase, session } }) => {
@@ -142,30 +142,46 @@ export const actions: Actions = {
     }
 }
 
-export const load: PageServerLoad = async ({ locals: { supabase, session, profile }, params }) => {
+export const load: PageServerLoad = async ({ locals: { supabase, session }, params }) => {
+    const { data: profile } = await supabase
+        .from('profiles')
+        .select(`
+            id,
+            stripe_price_id, 
+            stripe_current_period_end, 
+            articles (id)
+        `)
+        .eq('id', session?.user?.id)
+        .single()
+
     const { data: article } = await supabase
         .from('articles')
-        .select()
+        .select(`*`)
         .eq('id', params.slug)
         .single()
 
-    const { data: note } = await supabase
-        .from('notes')
-        .select()
-        .eq('profile_id', profile?.id)
-        .eq('article_id', article?.id)
-        .single()
 
     const { data: relatedArticles } = await supabase.rpc('match_articles', {
         query_embedding: article?.embedding,
         match_threshold: 0.25,
-        match_count: 14,
+        match_count: 15,
         order_by: "similarity",
     }).neq('id', article?.id)
 
     const figures = JSON.parse(article?.figures).sort((a, b) => {
         return a.page > b.page ? 1 : -1
     })
+
+    let note;
+
+    if (isPremium(profile)) {
+        ({ data: note } = await supabase
+            .from('notes')
+            .select('*')
+            .eq('profile_id', profile?.id)
+            .eq('article_id', article?.id)
+            .single())
+    }
 
     return {
         article: article ?? {},

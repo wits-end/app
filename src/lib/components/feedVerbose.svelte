@@ -10,11 +10,7 @@
 	let { articles, profile, session } = data;
 	$: ({ articles, profile, session } = data);
 
-	let savedArticleIds = [];
-
-	if (profile?.articles) {
-		savedArticleIds = profile.articles.map((x) => x.id);
-	}
+	let savedArticleIds = profile?.articles?.map((x) => x.id);
 
 	const handleSubmit: SubmitFunction = (articleId) => {
 		if (savedArticleIds.includes(articleId)) {

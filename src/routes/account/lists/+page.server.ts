@@ -137,7 +137,7 @@ export const actions: Actions = {
                 .from('activity')
                 .insert({
                     profile_id: profileId,
-                    message: `move article ${articleId} to list ${newListId}`
+                    message: `move article to list ${articleId}`
                 });
 
             if (error) {
@@ -163,7 +163,7 @@ export const actions: Actions = {
                 .from('activity')
                 .insert({
                     profile_id: profileId,
-                    message: `add article ${articleId} to list ${newListId}`
+                    message: `add article to list ${articleId}`
                 });
 
             if (error) {
@@ -220,19 +220,32 @@ export const actions: Actions = {
 
     }
 }
-export const load: PageServerLoad = async ({ locals: { supabase, session, profile } }) => {
-    const { data: lists } = await supabase
-        .from("lists")
+export const load: PageServerLoad = async ({ locals: { supabase, session } }) => {
+    let { data: profile } = await supabase
+        .from('profiles')
         .select(`
-            *,
-            articles (*),
-            lists_articles (position)
+            id,
+            stripe_price_id, 
+            stripe_current_period_end, 
+            articles (
+                id,
+                arxiv_id,
+                published_at,
+                title
+            ),
+            lists (
+                id, 
+                name,
+                position,
+                articles (id, arxiv_id, published_at, title),
+                lists_articles (position)
+            )
         `)
-        .eq("profile_id", profile?.id)
-        .order('position')
+        .eq('id', session?.user?.id)
+        .single()
 
     // Add article position to lists
-    lists?.forEach((list) => {
+    profile?.lists?.forEach((list) => {
         for (let i = 0; i < list.articles.length; i++) {
             // We do this reassignment because we store position info in the join table but need in the actual article object
             list.articles[i].position = list.lists_articles[i].position
@@ -245,10 +258,13 @@ export const load: PageServerLoad = async ({ locals: { supabase, session, profil
             list.articles[i].id = `${list.id}:` + list.articles[i].id
         }
 
+        console.log(list.articles)
+
         list.articles.sort((a, b) => {
             return (a.position < b.position) ? -1 : 1
         })
     })
 
-    return { articles: profile?.articles || [], lists: lists || [], profile, session }
+
+    return { articles: profile?.articles || [], lists: profile?.lists || [], profile, session }
 };
