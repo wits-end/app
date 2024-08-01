@@ -60,7 +60,6 @@
 		.post {
 			background: white;
 			padding: 2rem 0;
-			margin-right: 2rem;
 			border-bottom: 1px solid #ddd;
 
 			.published-date {

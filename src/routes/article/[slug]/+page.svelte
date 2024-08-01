@@ -221,12 +221,12 @@
 			grid-gap: 2rem;
 
 			.col {
-				padding: 1rem;
-				padding-left: 0;
+				padding: 1rem 2rem 1rem 0;
 				border-right: 1px solid #ddd;
 
 				&:last-child {
 					border: none;
+					padding-right: 0;
 				}
 
 				.article {
