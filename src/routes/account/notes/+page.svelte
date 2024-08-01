@@ -1,8 +1,6 @@
 <script lang="ts">
 	import NotesList from './NotesList.svelte';
 	import Tiptap from './Tiptap.svelte';
-	import { invalidate } from '$app/navigation';
-	import { page } from '$app/stores';
 	import AccountMenu from '$lib/components/AccountMenu.svelte';
 
 	export let data;

@@ -63,7 +63,7 @@ export const actions: Actions = {
 }
 
 
-export const load: PageServerLoad = async ({ params, url, locals: { supabase, session } }) => {
+export const load: PageServerLoad = async ({ url, locals: { supabase, session } }) => {
   const { data: profile } = await supabase
     .from('profiles')
     .select(`

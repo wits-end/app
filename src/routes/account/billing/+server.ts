@@ -7,9 +7,10 @@ export const GET: RequestHandler = async ({ locals: { supabase, session } }) => 
     const { data: profile } = await supabase
         .from('profiles')
         .select(`
+            stripe_subscription_id,
             stripe_customer_id,
             stripe_price_id, 
-            stripe_current_period_end, 
+            stripe_current_period_end
         `)
         .eq('id', session?.user?.id)
         .single()
