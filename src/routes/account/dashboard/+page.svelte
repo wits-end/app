@@ -288,6 +288,8 @@
 		}
 
 		.tree {
+			max-height: 110vh;
+			overflow-y: auto;
 			.minion {
 				font-family: 'Open Sans';
 				text-transform: uppercase;
