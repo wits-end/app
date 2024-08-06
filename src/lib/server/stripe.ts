@@ -7,6 +7,8 @@ export const stripe = new Stripe(PRIVATE_STRIPE_TEST_SECRET, {
 });
 
 export const createCheckoutSession = async (profile, priceId: string) => {
+    console.log(profile)
+
     const isEligibleForTrial = profile.stripeSubscriptionId ? false : true;
 
     if (isEligibleForTrial) {

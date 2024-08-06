@@ -1,24 +1,31 @@
 import { error, redirect } from "@sveltejs/kit"
 import type { RequestHandler } from "./$types"
 import { createCheckoutSession } from "$lib/server/stripe"
+import { isPremium } from "$lib/utils/subscriptions"
 
-export const GET: RequestHandler = async (event) => {
-    const { session, profile } = await event.locals.safeGetSession()
-
-    if (!session || !profile) {
+export const GET: RequestHandler = async ({ url, locals: { session, supabase } }) => {
+    if (!session) {
         throw redirect(302, "/auth/register")
     }
 
-    // If they already have a subscription then redirect to billing
-    const isPaid = profile.stripePriceId &&
-        profile.stripeCurrentPeriodEnd?.getTime() + 86_400_000 > Date.now() ? true : false;
+    const { error, data: profile } = await supabase
+        .from('profiles')
+        .select(`
+            id,
+            stripe_subscription_id,
+            stripe_price_id, 
+            stripe_current_period_end
+        `)
+        .eq('id', session?.user?.id)
+        .single()
 
-    if (isPaid) {
+    // If they already have a subscription then redirect to billing
+    if (isPremium(profile)) {
         throw redirect(302, "/account/billing")
     }
 
     // Create a checkout session
-    const priceId = event.url.searchParams.get("id");
+    const priceId = url.searchParams.get("id");
 
     if (!priceId) {
         throw error(400, "Invalid request")
