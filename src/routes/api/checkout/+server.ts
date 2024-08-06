@@ -19,6 +19,7 @@ export const GET: RequestHandler = async ({ url, locals: { session, supabase } }
         .eq('id', session?.user?.id)
         .single()
 
+
     // If they already have a subscription then redirect to billing
     if (isPremium(profile)) {
         throw redirect(302, "/account/billing")
