@@ -4,6 +4,7 @@
 	import { Chart } from '@highcharts/svelte'; // Chart is also exported by default
 	import type { PageData } from '../$types';
 	import FeedCondensed from '$lib/components/feedCondensed.svelte';
+	import FeedVerbose from '$lib/components/feedVerbose.svelte';
 	import { isPremium } from '$lib/utils/subscriptions';
 	import Loading from '$lib/components/icons/loading.svelte';
 	import { page } from '$app/stores';
@@ -11,84 +12,18 @@
 
 	export let data: PageData;
 
-	let { articles, profile, activity } = data;
+	let { savedArticles, recommendedArticles, profile, activity } = data;
 	$: ({ activity } = data);
 
 	let pending = false;
 
-	let embeddings = articles.map((article) => {
+	let embeddings = savedArticles.map((article) => {
 		return JSON.parse(article.embedding);
 	});
-
-	let meanEmbedding = [];
-
-	if (embeddings.length) {
-		for (let i = 0; i < embeddings[0].length; i++) {
-			let num = 0;
-			for (let j = 0; j < embeddings.length; j++) {
-				num += embeddings[j][i];
-			}
-			meanEmbedding.push(num / embeddings.length);
-		}
-	}
-
-	let allEmbeddings = embeddings.map((e) => {
-		return {
-			type: 'scatter',
-			color: '#aaa',
-			opacity: 0.5,
-			marker: {
-				symbol: 'diamond',
-				radius: 3
-			},
-			data: e
-		};
-	});
-
-	if (embeddings.length) {
-		allEmbeddings.push({
-			type: 'column',
-			opacity: 1,
-			color: '#000000',
-			borderColor: '#000000',
-			borderRadius: 0,
-			data: meanEmbedding
-		});
-	}
-
-	let options = {
-		title: {
-			text: ''
-		},
-		yAxis: {
-			title: {
-				enabled: false
-			}
-		},
-		xAxis: {
-			visible: false
-		},
-		plotOptions: {
-			series: {
-				states: {
-					hover: {
-						enabled: false
-					},
-					inactive: {
-						enabled: false
-					}
-				}
-			}
-		},
-		tooltip: { enabled: false },
-		legend: { enabled: false },
-		credits: { enabled: false },
-		series: allEmbeddings
-	};
 </script>
 
 <svelte:head>
-	<title>Dashboard | Wits End</title>
+	<title>Dashboard | Dead Neuron</title>
 	<meta
 		name="description"
 		content="Personal AI notebook dashboard. View your embedding fingerprint, saved articles, and personal info."
@@ -102,7 +37,7 @@
 		<div class="col">
 			<div class="personal-info">
 				<h3 class="minion">Personal Info</h3>
-				<p>premium: {isPremium(profile)}</p>
+				<p>supporter: {isPremium(profile)}</p>
 				<p>username: {profile?.username}</p>
 				<p>email: {profile?.email}</p>
 
@@ -143,30 +78,7 @@
 					{/if}
 				</form>
 			</div>
-			<h3 class="minion">Embedding Fingerprint</h3>
-			<div class="embeddings">
-				<p>
-					All research articles on Wits End are represented with vector embeddings. These embeddings
-					are used to measure article similarity and to make recommendations for new papers
-					applicable to your interests. The following graph is a visualization of your unique
-					embedding fingerprint as a scatterplot of all the embeddings of the research articles you
-					have saved. {#if isPremium(profile)}
-						Check out your <a href="/?sort=foryou">recommended articles</a> here.
-					{/if}
-				</p>
-				{#if allEmbeddings.length}
-					<div id="chart-container">
-						<Chart {options} highcharts={Highcharts} />
-					</div>
-				{:else}
-					<p>
-						If you don't see a graph here, try saving some articles to get a visualization of your
-						profile's fingerprint.
-					</p>
-				{/if}
-			</div>
-		</div>
-		<div class="col">
+
 			<div class="activity">
 				<h3 class="minion">Recent Activity</h3>
 				<table>
@@ -175,7 +87,7 @@
 							<th>Event</th>
 						</tr>
 					</thead>
-					{#each activity.slice(0, 30) as event}
+					{#each activity.slice(0, 25) as event}
 						<tr>
 							<td>{event.message}</td>
 						</tr>
@@ -183,9 +95,37 @@
 				</table>
 			</div>
 		</div>
+		<div class="col">
+			<div class="activity">
+				<h3 class="minion">Featured Recommendations</h3>
+				<div class="embeddings">
+					<!-- <p>
+						All research articles on Wits End are represented with vector embeddings. These are used
+						to measure article similarity so that we can make recommendations for new papers
+						applicable to your interests. The following graph is a visualization of your unique
+						embedding fingerprint as a scatterplot of all the embeddings of the research articles
+						you have saved. {#if isPremium(profile)}
+							Check out your <a href="/?sort=foryou">recommended articles</a> here.
+						{/if}
+					</p> -->
+					{#if recommendedArticles.length}
+						<!-- <div id="chart-container">
+							<Chart {options} highcharts={Highcharts} />
+						</div> -->
+
+						<FeedVerbose articles={recommendedArticles} {profile} />
+					{:else}
+						<p>
+							If you don't see any graph here, try saving some articles to get a visualization of
+							your profile's fingerprint.
+						</p>
+					{/if}
+				</div>
+			</div>
+		</div>
 		<div class="tree col">
 			<h3 class="minion">Saved Articles</h3>
-			<FeedCondensed {data} />
+			<FeedCondensed articles={savedArticles} {profile} />
 		</div>
 	</div>
 </div>
@@ -194,7 +134,7 @@
 	.grid {
 		display: grid;
 		grid-template-rows: auto auto;
-		grid-template-columns: 2fr 1.5fr 1fr;
+		grid-template-columns: 1fr 2fr 1fr;
 		grid-gap: 2rem;
 
 		.col {
@@ -288,8 +228,6 @@
 		}
 
 		.tree {
-			max-height: 110vh;
-			overflow-y: auto;
 			.minion {
 				font-family: 'Open Sans';
 				text-transform: uppercase;

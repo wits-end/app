@@ -18,7 +18,7 @@
 </script>
 
 <svelte:head>
-	<title>Reading Lists | Wits End</title>
+	<title>Reading Lists | Dead Neuron</title>
 	<meta
 		name="description"
 		content="Personal AI notebook. View your saved articles and create custom reading lists."

@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>Premium | Wits End</title>
+	<title>Donate | Dead Neuron</title>
 	<meta name="description" content="An AI platform to empower researchers." />
 </svelte:head>
 
@@ -12,10 +12,10 @@
 	<div class="wrapper">
 		<div class="intro">
 			<h2>Premium Membership</h2>
-			<h1>Exclusive Tools To <br />Empower Researchers</h1>
+			<h1>Your Support Helps<br />Empower Researchers</h1>
 			<p>
-				We rely on support from people like you to keep Wits End up and running. Show your support
-				and get access to an improved experience with additional features.
+				We rely on support from people like you to keep Dead Neuron up and running. Show your
+				support and get access to an improved experience with additional features.
 			</p>
 			<div class="bullets">
 				<ul>
@@ -32,7 +32,6 @@
 			<a href="/api/checkout?id={priceIds[1]}">$5/month</a>
 			<a href="/api/checkout?id={priceIds[0]}">$50/Year (Save 30%)</a>
 		</div>
-		<div class="video"></div>
 	</div>
 </div>
 <div class="faqs">
@@ -73,9 +72,8 @@
 			<div>
 				<h2>Why are my premium features not working?</h2>
 				<p>
-					Premium is activated on a successful invoicing event with our payment provider. If there
-					are any issues, please contact me at tim@witsend.ai and I will make things right as soon
-					as possible.
+					Premium is activated on a successful invoicing event from Stripe. If there are any issues,
+					please contact me at tim@witsend.ai and I will make things right as soon as possible.
 				</p>
 			</div>
 			<div>

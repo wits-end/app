@@ -1,18 +1,8 @@
 # Wits End
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+![]()
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+Wits End is a platform for AI and ML researchers to better explore the research landscape. We have gathered a curated collection of the best papers in machine learning to help you explore the most important ideas and projects in this field. We perform high quality AI analysis on these papers to produce synopses that make it easier to quickly view the key ideas and results. Create an account to save articles. Premium members get access to additional features including: personalized paper recommendations, custom reading lists, editable markdown notes, early access to new features, and an ad-free experience. Our purpose is to build a useful tool that new and experienced ML researchers will love to use in order to discover, explore, and organize their academic literature.
 
 ## Developing
 
@@ -27,15 +17,13 @@ npm run dev -- --open
 
 ## Building
 
-To create a production version of your app:
+To create a production version:
 
 ```bash
 npm run build
 ```
 
 You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
 
 ## Todo
 
@@ -67,9 +55,12 @@ You can preview the production build with `npm run preview`.
         - [x] Synopsis
         - [x] Peronsal notes
     - [ ] Report
+    - [ ] Share
+- [ ] Email Server Setup
 
 - [ ] Premium
     - [ ] Marketing Page
+        - [ ] Explainer video/animation
     - [x] Setup Stripe
     - [x] No Ads
     - [x] Custom reading lists
@@ -81,12 +72,3 @@ You can preview the production build with `npm run preview`.
         - [x] Article detail
         - [x] Markdown editor
         - [x] Admin management
-
-Arxiv Id 
-| Arxiv API(ID) -> General Metadata, Download PDF
-| Semantic Scholar(ID) -> Citations, H Indexes
-| Imagemagick(PDF) -> PDF Thumbnail Preview
-| Llamaparse(PDF) -> Figures, Tables
-| Open AI (PDF) -> Synopsis, RAG
-| Supabase Bucket(Media) -> Upload thumbnails, figures, tables
-| Supabase(Article) -> Upload article

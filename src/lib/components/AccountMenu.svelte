@@ -1,6 +1,5 @@
 <script>
 	import { page } from '$app/stores';
-	import { isPremium } from '$lib/utils/subscriptions';
 	import Tooltip from '$lib/components/tooltip.svelte';
 
 	export let profile;
@@ -9,39 +8,21 @@
 <div class="menu">
 	<nav class="categories">
 		<a
+			href="/account/billing"
+			class:active={$page.url.pathname === '/account/billing'}
+			title="billing">Billing</a
+		>
+		<a
 			href="/account/dashboard"
 			class:active={$page.url.pathname === '/account/dashboard'}
 			title="Dashboard">Dashboard</a
 		>
-		{#if isPremium(profile)}
-			<a
-				href="/account/billing"
-				class:active={$page.url.pathname === '/account/billing'}
-				title="billing">Billing</a
-			>
-			<a href="/account/lists" class:active={$page.url.pathname === '/account/lists'} title="lists"
-				>Lists</a
-			>
-			<a href="/account/notes" class:active={$page.url.pathname === '/account/notes'} title="notes"
-				>Notes</a
-			>
-		{:else}
-			<div class="disabled-wrap">
-				<Tooltip title="premium feature disabled">
-					<span class="navigation-disabled">Billing</span>
-				</Tooltip>
-			</div>
-			<div class="disabled-wrap">
-				<Tooltip title="premium feature disabled">
-					<span class="navigation-disabled">Lists</span>
-				</Tooltip>
-			</div>
-			<div class="disabled-wrap">
-				<Tooltip title="premium feature disabled">
-					<span class="navigation-disabled">Notes</span>
-				</Tooltip>
-			</div>
-		{/if}
+		<a href="/account/lists" class:active={$page.url.pathname === '/account/lists'} title="lists"
+			>Lists</a
+		>
+		<a href="/account/notes" class:active={$page.url.pathname === '/account/notes'} title="notes"
+			>Notes</a
+		>
 	</nav>
 </div>
 

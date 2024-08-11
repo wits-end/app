@@ -1,7 +1,6 @@
 <script lang="ts">
 	import FeedVerbose from '$lib/components/feedVerbose.svelte';
 	import FeedCondensed from '$lib/components/feedCondensed.svelte';
-	import { isPremium } from '$lib/utils/subscriptions.js';
 	import { createArticleStore, filterHandler } from '$lib/stores/articles.js';
 	import { onDestroy } from 'svelte';
 	import { goto } from '$app/navigation';
@@ -28,23 +27,10 @@
 		goto(`?${$page.url.searchParams.toString()}`);
 		$articleStore.page = page;
 	};
-
-	// Reactive data for the article feeds
-	$: featuredFeedData = {
-		articles: $articleStore.filtered.slice(0, 3),
-		profile: profile,
-		session: session
-	};
-
-	$: condensedFeedData = {
-		articles: $articleStore.filtered.slice(3),
-		profile: profile,
-		session: session
-	};
 </script>
 
 <svelte:head>
-	<title>Home | Wits End</title>
+	<title>Home | Dead Neuron</title>
 	<meta
 		name="description"
 		content="Enhancing the productivity and impact of researchers through an AI-powered web platform that simplifies the management of academic literature."
@@ -58,10 +44,10 @@
 
 	<div class="grid">
 		<div class="trending col">
-			<FeedVerbose data={featuredFeedData} />
+			<FeedVerbose articles={$articleStore.filtered.slice(0, 3)} {profile} />
 		</div>
 		<div class="recent col">
-			<FeedCondensed data={condensedFeedData} />
+			<FeedCondensed articles={$articleStore.filtered.slice(3)} {profile} />
 		</div>
 		<div class="tools col">
 			<Search {articleStore} />
@@ -70,23 +56,18 @@
 
 			<Tags {articleStore} />
 
-			{#if !isPremium(profile)}
-				<div class="ads">
-					<h3 class="minion">Ads</h3>
-					<!-- Sidebar -->
-					<ins
-						class="adsbygoogle"
-						style="display:block"
-						data-ad-client="ca-pub-1498186405228029"
-						data-ad-slot="3897793383"
-						data-ad-format="auto"
-						data-full-width-responsive="true"
-					></ins>
-					<script>
-						(adsbygoogle = window.adsbygoogle || []).push({});
-					</script>
-				</div>
-			{/if}
+			<div class="about">
+				<h3 class="minion">About</h3>
+				<p>
+					Dead Neuron offers a curated collection of the best machine learning research papers along
+					with concise synopses that highlights their key ideas and contributions. Create an account
+					to save papers, organize reading lists, record personal notes, and receive personalized
+					recommendations according to your interests. We're developing a platform for new and
+					experienced AI/ML enthusiasts to better explore the research landscape. Join us on this
+					stochastic gradient descent into madness and uncover the insights that are shaping the
+					future of artificial intelligence.
+				</p>
+			</div>
 		</div>
 	</div>
 	<div class="pagination">
@@ -134,8 +115,12 @@
 					padding-right: 0;
 				}
 
-				.ads {
+				.about {
 					margin: 2rem 0;
+
+					p {
+						font-size: 1.4rem;
+					}
 				}
 			}
 		}

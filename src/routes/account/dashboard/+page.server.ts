@@ -135,7 +135,22 @@ export const load: PageServerLoad = async ({ locals: { supabase, session } }) =>
             )
         `)
         .eq('id', session?.user?.id)
-        .single()
+        .single();
+
+    // map reduce to average embeddings together
+    const { data: recommendedArticles } = await supabase.rpc('match_articles', {
+        query_embedding: profile?.articles?.map(x => JSON.parse(x.embedding))
+            .reduce((acc, obj) => {
+                for (let i = 0; i < 256; i++) {
+                    acc[i] += obj[i]
+                }
+                return acc
+            }, new Array(256).fill(0))
+            .map(x => x / profile?.articles.length),
+        match_threshold: 0.0,
+        match_count: 3,
+        order_by: "foryou"
+    })
 
     const { data: activity } = await supabase
         .from('activity')
@@ -146,5 +161,11 @@ export const load: PageServerLoad = async ({ locals: { supabase, session } }) =>
         return Date.parse(a.created_at) > Date.parse(b.created_at) ? -1 : 1
     })
 
-    return { articles: profile?.articles || [], activity: activity || [], profile, session }
+    return {
+        savedArticles: profile?.articles || [],
+        recommendedArticles: recommendedArticles || [],
+        activity: activity || [],
+        profile,
+        session
+    }
 };

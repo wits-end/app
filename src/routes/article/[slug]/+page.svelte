@@ -3,7 +3,6 @@
 	import { marked } from 'marked';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import { isPremium } from '$lib/utils/subscriptions.js';
 	import Tooltip from '$lib/components/tooltip.svelte';
 	import FeedCondensed from '$lib/components/feedCondensed.svelte';
 	import Tiptap from '$lib/components/tiptap.svelte';
@@ -19,13 +18,6 @@
 
 	$: ({ article, figures, note, relatedArticles, session, profile } = data);
 
-	$: relatedFeedData = {
-		articles: relatedArticles,
-		savedArticleIds: [],
-		session: session,
-		profile: profile
-	};
-
 	$: isSaved = profile?.articles.some((x) => x.id === article.id) || false;
 
 	const handleSubmit: SubmitFunction = () => {
@@ -34,7 +26,7 @@
 </script>
 
 <svelte:head>
-	<title>{article?.title} | Wits End</title>
+	<title>{article?.title} | Dead Neuron</title>
 	<meta name="description" content={article?.abstract} />
 </svelte:head>
 
@@ -128,7 +120,7 @@
 
 				<div class="notes">
 					<h3 class="minion">Notes</h3>
-					{#if isPremium(profile)}
+					{#if profile}
 						{#key article?.id}
 							<Tiptap {note} articleId={article?.id} isEnabled={true} />
 						{/key}
@@ -158,7 +150,7 @@
 			</div>
 			<div class="related">
 				<h3 class="minion">Related</h3>
-				<FeedCondensed data={relatedFeedData} />
+				<FeedCondensed articles={relatedArticles} {profile} />
 			</div>
 			<!-- <div class="ads">
 				<h3 class="minion">Ads</h3>

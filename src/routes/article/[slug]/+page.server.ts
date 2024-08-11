@@ -1,6 +1,5 @@
 import type { PageServerLoad, Actions } from './$types'
 import { fail, redirect } from '@sveltejs/kit'
-import { isPremium } from '$lib/utils/subscriptions'
 
 export const actions: Actions = {
     saveArticle: async ({ request, locals: { supabase, session } }) => {
@@ -190,7 +189,7 @@ export const load: PageServerLoad = async ({ locals: { supabase, session }, para
 
     let note;
 
-    if (isPremium(profile)) {
+    if (profile) {
         ({ data: note } = await supabase
             .from('notes')
             .select('*')

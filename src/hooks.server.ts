@@ -75,29 +75,30 @@ const authGuard: Handle = async ({ event, resolve }) => {
     event.locals.session = session
     event.locals.user = user
 
-    const premiumRoutes = ["/account/lists", "/account/notes", "/account/billing"]
+    // const premiumRoutes = ["/account/lists", "/account/notes", "/account/billing"]
 
     // Redirect /account links to register
     if (!event.locals.session && event.url.pathname.startsWith('/account')) {
         return redirect(303, '/auth/register')
     }
 
-    // Redirect /premium links to register
-    if (!event.locals.session && event.url.pathname.startsWith('/premium')) {
+    // Redirect /donate to register
+    if (!event.locals.session && event.url.pathname.startsWith('/donate')) {
         return redirect(303, '/auth/register')
     }
-    // Redirect premium routes
-    if (premiumRoutes.includes(event.url.pathname)) {
-        const { data: profile } = await event.locals.supabase
-            .from('profiles')
-            .select('stripe_price_id, stripe_current_period_end')
-            .eq('id', user?.id)
-            .single()
 
-        if (!isPremium(profile)) {
-            return redirect(303, '/account/dashboard')
-        }
-    }
+    // Redirect premium routes
+    // if (premiumRoutes.includes(event.url.pathname)) {
+    //     const { data: profile } = await event.locals.supabase
+    //         .from('profiles')
+    //         .select('stripe_price_id, stripe_current_period_end')
+    //         .eq('id', user?.id)
+    //         .single()
+
+    //     if (!isPremium(profile)) {
+    //         return redirect(303, '/account/dashboard')
+    //     }
+    // }
 
     if (event.locals.session && event.url.pathname === '/auth') {
         return redirect(303, '/account/dashboard')

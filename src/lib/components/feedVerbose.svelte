@@ -6,9 +6,12 @@
 
 	dayjs.extend(relativeTime);
 
-	export let data;
-	let { articles, profile, session } = data;
-	$: ({ articles, profile, session } = data);
+	// export let data;
+	export let articles;
+	export let profile;
+
+	// let { articles, profile, session } = data;
+	// $: ({ articles, profile, session } = data);
 
 	let savedArticleIds = profile?.articles?.map((x) => x.id);
 
@@ -38,7 +41,7 @@
 			<div class="actions">
 				<p class="date">published {dayjs().to(dayjs(article.published_at))}</p>
 				<a class="read-more" href="/article/{article.id}">read more</a>
-				{#if session && profile}
+				{#if profile}
 					{#if savedArticleIds?.includes(article?.id)}
 						<form
 							method="post"

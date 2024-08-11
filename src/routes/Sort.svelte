@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Tooltip from '$lib/components/tooltip.svelte';
-	import { isPremium } from '$lib/utils/subscriptions';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
@@ -80,20 +79,15 @@
 	<h3 class="minion">Sort</h3>
 	<div class="options">
 		<div class="group">
-			{#if isPremium(profile)}
-				<button
-					class="sort-button"
-					id="sort-button-foryou"
-					title="For You"
-					on:click={(e) => {
-						handleSort(e, 'foryou');
-					}}>For You</button
-				>
-			{:else}
-				<Tooltip title="premium feature disabled">
-					<button class="sort-button-disabled">For You</button>
-				</Tooltip>
-			{/if}
+			<button
+				class="sort-button"
+				id="sort-button-foryou"
+				title="For You"
+				on:click={(e) => {
+					handleSort(e, 'foryou');
+				}}>For You</button
+			>
+
 			<button
 				class="sort-button active"
 				id="sort-button-featured"

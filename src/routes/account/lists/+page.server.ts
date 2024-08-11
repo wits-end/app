@@ -258,8 +258,6 @@ export const load: PageServerLoad = async ({ locals: { supabase, session } }) =>
             list.articles[i].id = `${list.id}:` + list.articles[i].id
         }
 
-        console.log(list.articles)
-
         list.articles.sort((a, b) => {
             return (a.position < b.position) ? -1 : 1
         })

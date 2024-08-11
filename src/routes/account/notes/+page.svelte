@@ -11,6 +11,14 @@
 	$: selectedNote = notes[0];
 </script>
 
+<svelte:head>
+	<title>Notes | Dead Neuron</title>
+	<meta
+		name="description"
+		content="Personal AI notebook. View your saved articles and create custom reading lists."
+	/>
+</svelte:head>
+
 <div class="wrapper">
 	<AccountMenu {profile} />
 
