@@ -11,11 +11,13 @@
 	<div class="overlay"></div>
 	<div class="wrapper">
 		<div class="intro">
-			<h2>Premium Membership</h2>
+			<h2>Supporter Memberships</h2>
 			<h1>Your Support Helps<br />Empower Researchers</h1>
 			<p>
-				We rely on support from people like you to keep Dead Neuron up and running. Show your
-				support and get access to an improved experience with additional features.
+				We rely on people like you to keep Dead Neuron up and running. We believe everyone should
+				have access to a free world-class research platform and we're trying to deliver the best
+				experience we can for our users. We are a small team, so your support makes a huge
+				difference!
 			</p>
 			<div class="bullets">
 				<ul>
@@ -30,7 +32,10 @@
 				</ul>
 			</div>
 			<a href="/api/checkout?id={priceIds[1]}">$5/month</a>
-			<a href="/api/checkout?id={priceIds[0]}">$50/Year (Save 30%)</a>
+			<a href="/api/checkout?id={priceIds[0]}">$50/Year</a>
+		</div>
+		<div class="image">
+			<img src="#" alt="" />
 		</div>
 	</div>
 </div>
@@ -38,10 +43,10 @@
 	<div>
 		<h1>Frequently Asked Questions</h1>
 		<p>
-			Thank you for your interest in supporting Wits End! This website is a passion project and I am
-			doing my best to create a platform that AI enthusiasts will love to use and explore. If you
-			run into any issues or have additional questions, please reach out to me at tim@witsend.ai and
-			I will get back to you as soon as possible.
+			Thank you for your interest in supporting Dead Neuron! This website is my passion project and
+			I am doing my best to create a dream platform for new and experienced machine learning
+			enthusiasts alike. If you run into any issues or have additional questions, please reach out
+			to me at tim@deadneuron.com and I will get back to you as soon as possible.
 		</p>
 		<div class="questions">
 			<div>
@@ -52,21 +57,21 @@
 				</p>
 			</div>
 			<div>
-				<h2>Can I try premium for free?</h2>
-				<p>
-					All premium memberships include a free three day trial for new customers. You need a
-					credit card to activate but you can cancel at any time within that time frame at no cost.
-				</p>
-			</div>
-			<div>
-				<h2>Does my membership renew automatically?</h2>
-				<p>Yes, memberships renew automatically each month or year based on your plan.</p>
-			</div>
-			<div>
 				<h2>Is my payment information private and secure?</h2>
 				<p>
 					We exclusively use Stripe, a trusted industry standard, to manage subscriptions and do not
 					store any payment information on our private servers.
+				</p>
+			</div>
+			<div>
+				<h2>Does my membership renew automatically?</h2>
+				<p>Yes, recurring memberships renew automatically each month or year based on your plan.</p>
+			</div>
+			<div>
+				<h2>Do I get anything for becoming a supporter?</h2>
+				<p>
+					Not yet. We have some plans to offer merch in the future so stay tuned for that. We will
+					offer something special for early supporters to show our appreciation.
 				</p>
 			</div>
 			<div>
@@ -185,7 +190,7 @@
 					}
 				}
 			}
-			.video {
+			.image {
 				height: 40rem;
 				background: black;
 			}
