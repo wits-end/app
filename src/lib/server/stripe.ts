@@ -7,7 +7,7 @@ export const stripe = new Stripe(PRIVATE_STRIPE_TEST_SECRET, {
 });
 
 export const createCheckoutSession = async (profile, priceId: string) => {
-    const isEligibleForTrial = profile.stripeSubscriptionId ? false : true;
+    const isEligibleForTrial = profile.stripe_subscription_id ? false : true;
 
     if (isEligibleForTrial) {
         const checkoutSession = await stripe.checkout.sessions.create({

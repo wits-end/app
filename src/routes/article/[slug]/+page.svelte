@@ -38,14 +38,14 @@
 	<meta name="description" content={article?.abstract} />
 </svelte:head>
 
-<FigureModal bind:showModal>
+<!-- <FigureModal bind:showModal>
 	<figure>
 		<img src={figureUrl} alt={figureCaption} />
 		<figcaption>
 			<p>{figureCaption}</p>
 		</figcaption>
 	</figure>
-</FigureModal>
+</FigureModal> -->
 
 <div class="wrapper">
 	{#if session && profile}
@@ -72,15 +72,15 @@
 		<div class="col">
 			<div class="article">
 				<h1 class="title">{article?.title}</h1>
-
-				<!-- {#if article?.authors.length > 400}
+				<!-- 				
+				{#if article?.authors.length > 400}
 					<p class="authors">{article?.authors.substr(0, 400)}...</p>
 				{:else}
 					<p class="authors">{article?.authors}</p>
 				{/if} -->
-				<a class="thumbnail" href="https://arxiv.org/pdf/{article?.arxiv_id}"
+				<!-- <a class="thumbnail" href="https://arxiv.org/pdf/{article?.arxiv_id}"
 					><img src={article?.thumb_url} alt="PDF Thumbnail" /></a
-				>
+				> -->
 				<!-- <p>
 					<b>PDF: </b>
 					<a href={'https://arxiv.org/pdf/' + article?.arxiv_id + '.pdf'}
@@ -89,7 +89,7 @@
 				</p> -->
 				<p><b>Abstract:</b> {article?.abstract}</p>
 
-				<div class="figures">
+				<!-- <div class="figures">
 					<h3 class="minion">Figures</h3>
 
 					<div class="gallery">
@@ -108,7 +108,16 @@
 							{/if}
 						{/each}
 					</div>
+				</div> -->
+
+				<div class="preview">
+					<h3 class="minion">Preview</h3>
+
+					<a class="thumbnail" href="https://arxiv.org/pdf/{article?.arxiv_id}"
+						><img src={article?.thumb_url} alt="PDF Thumbnail" /></a
+					>
 				</div>
+
 				{#if article?.synopsis}
 					<div class="synopsis">
 						<h3 class="minion">Synopsis</h3>
@@ -237,7 +246,6 @@
 						font-family: 'Open Sans';
 						font-size: 3.2rem;
 						line-height: 1.25;
-						margin-bottom: 2rem;
 					}
 					.minion {
 						font-family: 'Open Sans';
@@ -278,6 +286,19 @@
 									width: 100%;
 									height: 100%;
 								}
+							}
+						}
+					}
+
+					.preview {
+						margin-top: 2rem;
+						.thumbnail {
+							display: block;
+							margin: 2rem 0;
+
+							img {
+								max-width: 100%;
+								width: 100%;
 							}
 						}
 					}

@@ -156,7 +156,23 @@ export const load: PageServerLoad = async ({ locals: { supabase, session }, para
 
     const { data: article } = await supabase
         .from('articles')
-        .select(`*`)
+        .select(`
+            id,
+            published_at,
+            title,
+            authors,
+            categories,
+            arxiv_id,
+            abstract,
+            model_id,
+            model_thread_id,
+            model_updated_at,
+            thumb_url,
+            embedding,
+            synopsis,
+            citations,
+            h_index
+        `)
         .eq('id', params.slug)
         .single()
 
@@ -168,9 +184,9 @@ export const load: PageServerLoad = async ({ locals: { supabase, session }, para
         order_by: "similarity",
     }).neq('id', article?.id)
 
-    const figures = JSON.parse(article?.figures).sort((a, b) => {
-        return a.page > b.page ? 1 : -1
-    })
+    // const figures = JSON.parse(article?.figures).sort((a, b) => {
+    //     return a.page > b.page ? 1 : -1
+    // })
 
     let note;
 
@@ -185,7 +201,7 @@ export const load: PageServerLoad = async ({ locals: { supabase, session }, para
 
     return {
         article: article ?? {},
-        figures: figures || [],
+        // figures: figures || [],
         note: note ?? {},
         relatedArticles: relatedArticles ?? [],
         profile,
