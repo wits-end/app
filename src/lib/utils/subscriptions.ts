@@ -4,8 +4,9 @@ export const isPremium = (profile) => {
     if (!profile) {
         return false
     } else {
-        return profile?.stripe_price_id &&
-            Date.parse(profile?.stripe_current_period_end) > Date.now() ? true : false;
+        return true
+        // return profile?.stripe_price_id &&
+        //     Date.parse(profile?.stripe_current_period_end) > Date.now() ? true : false;
     }
 }
 

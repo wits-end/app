@@ -28,7 +28,7 @@
 		<nav>
 			<!-- <a href="/about">About</a> -->
 			{#if session}
-				<a href="/premium" title="Premium">Premium</a>
+				<!-- <a href="/premium" title="Premium">Premium</a> -->
 				<a href="/account/dashboard" title="Account">Account</a>
 				<form action="/auth/logout/?/logout" method="POST">
 					<button title="Log Out">Log Out</button>

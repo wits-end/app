@@ -34,7 +34,7 @@
 </script>
 
 <svelte:head>
-	<title>{article?.title} | Wits End</title>
+	<title>{article?.title} | Algonomicon</title>
 	<meta name="description" content={article?.abstract} />
 </svelte:head>
 

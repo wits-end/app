@@ -44,7 +44,7 @@
 </script>
 
 <svelte:head>
-	<title>Home | Wits End</title>
+	<title>Home | Algonomicon</title>
 	<meta
 		name="description"
 		content="Enhancing the productivity and impact of researchers through an AI-powered web platform that simplifies the management of academic literature."

@@ -88,7 +88,7 @@
 </script>
 
 <svelte:head>
-	<title>Dashboard | Wits End</title>
+	<title>Dashboard | Algonomicon</title>
 	<meta
 		name="description"
 		content="Personal AI notebook dashboard. View your embedding fingerprint, saved articles, and personal info."

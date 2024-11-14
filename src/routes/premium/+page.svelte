@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>Premium | Wits End</title>
+	<title>Premium | Algonomicon</title>
 	<meta name="description" content="An AI platform to empower researchers." />
 </svelte:head>
 

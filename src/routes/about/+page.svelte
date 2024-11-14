@@ -1,7 +1,7 @@
 <script></script>
 
 <svelte:head>
-	<title>About | Wits End</title>
+	<title>About | Algonomicon</title>
 	<meta name="description" content="An AI platform to empower researchers." />
 </svelte:head>
 
