@@ -14,11 +14,11 @@
 			title="Dashboard">Dashboard</a
 		>
 		{#if isPremium(profile)}
-			<a
+			<!-- <a
 				href="/account/billing"
 				class:active={$page.url.pathname === '/account/billing'}
 				title="billing">Billing</a
-			>
+			> -->
 			<a href="/account/lists" class:active={$page.url.pathname === '/account/lists'} title="lists"
 				>Lists</a
 			>
@@ -26,11 +26,11 @@
 				>Notes</a
 			>
 		{:else}
-			<div class="disabled-wrap">
+			<!-- <div class="disabled-wrap">
 				<Tooltip title="premium feature disabled">
 					<span class="navigation-disabled">Billing</span>
 				</Tooltip>
-			</div>
+			</div> -->
 			<div class="disabled-wrap">
 				<Tooltip title="premium feature disabled">
 					<span class="navigation-disabled">Lists</span>
